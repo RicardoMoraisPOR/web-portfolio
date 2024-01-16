@@ -1,6 +1,7 @@
 import styled, { createGlobalStyle } from 'styled-components';
 import GlowingCard from './components/GlowingCard';
 import FloatingMenu from './components/FloatingMenu';
+import AppTheme from './theme/AppThemeContext';
 
 const Container = styled('div')({
   width: '100vw',
@@ -32,7 +33,7 @@ const GlobalStyles = createGlobalStyle({
 
 function App() {
   return (
-    <>
+    <AppTheme>
       <GlobalStyles />
       <FloatingMenu />
       <Container>
@@ -76,7 +77,7 @@ function App() {
           </GlowingCard>
         </StatusCardWrapper>
       </Container>
-    </>
+    </AppTheme>
   );
 }
 

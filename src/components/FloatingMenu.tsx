@@ -1,22 +1,22 @@
-import { useState } from 'react';
+import { useAppTheme } from '../hooks/useAppTheme';
 import ThemeToggleAnimation from './ThemeToggleAnimation';
 
 function FloatingMenu() {
-  const [t, setT] = useState(false);
+  const { toggleTheme } = useAppTheme();
   return (
     <div>
       <div
         onClick={() => {
-          setT(!t);
+          toggleTheme?.();
         }}
         style={{
-          height: '40px',
-          width: '40px',
+          height: '50px',
+          width: '50px',
           borderRadius: '50%',
           backgroundColor: '#0d2530',
         }}
       >
-        <ThemeToggleAnimation isDarkTheme={t} />
+        <ThemeToggleAnimation />
       </div>
     </div>
   );

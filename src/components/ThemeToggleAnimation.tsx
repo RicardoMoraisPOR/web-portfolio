@@ -1,79 +1,77 @@
 import { useRef, memo, useEffect, useState } from 'react';
 import themeAnimation from '../assets/themeLottie.json';
-import Lottie, {
-  LottieRefCurrentProps,
-  LottieComponentProps,
-} from 'lottie-react';
+import { useLottie } from 'lottie-react';
+import { useAppTheme } from '../hooks/useAppTheme';
 
-const ThemeToggleAnimation = memo(
-  ({ isDarkTheme }: { isDarkTheme: boolean }) => {
-    // #region Lottie Animation Values
-    const DARK_THEME_FRAME = 66;
-    const LIGHT_THEME_FRAME = 153;
+type AnimationDirection = 1 | -1;
 
-    const initialAnimationRenderStatus = useRef({
-      firstRender: false,
-      firstToggle: false,
-    });
-    const initialThemeValue = useRef(isDarkTheme);
-    // Animation goes Light -> Dark -> Light
-    const initialSegment: LottieComponentProps['initialSegment'] =
-      initialThemeValue
-        ? [0, DARK_THEME_FRAME]
-        : [DARK_THEME_FRAME, LIGHT_THEME_FRAME];
+const ThemeToggleAnimation = memo(() => {
+  const { isDarkTheme } = useAppTheme();
 
-    // #endregion
+  // #region Lottie Animation Values
+  const LIGHT_THEME_FRAME = 0;
+  const DARK_THEME_FRAME = 66;
 
-    const lottieRef = useRef<LottieRefCurrentProps>(null);
-    const [directionReversed, setDirectionReversed] = useState(false);
+  const initialAnimationRenderStatus = useRef(false);
+  const [showAnimation, setShowAnimation] = useState(false);
+  // #endregion
 
-    // Controls the lottie animation play and direction
-    useEffect(() => {
-      const { firstRender, firstToggle } = initialAnimationRenderStatus.current;
+  const {
+    View,
+    play,
+    setDirection,
+    animationLoaded,
+    animationItem,
+    goToAndPlay,
+  } = useLottie(
+    {
+      id: 'themeAnimationId',
+      animationData: themeAnimation,
+      loop: false,
+      autoplay: false,
+      initialSegment: [LIGHT_THEME_FRAME, DARK_THEME_FRAME],
+      rendererSettings: {
+        viewBoxSize: '150 150 300 300',
+      },
+    },
+    {
+      transition: 'opacity 300ms',
+      opacity: showAnimation ? 1 : 0,
+    }
+  );
 
-      if (firstRender) {
-        lottieRef.current?.setDirection(directionReversed ? -1 : 1);
-        if (firstToggle || initialThemeValue.current) {
-          lottieRef.current?.play();
-        } else {
-          // On the first theme toggle, we need to go to the correct frame since lottie always starts at 0,
-          // even if the initialSegment does not include it.
-          lottieRef.current?.goToAndPlay(DARK_THEME_FRAME);
-          initialAnimationRenderStatus.current = {
-            firstToggle: true,
-            firstRender,
-          };
-        }
+  // start revealing animation
+  useEffect(() => {
+    setShowAnimation(true);
+  }, []);
+
+  // Lottie play and toggle animation direction
+  useEffect(() => {
+    if (initialAnimationRenderStatus.current && animationItem) {
+      setDirection((animationItem?.playDirection * -1) as AnimationDirection);
+      if (animationItem.isPaused) {
+        play();
       }
-    }, [directionReversed]);
-
-    // Controls the direction state of the animation based on the theme value change after mounted.
-    useEffect(() => {
-      const { firstRender, firstToggle } = initialAnimationRenderStatus.current;
-
-      if (firstRender) {
-        setDirectionReversed((previous) => !previous);
+    } else if (animationLoaded) {
+      if (isDarkTheme) {
+        setDirection(-1);
       } else {
-        // Ignore the first render
-        // Lottie itself will take care of the initial frame based on the first initialSegment value.
-        initialAnimationRenderStatus.current = {
-          firstToggle,
-          firstRender: true,
-        };
+        // When the animation is first loaded, we need to go to initial frame and play it if it's not dark mode
+        // There is no way to say the initial frame is X.
+        goToAndPlay(DARK_THEME_FRAME, true);
       }
-    }, [isDarkTheme]);
+      initialAnimationRenderStatus.current = true;
+    }
+  }, [
+    isDarkTheme,
+    animationLoaded,
+    setDirection,
+    play,
+    animationItem,
+    goToAndPlay,
+  ]);
 
-    return (
-      <Lottie
-        autoplay={false}
-        loop={false}
-        initialSegment={initialSegment}
-        lottieRef={lottieRef}
-        animationData={themeAnimation}
-        style={{ height: 'inherit', width: 'inherit' }}
-      />
-    );
-  }
-);
+  return View;
+});
 
 export default ThemeToggleAnimation;
