@@ -10,7 +10,7 @@ const ThemeToggleAnimation = memo(() => {
 
   // #region Lottie Animation Values
   const LIGHT_THEME_FRAME = 0;
-  const DARK_THEME_FRAME = 66;
+  const DARK_THEME_FRAME = 90;
 
   const initialAnimationRenderStatus = useRef(false);
   const [showAnimation, setShowAnimation] = useState(false);
@@ -23,6 +23,7 @@ const ThemeToggleAnimation = memo(() => {
     animationLoaded,
     animationItem,
     goToAndPlay,
+    setSpeed,
   } = useLottie(
     {
       id: 'themeAnimationId',
@@ -31,10 +32,12 @@ const ThemeToggleAnimation = memo(() => {
       autoplay: false,
       initialSegment: [LIGHT_THEME_FRAME, DARK_THEME_FRAME],
       rendererSettings: {
-        viewBoxSize: '150 150 300 300',
+        viewBoxSize: '175 175 250 250',
       },
     },
     {
+      height: 'inherit',
+      width: 'inherit',
       transition: 'opacity 300ms',
       opacity: showAnimation ? 1 : 0,
     }
@@ -53,6 +56,7 @@ const ThemeToggleAnimation = memo(() => {
         play();
       }
     } else if (animationLoaded) {
+      setSpeed(1.5);
       if (isDarkTheme) {
         setDirection(-1);
       } else {
@@ -69,6 +73,7 @@ const ThemeToggleAnimation = memo(() => {
     play,
     animationItem,
     goToAndPlay,
+    setSpeed,
   ]);
 
   return View;

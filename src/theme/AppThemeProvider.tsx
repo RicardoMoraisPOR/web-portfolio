@@ -7,17 +7,19 @@ import {
   useState,
 } from 'react';
 import { ThemeProvider } from 'styled-components';
+import Theme, { ThemeContextProps } from './AppTheme.types';
+import { darkTheme, lightTheme } from './Themes';
 
-type ThemeContextProps = {
-  isDarkTheme: boolean;
-  toggleTheme?: (darkTheme?: boolean) => void;
-};
+declare module 'styled-components' {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  export interface DefaultTheme extends Theme {}
+}
 
-export const ThemeToggleContext = createContext<ThemeContextProps>({
+export const ThemeTypeContext = createContext<ThemeContextProps>({
   isDarkTheme: window.matchMedia('(prefers-color-scheme: dark)').matches,
 });
 
-export const AppTheme: FC<PropsWithChildren> = ({ children }) => {
+export const AppThemeProvider: FC<PropsWithChildren> = ({ children }) => {
   const [isDarkTheme, setIsDarkTheme] = useState(
     window.matchMedia('(prefers-color-scheme: light)').matches
   );
@@ -35,10 +37,12 @@ export const AppTheme: FC<PropsWithChildren> = ({ children }) => {
   }, [isDarkTheme, toggleTheme]);
 
   return (
-    <ThemeToggleContext.Provider value={contextValue}>
-      <ThemeProvider theme={{}}>{children}</ThemeProvider>
-    </ThemeToggleContext.Provider>
+    <ThemeTypeContext.Provider value={contextValue}>
+      <ThemeProvider theme={isDarkTheme ? darkTheme : lightTheme}>
+        {children}
+      </ThemeProvider>
+    </ThemeTypeContext.Provider>
   );
 };
 
-export default AppTheme;
+export default AppThemeProvider;

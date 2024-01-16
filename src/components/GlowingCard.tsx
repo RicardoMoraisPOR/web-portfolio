@@ -8,63 +8,86 @@ import {
 } from 'react';
 import styled from 'styled-components';
 
-interface GlowingCardProps {
+type Enumerate<
+  N extends number,
+  Acc extends number[] = []
+> = Acc['length'] extends N
+  ? Acc[number]
+  : Enumerate<N, [...Acc, Acc['length']]>;
+
+type IntRange<F extends number, T extends number> = Exclude<
+  Enumerate<T>,
+  Enumerate<F>
+>;
+
+type Intensity = IntRange<0, 100>;
+
+interface GlowingCardCoordinatesProps {
   $x?: number;
   $y?: number;
+  $intensity: Intensity;
 }
 
-const GlowingCardComponent = styled('div').attrs<GlowingCardProps>(
+interface GlowingCardProps {
+  intensity: Intensity;
+}
+
+const GlowingCardComponent = styled('div').attrs<GlowingCardCoordinatesProps>(
   ({ $x, $y }) => ({
     style: {
       '--x': `${$x}px`,
       '--y': `${$y}px`,
     } as CSSProperties,
   })
-)({
-  backgroundColor: '#0d2530',
-  borderRadius: 'inherit',
-  cursor: 'pointer',
-  display: 'flex',
-  height: '100%',
-  flexDirection: 'column',
-  position: 'relative',
-  width: '100%',
-
-  '&::after': {
+)(({ theme, $intensity }) => {
+  return {
+    backgroundColor: theme.palette.secondary,
     borderRadius: 'inherit',
-    content: '""',
     height: '100%',
-    left: '0px',
-    opacity: 0,
-    position: 'absolute',
-    top: '0px',
-    transition: 'opacity 250ms',
+    position: 'relative',
     width: '100%',
-    background: `radial-gradient(400px circle at var(--x) var(--y), #4AC7FA80, transparent 40%)`,
-    zIndex: 1,
-  },
 
-  '&:hover': {
     '&::after': {
-      opacity: 1,
+      borderRadius: 'inherit',
+      content: '""',
+      height: '100%',
+      left: '0px',
+      opacity: 0,
+      position: 'absolute',
+      top: '0px',
+      transition: 'opacity 800ms',
+      width: '100%',
+      background: `radial-gradient(400px circle at var(--x) var(--y), ${theme.palette.primary}, transparent ${$intensity}%)`,
+      zIndex: 1,
     },
-  },
+
+    '&:hover': {
+      '&::after': {
+        opacity: 1,
+      },
+    },
+  };
 });
 
-const InnerContainer = styled('div')({
-  backgroundColor: '#0d2530',
-  borderRadius: 'inherit',
-  display: 'flex',
-  flexDirection: 'column',
-  flexGrow: 1,
-  inset: '1px',
-  padding: '10px',
-  position: 'absolute',
-  zIndex: 2,
+const InnerContainer = styled('div')(({ theme }) => {
+  return {
+    backgroundColor: theme.palette.secondary,
+    borderRadius: 'inherit',
+    display: 'flex',
+    flexDirection: 'column',
+    flexGrow: 1,
+    inset: '1px',
+    position: 'absolute',
+    zIndex: 2,
+  };
 });
 
-const GlowingCard: FC<PropsWithChildren> = ({ children }) => {
-  const [mouseCoordinates, setMouseCoordinates] = useState<GlowingCardProps>();
+const GlowingCard: FC<PropsWithChildren<GlowingCardProps>> = ({
+  children,
+  intensity,
+}) => {
+  const [mouseCoordinates, setMouseCoordinates] =
+    useState<Omit<GlowingCardCoordinatesProps, '$intensity'>>();
 
   const handleMouseMove = useCallback<MouseEventHandler<HTMLDivElement>>(
     (e) => {
@@ -79,7 +102,11 @@ const GlowingCard: FC<PropsWithChildren> = ({ children }) => {
   );
 
   return (
-    <GlowingCardComponent {...mouseCoordinates} onMouseMove={handleMouseMove}>
+    <GlowingCardComponent
+      {...mouseCoordinates}
+      $intensity={intensity}
+      onMouseMove={handleMouseMove}
+    >
       <InnerContainer>{children}</InnerContainer>
     </GlowingCardComponent>
   );

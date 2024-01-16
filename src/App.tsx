@@ -1,13 +1,16 @@
-import styled, { createGlobalStyle } from 'styled-components';
+import styled from 'styled-components';
 import GlowingCard from './components/GlowingCard';
 import FloatingMenu from './components/FloatingMenu';
-import AppTheme from './theme/AppTheme';
+import AppThemeProvider from './theme/AppThemeProvider';
 // Supports weights 300-700
 import '@fontsource-variable/quicksand';
 // Supports weights 100-900
 import '@fontsource-variable/montserrat';
+import GlobalStyles from './theme/GlobalStyles';
+import Logo from './components/Logo';
 
 const Container = styled('div')({
+  padding: '2rem',
   width: '100vw',
   height: '100vh',
 });
@@ -18,34 +21,19 @@ const StatusCardWrapper = styled('div')({
   borderRadius: '12px',
 });
 
-const GlobalStyles = createGlobalStyle({
-  '*, *::before, *::after': {
-    boxSizing: 'inherit',
-  },
-  html: {
-    WebkitFontSmoothing: 'antialiased',
-    MozOsxFontSmoothing: 'grayscale',
-    boxSizing: 'border-box',
-    WebkitTextSizeAdjust: '100%',
-  },
-
-  body: {
-    margin: 0,
-    backgroundColor: '#071319',
-    fontFamily: 'Montserrat Variable, sans-serif',
-  },
-});
-
 function App() {
   return (
-    <AppTheme>
+    <AppThemeProvider>
       <GlobalStyles />
-      <FloatingMenu />
       <Container>
-        <h1>Hello ✌️, My name is Ricardo Morais.</h1>
+        <Logo />
+        <FloatingMenu />
+        <h1>
+          Hello <span>✌️</span>, My name is Ricardo Morais.
+        </h1>
         <span>I’m a Frontend Developer</span>
         <StatusCardWrapper>
-          <GlowingCard>
+          <GlowingCard intensity={30}>
             <div style={{ display: 'flex', justifyContent: 'space-around' }}>
               <div
                 style={{
@@ -82,7 +70,7 @@ function App() {
           </GlowingCard>
         </StatusCardWrapper>
       </Container>
-    </AppTheme>
+    </AppThemeProvider>
   );
 }
 

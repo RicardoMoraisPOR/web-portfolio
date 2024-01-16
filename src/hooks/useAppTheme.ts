@@ -1,4 +1,4 @@
 import { useContext } from 'react';
-import { ThemeToggleContext } from '../theme/AppTheme';
+import { ThemeTypeContext } from '../theme/AppThemeProvider';
 
-export const useAppTheme = () => useContext(ThemeToggleContext);
+export const useAppTheme = () => useContext(ThemeTypeContext);
