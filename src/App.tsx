@@ -1,7 +1,7 @@
 import styled, { createGlobalStyle } from 'styled-components';
 import GlowingCard from './components/GlowingCard';
 import FloatingMenu from './components/FloatingMenu';
-import AppTheme from './theme/AppThemeContext';
+import AppTheme from './theme/AppTheme';
 
 const Container = styled('div')({
   width: '100vw',
