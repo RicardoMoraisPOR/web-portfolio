@@ -21,7 +21,7 @@ export const ThemeTypeContext = createContext<ThemeContextProps>({
 
 export const AppThemeProvider: FC<PropsWithChildren> = ({ children }) => {
   const [isDarkTheme, setIsDarkTheme] = useState(
-    window.matchMedia('(prefers-color-scheme: light)').matches
+    window.matchMedia('(prefers-color-scheme: dark)').matches
   );
 
   const toggleTheme = useCallback<
