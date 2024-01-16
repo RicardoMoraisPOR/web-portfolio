@@ -5,6 +5,12 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@fontsource-variable/montserrat':
+    specifier: ^5.0.17
+    version: 5.0.17
+  '@fontsource-variable/quicksand':
+    specifier: ^5.0.16
+    version: 5.0.16
   react:
     specifier: ^18.2.0
     version: 18.2.0
@@ -541,6 +547,14 @@ packages:
     resolution: {integrity: sha512-gMsVel9D7f2HLkBma9VbtzZRehRogVRfbr++f06nL2vnCGCNlzOD+/MUov/F4p8myyAHspEhVobgjpX64q5m6A==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: true
+
+  /@fontsource-variable/montserrat@5.0.17:
+    resolution: {integrity: sha512-kRPFY+sLUPE4fGTkuHu6phebYTwizsbGVIvqYa2vysRLPKUxwoiy1lb9Z4Qul8qoVspXnl0b9zA5LSn0scD9vA==}
+    dev: false
+
+  /@fontsource-variable/quicksand@5.0.16:
+    resolution: {integrity: sha512-I8QmSpiukev1QRNE9eimA+r7SLbYlNGi1iOZrLKdm6bXN1nSHFU98PlWIK1K/VRjR2MqNeStaVaIzwi4pnuDOA==}
+    dev: false
 
   /@humanwhocodes/config-array@0.11.14:
     resolution: {integrity: sha512-3T8LkOmg45BV5FICb15QQMsyUSWrQ8AygVfC7ZG32zOalnqrilm018ZVCw0eapXux8FtA33q8PSRSstjee3jSg==}

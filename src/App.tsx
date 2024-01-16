@@ -2,6 +2,10 @@ import styled, { createGlobalStyle } from 'styled-components';
 import GlowingCard from './components/GlowingCard';
 import FloatingMenu from './components/FloatingMenu';
 import AppTheme from './theme/AppTheme';
+// Supports weights 300-700
+import '@fontsource-variable/quicksand';
+// Supports weights 100-900
+import '@fontsource-variable/montserrat';
 
 const Container = styled('div')({
   width: '100vw',
@@ -28,6 +32,7 @@ const GlobalStyles = createGlobalStyle({
   body: {
     margin: 0,
     backgroundColor: '#071319',
+    fontFamily: 'Montserrat Variable, sans-serif',
   },
 });
 
