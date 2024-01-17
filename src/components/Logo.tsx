@@ -12,7 +12,7 @@ function Logo() {
   const { isDarkTheme } = useAppTheme();
 
   return (
-    <GlowEffect>
+    <GlowEffect $transparency={50}>
       <Image
         src={isDarkTheme ? darkLogo : lightLogo}
         alt="Ricardo Morais Dev Logo"

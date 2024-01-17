@@ -6,46 +6,33 @@ import {
   useCallback,
   useState,
 } from 'react';
-import styled from 'styled-components';
+import styled, { CSSObject } from 'styled-components';
+import { IntRange } from '../utils/typeUtils';
 
-type Enumerate<
-  N extends number,
-  Acc extends number[] = []
-> = Acc['length'] extends N
-  ? Acc[number]
-  : Enumerate<N, [...Acc, Acc['length']]>;
-
-type IntRange<F extends number, T extends number> = Exclude<
-  Enumerate<T>,
-  Enumerate<F>
->;
-
-type Intensity = IntRange<0, 100>;
-
-interface GlowingCardCoordinatesProps {
+interface FlareCardCoordinatesProps {
   $x?: number;
   $y?: number;
-  $intensity: Intensity;
+  $intensity: IntRange<0, 101>;
+  $borderRadius?: CSSObject['borderRadius'];
 }
 
-interface GlowingCardProps {
-  intensity: Intensity;
-}
+type FlareCardProps = Omit<FlareCardCoordinatesProps, '$x' | '$y'>;
 
-const GlowingCardComponent = styled('div').attrs<GlowingCardCoordinatesProps>(
+const FlareCardComponent = styled('div').attrs<FlareCardCoordinatesProps>(
   ({ $x, $y }) => ({
     style: {
       '--x': `${$x}px`,
       '--y': `${$y}px`,
     } as CSSProperties,
   })
-)(({ theme, $intensity }) => {
+)(({ theme, $intensity, $borderRadius }) => {
   return {
     backgroundColor: theme.palette.secondary,
-    borderRadius: 'inherit',
-    height: '100%',
+    borderRadius: $borderRadius ?? 'inherit',
+    height: 'fit-content',
     position: 'relative',
-    width: '100%',
+    width: 'fit-content',
+    padding: '1px',
 
     '&::after': {
       borderRadius: 'inherit',
@@ -73,21 +60,18 @@ const InnerContainer = styled('div')(({ theme }) => {
   return {
     backgroundColor: theme.palette.secondary,
     borderRadius: 'inherit',
+    position: 'relative',
     display: 'flex',
-    flexDirection: 'column',
-    flexGrow: 1,
-    inset: '1px',
-    position: 'absolute',
     zIndex: 2,
   };
 });
 
-const GlowingCard: FC<PropsWithChildren<GlowingCardProps>> = ({
+const FlareCard: FC<PropsWithChildren<FlareCardProps>> = ({
   children,
-  intensity,
+  ...props
 }) => {
   const [mouseCoordinates, setMouseCoordinates] =
-    useState<Omit<GlowingCardCoordinatesProps, '$intensity'>>();
+    useState<Pick<FlareCardCoordinatesProps, '$x' | '$y'>>();
 
   const handleMouseMove = useCallback<MouseEventHandler<HTMLDivElement>>(
     (e) => {
@@ -102,14 +86,14 @@ const GlowingCard: FC<PropsWithChildren<GlowingCardProps>> = ({
   );
 
   return (
-    <GlowingCardComponent
+    <FlareCardComponent
       {...mouseCoordinates}
-      $intensity={intensity}
+      {...props}
       onMouseMove={handleMouseMove}
     >
       <InnerContainer>{children}</InnerContainer>
-    </GlowingCardComponent>
+    </FlareCardComponent>
   );
 };
 
-export default GlowingCard;
+export default FlareCard;

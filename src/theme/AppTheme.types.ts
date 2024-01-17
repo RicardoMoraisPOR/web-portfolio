@@ -5,11 +5,13 @@ export type ThemeContextProps = {
   toggleTheme?: (darkTheme?: boolean) => void;
 };
 
+type ThemeColor = NonNullable<CSSObject['color']>;
+
 export interface Palette {
-  background: CSSObject['color'];
-  primary: CSSObject['color'];
-  secondary: CSSObject['color'];
-  text: CSSObject['color'];
+  background: ThemeColor;
+  primary: ThemeColor;
+  secondary: ThemeColor;
+  text: ThemeColor;
 }
 export interface Fonts {
   quicksand: CSSObject['fontFamily'];

@@ -1,9 +1,12 @@
 import { createGlobalStyle } from 'styled-components';
+import { alphaHexConverter } from '../utils/themeUtils';
 
 const GlobalStyles = createGlobalStyle(({ theme }) => {
+  console.log(theme);
+
   return {
     '*, *::before, *::after': {
-      transition: 'background-color 0.5s ease',
+      transition: 'background-color 0.3s ease',
       boxSizing: 'inherit',
     },
     html: {
@@ -13,17 +16,21 @@ const GlobalStyles = createGlobalStyle(({ theme }) => {
       WebkitTextSizeAdjust: '100%',
     },
 
+    '&:focus-visible': {
+      outline: `1px solid ${alphaHexConverter(theme.palette.primary, 50)}`,
+    },
+
     h1: {
       fontSize: '4rem',
       fontFamily: theme.fonts.quicksand,
     },
 
     body: {
-      transition: 'color 0.5s linear',
+      transition: 'color 0.3s linear, background-color 0.3s ease',
       margin: 0,
       color: theme.palette.text,
       backgroundColor: theme.palette.background,
-      fontFamily: 'Montserrat Variable, sans-serif',
+      fontFamily: theme.fonts.montserrat,
     },
   };
 });
