@@ -2,10 +2,9 @@ import styled from 'styled-components';
 import { useAppTheme } from '../hooks/useAppTheme';
 import ThemeToggleAnimation from './ThemeToggleAnimation';
 import FlareCard from './FlareCard';
-import GlowEffect from './GlowEffect';
+import GlowEffect, { GlowEffectStyle, GlowEffectpProps } from './GlowEffect';
 import Logo from './Logo';
 import { Link } from 'react-router-dom';
-import { alphaHexConverter } from '../utils/themeUtils';
 
 const ThemeToggleButton = styled('button')({
   height: '30px',
@@ -36,9 +35,10 @@ const ChipMenuWrapper = styled('div')({
 const ChipMenuLink = styled(Link)(({ theme }) => {
   return {
     fontSize: '12px',
+    fontWeight: 500,
     textDecoration: 'none',
     color: theme.palette.primary,
-    transition: 'color 300ms',
+    transition: 'color 300ms linear',
     userSelect: 'none',
 
     '&:focus-visible, &:hover': {
@@ -47,25 +47,28 @@ const ChipMenuLink = styled(Link)(({ theme }) => {
   };
 });
 
-const LogoLink = styled(Link)(({ theme }) => {
+const LogoLink = styled(Link)<GlowEffectpProps>(({ theme, ...rest }) => {
+  const glowStyle = GlowEffectStyle(theme, rest);
+
   return {
-    willChange: 'filter',
-    transition: 'filter 300ms',
+    ...glowStyle.animation,
+
     '& svg': {
-      transition: 'fill 0.3s ease',
-      fill: theme.palette.secondary,
+      opacity: '40%',
+      transition: 'fill 0.3s ease, opacity 0.3s ease',
+      fill: theme.palette.primary,
     },
     '&:hover': {
+      ...glowStyle.filter,
       '& svg': {
+        opacity: '100%',
         fill: 'url(#a)',
       },
     },
-    '&:focus-visible': {
-      filter: `drop-shadow(0 0 2em ${alphaHexConverter(
-        theme.palette.primary,
-        50
-      )})`,
+    '&:focus-visible:not(:hover)': {
+      ...glowStyle.filter,
       '& svg': {
+        opacity: '100%',
         fill: 'url(#a)',
       },
     },
@@ -74,9 +77,12 @@ const LogoLink = styled(Link)(({ theme }) => {
 
 function FloatingMenu() {
   const { toggleTheme } = useAppTheme();
+  const glowProps: GlowEffectpProps = {
+    $transparency: 30,
+  };
   return (
     <ChipMenuWrapper>
-      <LogoLink to="/">
+      <LogoLink to="/" {...glowProps} aria-label="Homepage">
         <Logo />
       </LogoLink>
       <ChipMenuWrapper>

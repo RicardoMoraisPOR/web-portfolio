@@ -1,23 +1,39 @@
-import styled from 'styled-components';
+import styled, { CSSObject, DefaultTheme } from 'styled-components';
 import { alphaHexConverter } from '../utils/themeUtils';
 
-type GlowEffectpProps = {
+export type GlowEffectpProps = {
   $transparency: Parameters<typeof alphaHexConverter>[1];
 };
 
-const GlowEffect = styled('div')<GlowEffectpProps>(
-  ({ theme, $transparency }) => {
-    return {
+export const GlowEffectStyle = (
+  theme: DefaultTheme,
+  glowProps: GlowEffectpProps
+) => {
+  return {
+    animation: {
       willChange: 'filter',
       transition: 'filter 300ms',
-      '&:hover': {
-        filter: `drop-shadow(0 0 2em ${alphaHexConverter(
-          theme.palette.primary,
-          $transparency
-        )})`,
-      },
-    };
-  }
-);
+    } as CSSObject,
+    filter: {
+      filter: `drop-shadow(0 0 2em ${alphaHexConverter(
+        theme.palette.primary,
+        glowProps.$transparency
+      )})`,
+    } as CSSObject,
+  };
+};
+
+const GlowEffect = styled('div')<GlowEffectpProps>(({ theme, ...rest }) => {
+  const style = GlowEffectStyle(theme, rest);
+  return {
+    ...style.animation,
+    '&:hover': {
+      ...style.filter,
+    },
+    '&:focus-visible:not(:hover)': {
+      ...style.filter,
+    },
+  };
+});
 
 export default GlowEffect;
