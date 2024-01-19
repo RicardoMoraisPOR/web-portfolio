@@ -6,8 +6,8 @@ const baseThemeFonts: DefaultTheme['fonts'] = {
 };
 
 const baseTheme: Pick<DefaultTheme['palette'], 'primary' | 'accent'> = {
-  primary: '#4AC7FA',
-  accent: '#29B6FA',
+  primary: '#04AAF1',
+  accent: '#63CAFD',
 };
 
 export const darkTheme: DefaultTheme = {

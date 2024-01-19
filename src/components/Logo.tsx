@@ -45,7 +45,7 @@ const Logo = () => {
   }, [theme.palette.accent, theme.palette.primary]);
 
   return (
-    <GlowEffect $transparency={80}>
+    <GlowEffect $transparency={60}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         height="3rem"
