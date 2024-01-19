@@ -1,12 +1,19 @@
-import { useRef, memo, useEffect, useState } from 'react';
+import { useRef, memo, useEffect, useState, useMemo } from 'react';
 import themeAnimation from '../assets/themeLottie.json';
 import { useLottie } from 'lottie-react';
 import { useAppTheme } from '../hooks/useAppTheme';
+import { hexToLottieRGBA } from '../utils/themeUtils';
+
+import cloneDeepWith from 'lodash/cloneDeepWith';
+import isEqual from 'lodash/isEqual';
+import cloneDeep from 'lodash/cloneDeep';
+import { useTheme } from 'styled-components';
 
 type AnimationDirection = 1 | -1;
 
 const ThemeToggleAnimation = memo(() => {
   const { isDarkTheme } = useAppTheme();
+  const theme = useTheme();
 
   // #region Lottie Animation Values
   const LIGHT_THEME_FRAME = 0;
@@ -15,6 +22,26 @@ const ThemeToggleAnimation = memo(() => {
   const initialAnimationRenderStatus = useRef(false);
   const [showAnimation, setShowAnimation] = useState(false);
   // #endregion
+
+  const deepRGBAReplace = (
+    obj: Record<string, unknown>,
+    target: Array<number>,
+    replacement: Array<number>
+  ) => {
+    return cloneDeepWith(obj, (value) => {
+      if (isEqual(value, target)) {
+        return cloneDeep(replacement);
+      }
+    });
+  };
+
+  const AnimationWithTheme = useMemo(() => {
+    return deepRGBAReplace(
+      themeAnimation,
+      [1, 0.819607853889, 0.372549027205, 1],
+      hexToLottieRGBA(theme.palette.primary)
+    );
+  }, [theme.palette.primary]);
 
   const {
     View,
@@ -27,7 +54,7 @@ const ThemeToggleAnimation = memo(() => {
   } = useLottie(
     {
       id: 'themeAnimationId',
-      animationData: themeAnimation,
+      animationData: AnimationWithTheme,
       loop: false,
       autoplay: false,
       initialSegment: [LIGHT_THEME_FRAME, DARK_THEME_FRAME],
@@ -56,7 +83,7 @@ const ThemeToggleAnimation = memo(() => {
         play();
       }
     } else if (animationLoaded) {
-      setSpeed(1.5);
+      setSpeed(2);
       if (isDarkTheme) {
         setDirection(-1);
       } else {

@@ -39,6 +39,8 @@ const ChipMenuLink = styled(Link)(({ theme }) => {
     textDecoration: 'none',
     color: theme.palette.primary,
     transition: 'color 300ms',
+    userSelect: 'none',
+
     '&:focus-visible, &:hover': {
       color: theme.palette.text,
     },
@@ -49,11 +51,23 @@ const LogoLink = styled(Link)(({ theme }) => {
   return {
     willChange: 'filter',
     transition: 'filter 300ms',
+    '& svg': {
+      transition: 'fill 0.3s ease',
+      fill: theme.palette.secondary,
+    },
+    '&:hover': {
+      '& svg': {
+        fill: 'url(#a)',
+      },
+    },
     '&:focus-visible': {
       filter: `drop-shadow(0 0 2em ${alphaHexConverter(
         theme.palette.primary,
         50
       )})`,
+      '& svg': {
+        fill: 'url(#a)',
+      },
     },
   };
 });

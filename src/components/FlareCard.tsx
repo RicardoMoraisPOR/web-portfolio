@@ -42,7 +42,7 @@ const FlareCardComponent = styled('div').attrs<FlareCardCoordinatesProps>(
       opacity: 0,
       position: 'absolute',
       top: '0px',
-      transition: 'opacity 800ms',
+      transition: 'opacity 1000ms',
       width: '100%',
       background: `radial-gradient(400px circle at var(--x) var(--y), ${theme.palette.primary}, transparent ${$intensity}%)`,
       zIndex: 1,

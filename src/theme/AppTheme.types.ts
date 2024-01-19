@@ -10,6 +10,7 @@ type ThemeColor = NonNullable<CSSObject['color']>;
 export interface Palette {
   background: ThemeColor;
   primary: ThemeColor;
+  accent: ThemeColor;
   secondary: ThemeColor;
   text: ThemeColor;
 }

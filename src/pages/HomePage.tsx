@@ -49,7 +49,7 @@ const HomePage = () => {
         Hello <EmojiHello>✌️</EmojiHello>, My name is Ricardo Morais.
       </h1>
       <span>I’m a Frontend Developer</span>
-      <GlowEffect $transparency={20}>
+      <GlowEffect $transparency={10}>
         <FlareCard $intensity={30} $borderRadius={'12px'}>
           <div
             style={{

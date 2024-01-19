@@ -9,6 +9,17 @@ const GlobalStyles = createGlobalStyle(({ theme }) => {
       transition: 'background-color 0.3s ease',
       boxSizing: 'inherit',
     },
+
+    '::-moz-selection': {
+      color: theme.palette.secondary,
+      background: theme.palette.primary,
+    },
+
+    '::selection': {
+      color: theme.palette.secondary,
+      background: theme.palette.primary,
+    },
+
     html: {
       WebkitFontSmoothing: 'antialiased',
       MozOsxFontSmoothing: 'grayscale',
@@ -17,7 +28,7 @@ const GlobalStyles = createGlobalStyle(({ theme }) => {
     },
 
     '&:focus-visible': {
-      outline: `1px solid ${alphaHexConverter(theme.palette.primary, 50)}`,
+      outline: `1px dashed ${alphaHexConverter(theme.palette.primary, 30)}`,
     },
 
     h1: {

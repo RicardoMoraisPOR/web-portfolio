@@ -5,10 +5,15 @@ const baseThemeFonts: DefaultTheme['fonts'] = {
   montserrat: 'Montserrat Variable, sans-serif',
 };
 
+const baseTheme: Pick<DefaultTheme['palette'], 'primary' | 'accent'> = {
+  primary: '#4AC7FA',
+  accent: '#29B6FA',
+};
+
 export const darkTheme: DefaultTheme = {
   fonts: baseThemeFonts,
   palette: {
-    primary: '#4AC7FA',
+    ...baseTheme,
     secondary: '#0D2530',
     background: '#071319',
     text: '#ECF9FE',
@@ -18,7 +23,7 @@ export const darkTheme: DefaultTheme = {
 export const lightTheme: DefaultTheme = {
   fonts: baseThemeFonts,
   palette: {
-    primary: '#4AC7FA',
+    ...baseTheme,
     secondary: '#cceffd',
     background: '#ECF9FE',
     text: '#071319',
