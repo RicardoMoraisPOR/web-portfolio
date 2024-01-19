@@ -2,8 +2,6 @@ import { createGlobalStyle } from 'styled-components';
 import { alphaHexConverter } from '../utils/themeUtils';
 
 const GlobalStyles = createGlobalStyle(({ theme }) => {
-  console.log(theme);
-
   return {
     '*, *::before, *::after': {
       transition: 'background-color 0.3s ease',
