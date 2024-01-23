@@ -7,7 +7,7 @@ import {
   useState,
 } from 'react';
 import styled, { CSSObject } from 'styled-components';
-import { IntRange } from '../utils/typeUtils';
+import { IntRange } from 'type-fest';
 
 interface FlareCardCoordinatesProps {
   $x?: number;
@@ -42,7 +42,7 @@ const FlareCardComponent = styled('div').attrs<FlareCardCoordinatesProps>(
       opacity: 0,
       position: 'absolute',
       top: '0px',
-      transition: 'opacity 1000ms',
+      transition: `opacity ${theme.transitions.slow}ms`,
       width: '100%',
       background: `radial-gradient(400px circle at var(--x) var(--y), ${theme.palette.primary}, transparent ${$intensity}%)`,
       zIndex: 1,

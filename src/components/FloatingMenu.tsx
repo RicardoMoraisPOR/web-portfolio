@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useAppTheme } from '../hooks/useAppTheme';
+import useAppThemeContext from '../hooks/useAppThemeContext';
 import ThemeToggleAnimation from './ThemeToggleAnimation';
 import FlareCard from './FlareCard';
 import GlowEffect, { GlowEffectStyle, GlowEffectpProps } from './GlowEffect';
@@ -7,23 +7,32 @@ import Logo from './Logo';
 import { Link } from 'react-router-dom';
 
 const ThemeToggleButton = styled('button')({
-  height: '30px',
-  width: '30px',
+  height: '1.8rem',
+  width: '1.8rem',
   borderRadius: '50%',
   backgroundColor: 'transparent',
   border: 'none',
   padding: '0px',
   cursor: 'pointer',
+  svg: {
+    transform: 'unset !important',
+  },
 });
 
-const ChipMenu = styled('div')({
-  height: '30px',
-  padding: '0px 30px',
-  display: 'flex',
-  width: 'fit-content',
-  justifyContent: 'center',
-  alignItems: 'center',
-  gap: 30,
+const ChipMenu = styled('div')(({ theme }) => {
+  return {
+    height: '1.8rem',
+    padding: '0px 30px',
+    display: 'flex',
+    width: 'fit-content',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 30,
+    [theme.breakpoints.max.mobile]: {
+      gap: 15,
+      padding: '0px 1.5rem',
+    },
+  };
 });
 
 const ChipMenuWrapper = styled('div')({
@@ -38,7 +47,7 @@ const ChipMenuLink = styled(Link)(({ theme }) => {
     fontWeight: 500,
     textDecoration: 'none',
     color: theme.palette.primary,
-    transition: 'color 300ms linear',
+    transition: `color ${theme.transitions.fast}ms linear`,
     userSelect: 'none',
 
     '&:focus-visible, &:hover': {
@@ -55,7 +64,7 @@ const LogoLink = styled(Link)<GlowEffectpProps>(({ theme, ...rest }) => {
 
     '& svg': {
       opacity: '40%',
-      transition: 'fill 0.3s ease, opacity 0.3s ease',
+      transition: `fill ${theme.transitions.fast}ms ease, opacity ${theme.transitions.fast}ms ease`,
       fill: theme.palette.primary,
     },
     '&:hover': {
@@ -76,13 +85,10 @@ const LogoLink = styled(Link)<GlowEffectpProps>(({ theme, ...rest }) => {
 });
 
 function FloatingMenu() {
-  const { toggleTheme } = useAppTheme();
-  const glowProps: GlowEffectpProps = {
-    $transparency: 30,
-  };
+  const { toggleTheme } = useAppThemeContext();
   return (
     <ChipMenuWrapper>
-      <LogoLink to="/" {...glowProps} aria-label="Homepage">
+      <LogoLink to="/" $transparency={30} aria-label="Homepage">
         <Logo />
       </LogoLink>
       <ChipMenuWrapper>
@@ -90,7 +96,7 @@ function FloatingMenu() {
           <FlareCard $intensity={8} $borderRadius={20}>
             <ChipMenu>
               <ChipMenuLink to="/about">About</ChipMenuLink>
-              <ChipMenuLink to="/projects">Project</ChipMenuLink>
+              <ChipMenuLink to="/projects">Projects</ChipMenuLink>
               <ChipMenuLink to="/uses">Uses</ChipMenuLink>
             </ChipMenu>
           </FlareCard>

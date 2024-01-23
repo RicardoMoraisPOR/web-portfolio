@@ -1,18 +1,18 @@
 import { useRef, memo, useEffect, useState, useMemo } from 'react';
 import themeAnimation from '../assets/themeLottie.json';
 import { useLottie } from 'lottie-react';
-import { useAppTheme } from '../hooks/useAppTheme';
-import { hexToLottieRGBA } from '../utils/themeUtils';
+import useAppThemeContext from '../hooks/useAppThemeContext';
+import { hexToLottieRGBA } from '../theme/AppThemeUtils';
+import { useTheme } from 'styled-components';
 
 import cloneDeepWith from 'lodash/cloneDeepWith';
 import isEqual from 'lodash/isEqual';
 import cloneDeep from 'lodash/cloneDeep';
-import { useTheme } from 'styled-components';
 
 type AnimationDirection = 1 | -1;
 
 const ThemeToggleAnimation = memo(() => {
-  const { isDarkTheme } = useAppTheme();
+  const { isDarkTheme } = useAppThemeContext();
   const theme = useTheme();
 
   // #region Lottie Animation Values
@@ -65,7 +65,7 @@ const ThemeToggleAnimation = memo(() => {
     {
       height: 'inherit',
       width: 'inherit',
-      transition: 'opacity 300ms',
+      transition: `opacity ${theme.transitions.fast}ms`,
       opacity: showAnimation ? 1 : 0,
     }
   );

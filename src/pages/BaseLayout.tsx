@@ -10,9 +10,6 @@ import '@fontsource-variable/montserrat';
 
 const Container = styled('div')({
   padding: '2rem',
-  width: '100vw',
-  height: '100vh',
-  overflow: 'hidden',
 });
 
 const BaseLayout = () => {

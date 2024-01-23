@@ -8,7 +8,7 @@ import {
 } from 'react';
 import { ThemeProvider } from 'styled-components';
 import Theme, { ThemeContextProps } from './AppTheme.types';
-import { darkTheme, lightTheme } from './Themes';
+import { darkTheme, lightTheme } from './AppThemes';
 
 declare module 'styled-components' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface

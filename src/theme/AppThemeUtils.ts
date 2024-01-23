@@ -1,4 +1,4 @@
-import { IntRange } from './typeUtils';
+import { IntRange } from 'type-fest';
 
 /**
  * applies transparency to a given color

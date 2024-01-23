@@ -1,6 +1,15 @@
-import { useTheme } from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 import { useMemo } from 'react';
-import { interpolateHexColors } from '../utils/themeUtils';
+import { interpolateHexColors } from '../theme/AppThemeUtils';
+
+const SVGLogo = styled('svg')(({ theme }) => {
+  return {
+    height: '3rem',
+    [theme.breakpoints.max.mobile]: {
+      height: '1.8rem',
+    },
+  };
+});
 
 const Logo = () => {
   const theme = useTheme();
@@ -19,7 +28,7 @@ const Logo = () => {
           <animate
             attributeName="stop-color"
             values={intermediateColors.join(';')}
-            dur="800ms"
+            dur={`${theme.transitions.normal}ms`}
             repeatCount="indefinite"
           />
         </stop>
@@ -27,7 +36,7 @@ const Logo = () => {
           <animate
             attributeName="stop-color"
             values={intermediateColors.reverse().join(';')}
-            dur="800ms"
+            dur={`${theme.transitions.normal}ms`}
             repeatCount="indefinite"
           />
         </stop>
@@ -36,15 +45,15 @@ const Logo = () => {
           type="rotate"
           from="0 .5 .5"
           to="360 .5 .5"
-          dur="800ms"
+          dur={`${theme.transitions.normal}ms`}
           repeatCount="indefinite"
         />
       </>
     );
-  }, [theme.palette.accent, theme.palette.primary]);
+  }, [theme.palette.accent, theme.palette.primary, theme.transitions.normal]);
 
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" height="3rem" viewBox="0 0 204 133">
+    <SVGLogo xmlns="http://www.w3.org/2000/svg" viewBox="0 0 204 133">
       <path d="M65.5 9.5c34 15.5 27.5 48 12.5 61S52.5 86 52.5 86c-17.5-13-8-21.5.5-26.5 10-4.5 6.5-17.5 0-21H31.5V7.99999c12.692 0 29-.7794 34 1.50001Z" />
       <path d="M0 22C0 14.268 6.26801 8 14 8h19v115c0 4.971-4.0294 9-9 9H9c-4.97056 0-9-4.029-9-9V22Z" />
       <path d="M171 21c0-4.4183 3.582-8 8-8h16c4.971 0 9 4.0294 9 9v101c0 4.971-4.029 9-9 9h-15c-4.971 0-9-4.029-9-9V21Z" />
@@ -68,7 +77,7 @@ const Logo = () => {
           {linearGradientStops}
         </linearGradient>
       </defs>
-    </svg>
+    </SVGLogo>
   );
 };
 

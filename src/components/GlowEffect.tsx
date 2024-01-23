@@ -1,5 +1,5 @@
 import styled, { CSSObject, DefaultTheme } from 'styled-components';
-import { alphaHexConverter } from '../utils/themeUtils';
+import { alphaHexConverter } from '../theme/AppThemeUtils';
 
 export type GlowEffectpProps = {
   $transparency: Parameters<typeof alphaHexConverter>[1];
@@ -12,7 +12,7 @@ export const GlowEffectStyle = (
   return {
     animation: {
       willChange: 'filter',
-      transition: 'filter 300ms',
+      transition: `filter ${theme.transitions.fast}ms`,
     } as CSSObject,
     filter: {
       filter: `drop-shadow(0 0 2em ${alphaHexConverter(
