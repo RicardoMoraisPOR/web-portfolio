@@ -5,8 +5,9 @@ import StackOverflowIcon from '../assets/StackOverflow';
 import GithubIcon from '../assets/Github';
 import LinkedInIcon from '../assets/LinkedIn';
 import useMediaQuery from '../hooks/useMediaQuery';
-import { ReactNode, useEffect, useRef } from 'react';
+import { ReactNode, useRef } from 'react';
 import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
 
 const EmojiHello = styled('div')({
   display: 'inline-block',
@@ -134,61 +135,42 @@ const Company = styled('a')({
 const HomePage = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.max.mobile);
-  const headingRef = useRef<HTMLHeadingElement>(null);
-  const card = useRef<HTMLDivElement>(null);
   const emojiRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (card.current) {
-      gsap.from(card.current, {
-        opacity: 0,
-        y: 90,
-      });
-      gsap.to(card.current, {
-        opacity: 1,
+  useGSAP(() => {
+    gsap
+      .timeline({
+        paused: true,
+      })
+      .to(emojiRef.current, {
+        rotate: -10,
+        x: -10,
+        delay: 0.8,
+        duration: 0.2,
+      })
+      .to(emojiRef.current, {
+        rotate: 20,
+        x: 10,
+        y: -20,
+        duration: 0.4,
+      })
+      .to(emojiRef.current, {
+        rotate: -20,
+        x: -20,
+        y: -20,
+        duration: 0.3,
+        ease: 'power5.inOut',
+      })
+      .to(emojiRef.current, {
+        rotate: 0,
+        x: 0,
         y: 0,
-        duration: 0.8,
-        ease: 'power2.out',
-      });
-    }
-  }, []);
-
-  useEffect(() => {
-    if (emojiRef.current) {
-      gsap
-        .timeline({
-          paused: true,
-        })
-        .to(emojiRef.current, {
-          rotate: -10,
-          x: -10,
-          delay: 0.8,
-          duration: 0.2,
-        })
-        .to(emojiRef.current, {
-          rotate: 20,
-          x: 10,
-          y: -20,
-          duration: 0.4,
-        })
-        .to(emojiRef.current, {
-          rotate: -20,
-          x: -20,
-          y: -20,
-          duration: 0.3,
-          ease: 'power5.inOut',
-        })
-        .to(emojiRef.current, {
-          rotate: 0,
-          x: 0,
-          y: 0,
-          delay: 0.5,
-          duration: 0.5,
-          ease: 'powe1.out',
-        })
-        .play();
-    }
-  }, []);
+        delay: 0.5,
+        duration: 0.5,
+        ease: 'powe1.out',
+      })
+      .play();
+  });
 
   const codingStatus: ReactNode = (
     <StatusGroup>
@@ -235,7 +217,7 @@ const HomePage = () => {
         alignItems: 'center',
       }}
     >
-      <h1 ref={headingRef} style={{ margin: '5rem 0px 1rem 0px' }}>
+      <h1 style={{ margin: '5rem 0px 1rem 0px' }}>
         Hello <EmojiHello ref={emojiRef}>✌️</EmojiHello>, My name is Ricardo
         Morais.
       </h1>
@@ -263,10 +245,7 @@ const HomePage = () => {
           <StackOverflowIcon />
         </SocialIconLink>
       </SocialsWrapper>
-      <div
-        ref={card}
-        style={{ display: 'flex', flexDirection: 'column', gap: 30 }}
-      >
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 30 }}>
         <GlowEffect $transparency={10}>
           <FlareCard $intensity={30} $borderRadius={'12px'}>
             <StatusWrapper>
