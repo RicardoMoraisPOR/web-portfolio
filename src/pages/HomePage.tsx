@@ -152,6 +152,12 @@ const HomePageWrapper = styled('div')({
   alignItems: 'center',
 });
 
+const MobileStatusCard = styled('div')({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 30,
+});
+
 const HomePage = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.max.mobile);
@@ -241,7 +247,7 @@ const HomePage = () => {
 
   if (isMobile) {
     cardInfo = (
-      <>
+      <MobileStatusCard>
         <GlowEffect $transparency={10}>
           <FlareCard $intensity={30} $borderRadius={'12px'}>
             <StatusWrapper>{codingStatus}</StatusWrapper>
@@ -257,7 +263,7 @@ const HomePage = () => {
             <StatusWrapper>{livingStatus}</StatusWrapper>
           </FlareCard>
         </GlowEffect>
-      </>
+      </MobileStatusCard>
     );
   }
   return (
