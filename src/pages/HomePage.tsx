@@ -114,9 +114,8 @@ const SocialIconLink = styled('a')(({ theme }) => {
 const SocialsWrapper = styled('div')({
   display: 'flex',
   gap: '1rem',
-  justifyContent: 'space-around',
+  justifyContent: 'center',
   padding: '1rem',
-  marginTop: '3rem',
 });
 
 const StatusDescriptionWrapper = styled('div')({
@@ -130,6 +129,27 @@ const StatusDescriptionWrapper = styled('div')({
 const Company = styled('a')({
   color: '#B5D823',
   fontStyle: 'italic',
+});
+
+const PositioningDiv = styled('div')(({ theme }) => {
+  return {
+    marginTop: '6rem',
+    [theme.breakpoints.max.mobile]: {
+      marginTop: '2rem',
+    },
+  };
+});
+
+const Title = styled('h1')({
+  margin: '2rem 0px 1rem 0px',
+});
+
+const HomePageWrapper = styled('div')({
+  width: '100%',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
 });
 
 const HomePage = () => {
@@ -207,74 +227,75 @@ const HomePage = () => {
     </StatusGroup>
   );
 
-  return (
-    <div
-      style={{
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
-      <h1 style={{ margin: '5rem 0px 1rem 0px' }}>
-        Hello <EmojiHello ref={emojiRef}>✌️</EmojiHello>, My name is Ricardo
-        Morais.
-      </h1>
-      <span>I’m a Frontend Developer</span>
-      <SocialsWrapper>
-        <SocialIconLink
-          href="https://github.com/RicardoMoraisPOR"
-          target="_blank"
-          aria-label="Ricardo Morais Github profile"
-        >
-          <GithubIcon />
-        </SocialIconLink>
-        <SocialIconLink
-          href="https://www.linkedin.com/in/ricardo-morais-aa3061205/"
-          target="_blank"
-          aria-label="Ricardo Morais LinkedIn profile"
-        >
-          <LinkedInIcon />
-        </SocialIconLink>
-        <SocialIconLink
-          href="https://stackoverflow.com/users/8182493/ricardo-dias-morais"
-          target="_blank"
-          aria-label="Ricardo Morais StackOverflow profile"
-        >
-          <StackOverflowIcon />
-        </SocialIconLink>
-      </SocialsWrapper>
+  let cardInfo = (
+    <GlowEffect $transparency={10}>
+      <FlareCard $intensity={30} $borderRadius={'12px'}>
+        <StatusWrapper>
+          {codingStatus}
+          {workStatus}
+          {livingStatus}
+        </StatusWrapper>
+      </FlareCard>
+    </GlowEffect>
+  );
+
+  if (isMobile) {
+    cardInfo = (
       <div style={{ display: 'flex', flexDirection: 'column', gap: 30 }}>
         <GlowEffect $transparency={10}>
           <FlareCard $intensity={30} $borderRadius={'12px'}>
-            <StatusWrapper>
-              {codingStatus}
-              {!isMobile && (
-                <>
-                  {workStatus}
-                  {livingStatus}
-                </>
-              )}
-            </StatusWrapper>
+            <StatusWrapper>{codingStatus}</StatusWrapper>
           </FlareCard>
         </GlowEffect>
-        {isMobile && (
-          <>
-            <GlowEffect $transparency={10}>
-              <FlareCard $intensity={30} $borderRadius={'12px'}>
-                <StatusWrapper>{workStatus}</StatusWrapper>
-              </FlareCard>
-            </GlowEffect>
-            <GlowEffect $transparency={10}>
-              <FlareCard $intensity={30} $borderRadius={'12px'}>
-                <StatusWrapper>{livingStatus}</StatusWrapper>
-              </FlareCard>
-            </GlowEffect>
-          </>
-        )}
+        <GlowEffect $transparency={10}>
+          <FlareCard $intensity={30} $borderRadius={'12px'}>
+            <StatusWrapper>{workStatus}</StatusWrapper>
+          </FlareCard>
+        </GlowEffect>
+        <GlowEffect $transparency={10}>
+          <FlareCard $intensity={30} $borderRadius={'12px'}>
+            <StatusWrapper>{livingStatus}</StatusWrapper>
+          </FlareCard>
+        </GlowEffect>
       </div>
-    </div>
+    );
+  }
+  return (
+    <HomePageWrapper>
+      <PositioningDiv>
+        <Title>
+          Hello <EmojiHello ref={emojiRef}>✌️</EmojiHello>, My name is Ricardo
+          Morais.
+        </Title>
+      </PositioningDiv>
+      <span>I’m a Frontend Developer</span>
+      <PositioningDiv>
+        <SocialsWrapper>
+          <SocialIconLink
+            href="https://github.com/RicardoMoraisPOR"
+            target="_blank"
+            aria-label="Ricardo Morais Github profile"
+          >
+            <GithubIcon />
+          </SocialIconLink>
+          <SocialIconLink
+            href="https://www.linkedin.com/in/ricardo-morais-aa3061205/"
+            target="_blank"
+            aria-label="Ricardo Morais LinkedIn profile"
+          >
+            <LinkedInIcon />
+          </SocialIconLink>
+          <SocialIconLink
+            href="https://stackoverflow.com/users/8182493/ricardo-dias-morais"
+            target="_blank"
+            aria-label="Ricardo Morais StackOverflow profile"
+          >
+            <StackOverflowIcon />
+          </SocialIconLink>
+        </SocialsWrapper>
+        {cardInfo}
+      </PositioningDiv>
+    </HomePageWrapper>
   );
 };
 

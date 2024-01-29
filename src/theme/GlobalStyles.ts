@@ -30,7 +30,7 @@ const GlobalStyles = createGlobalStyle(({ theme }) => {
     },
 
     h1: {
-      fontSize: 'clamp(2.5rem, 5vw, 4rem)',
+      fontSize: 'clamp(2.2rem, 5vw, 4rem)',
       fontFamily: theme.fonts.quicksand,
       textAlign: 'center',
     },
