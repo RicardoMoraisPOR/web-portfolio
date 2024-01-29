@@ -241,7 +241,7 @@ const HomePage = () => {
 
   if (isMobile) {
     cardInfo = (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 30 }}>
+      <>
         <GlowEffect $transparency={10}>
           <FlareCard $intensity={30} $borderRadius={'12px'}>
             <StatusWrapper>{codingStatus}</StatusWrapper>
@@ -257,7 +257,7 @@ const HomePage = () => {
             <StatusWrapper>{livingStatus}</StatusWrapper>
           </FlareCard>
         </GlowEffect>
-      </div>
+      </>
     );
   }
   return (
