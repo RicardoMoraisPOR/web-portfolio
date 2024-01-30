@@ -30,7 +30,7 @@ const ChipMenu = styled('div')(({ theme }) => {
     gap: 30,
     [theme.breakpoints.max.mobile]: {
       gap: 15,
-      padding: '0px 24px',
+      padding: '0px 15px',
     },
   };
 });
