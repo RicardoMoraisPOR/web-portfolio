@@ -1,6 +1,6 @@
 import styled, { useTheme } from 'styled-components';
 import FlareCard from '../components/FlareCard';
-import GlowEffect, { GlowEffectStyle } from '../components/GlowEffect';
+import GlowEffect from '../components/GlowEffect';
 import StackOverflowIcon from '../assets/StackOverflow';
 import GithubIcon from '../assets/Github';
 import LinkedInIcon from '../assets/LinkedIn';
@@ -8,6 +8,7 @@ import useMediaQuery from '../hooks/useMediaQuery';
 import { ReactNode, useRef } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
+import SocialIcon from '../components/SocialIcon';
 
 const EmojiHello = styled('div')({
   display: 'inline-block',
@@ -41,7 +42,7 @@ const StatusTitle = styled('span')(({ theme }) => {
   return {
     color: theme.palette.text,
     fontWeight: 300,
-    fontSize: '16px',
+    fontSize: '1rem',
     marginBottom: '15px',
   };
 });
@@ -50,9 +51,9 @@ const StatusYears = styled('span')(({ theme }) => {
   return {
     color: theme.palette.primary,
     fontWeight: 800,
-    fontSize: '40px',
+    fontSize: '2.5rem',
     [theme.breakpoints.max.mobile]: {
-      fontSize: '30px',
+      fontSize: '1.8rem',
     },
   };
 });
@@ -61,9 +62,9 @@ const StatusDescription = styled('span')(({ theme }) => {
   return {
     color: theme.palette.primary,
     fontWeight: 600,
-    fontSize: '20px',
+    fontSize: '1.25rem',
     [theme.breakpoints.max.mobile]: {
-      fontSize: '16px',
+      fontSize: '1rem',
     },
   };
 });
@@ -72,41 +73,10 @@ const StatusDescriptionSmall = styled('span')(({ theme }) => {
   return {
     color: theme.palette.primary,
     fontWeight: 600,
-    fontSize: '12px',
+    fontSize: '0.7rem',
     [theme.breakpoints.max.mobile]: {
       flexDirection: 'column',
       gap: 30,
-    },
-  };
-});
-
-const SocialIconLink = styled('a')(({ theme }) => {
-  const glowStyle = GlowEffectStyle(theme, { $transparency: 100 });
-
-  return {
-    cursor: 'pointer',
-    display: 'flex',
-    ...glowStyle.animation,
-    svg: {
-      fill: theme.palette.primary,
-      opacity: '20%',
-      width: '30px',
-      height: '30px',
-      transition: `opacity ${theme.transitions.fast}ms ease, fill ${theme.transitions.fast}ms ease`,
-    },
-    '&:hover': {
-      svg: {
-        fill: theme.palette.primary,
-        opacity: '100%',
-      },
-      ...glowStyle.filter,
-    },
-    '&:focus-visible:not(:hover)': {
-      svg: {
-        fill: theme.palette.primary,
-        opacity: '100%',
-        ...glowStyle.filter,
-      },
     },
   };
 });
@@ -277,27 +247,24 @@ const HomePage = () => {
       <span>I’m a Frontend Developer</span>
       <PositioningDiv>
         <SocialsWrapper>
-          <SocialIconLink
-            href="https://github.com/RicardoMoraisPOR"
-            target="_blank"
-            aria-label="Ricardo Morais Github profile"
+          <SocialIcon
+            url="https://github.com/RicardoMoraisPOR"
+            ariaLabel="Ricardo Morais Github profile"
           >
             <GithubIcon />
-          </SocialIconLink>
-          <SocialIconLink
-            href="https://www.linkedin.com/in/ricardo-morais-aa3061205/"
-            target="_blank"
-            aria-label="Ricardo Morais LinkedIn profile"
+          </SocialIcon>
+          <SocialIcon
+            url="https://www.linkedin.com/in/ricardo-morais-aa3061205/"
+            ariaLabel="Ricardo Morais LinkedIn profile"
           >
             <LinkedInIcon />
-          </SocialIconLink>
-          <SocialIconLink
-            href="https://stackoverflow.com/users/8182493/ricardo-dias-morais"
-            target="_blank"
-            aria-label="Ricardo Morais StackOverflow profile"
+          </SocialIcon>
+          <SocialIcon
+            url="https://stackoverflow.com/users/8182493/ricardo-dias-morais"
+            ariaLabel="Ricardo Morais StackOverflow profile"
           >
             <StackOverflowIcon />
-          </SocialIconLink>
+          </SocialIcon>
         </SocialsWrapper>
         {cardInfo}
       </PositioningDiv>

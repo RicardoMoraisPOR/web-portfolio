@@ -1,10 +1,14 @@
-import styled from 'styled-components';
+import styled, { CSSObject } from 'styled-components';
 import useAppThemeContext from '../hooks/useAppThemeContext';
 import ThemeToggleAnimation from './ThemeToggleAnimation';
 import FlareCard from './FlareCard';
-import GlowEffect, { GlowEffectStyle, GlowEffectpProps } from './GlowEffect';
+import GlowEffect, {
+  GlowEffectStyle,
+  GlowEffectComponentProps,
+} from './GlowEffect';
 import Logo from './Logo';
 import { Link } from 'react-router-dom';
+import useTouching from '../hooks/useIsTouching';
 
 const ThemeToggleButton = styled('button')({
   height: '30px',
@@ -43,7 +47,7 @@ const ChipMenuWrapper = styled('div')({
 
 const ChipMenuLink = styled(Link)(({ theme }) => {
   return {
-    fontSize: '12px',
+    fontSize: '1rem',
     fontWeight: 500,
     textDecoration: 'none',
     color: theme.palette.primary,
@@ -53,42 +57,56 @@ const ChipMenuLink = styled(Link)(({ theme }) => {
     '&:focus-visible, &:hover': {
       color: theme.palette.text,
     },
+    [theme.breakpoints.max.mobile]: {
+      fontSize: '0.7rem',
+    },
   };
 });
 
-const LogoLink = styled(Link)<GlowEffectpProps>(({ theme, ...rest }) => {
-  const glowStyle = GlowEffectStyle(theme, rest);
+const LogoLink = styled(Link)<GlowEffectComponentProps>(
+  ({ theme, $isTouching, ...rest }) => {
+    const glowStyle = GlowEffectStyle(theme, rest);
 
-  return {
-    ...glowStyle.animation,
-
-    '& svg': {
-      opacity: '40%',
-      transition: `fill ${theme.transitions.fast}ms ease, opacity ${theme.transitions.fast}ms ease`,
-      fill: theme.palette.primary,
-    },
-    '&:hover': {
+    const hoverStyle: CSSObject = {
       ...glowStyle.filter,
       '& svg': {
         opacity: '100%',
         fill: 'url(#a)',
       },
-    },
-    '&:focus-visible:not(:hover)': {
-      ...glowStyle.filter,
+    };
+
+    return {
+      ...glowStyle.animation,
+
       '& svg': {
-        opacity: '100%',
-        fill: 'url(#a)',
+        opacity: '40%',
+        transition: `fill ${theme.transitions.fast}ms ease, opacity ${theme.transitions.fast}ms ease`,
+        fill: theme.palette.primary,
       },
-    },
-  };
-});
+      '@media (hover: hover) and (pointer: fine)': {
+        '&:hover': hoverStyle,
+        '&:focus-visible:not(:hover)': hoverStyle,
+      },
+      ...($isTouching && hoverStyle),
+    };
+  }
+);
 
 function FloatingMenu() {
   const { toggleTheme } = useAppThemeContext();
+  const { isTouching, handleTouch } = useTouching();
+
   return (
     <ChipMenuWrapper>
-      <LogoLink to="/" $transparency={30} aria-label="Homepage">
+      <LogoLink
+        to="/"
+        $isTouching={isTouching}
+        $transparency={30}
+        aria-label="Homepage"
+        onTouchStart={handleTouch(true)}
+        onTouchEnd={handleTouch(false)}
+        onTouchCancel={handleTouch(false)}
+      >
         <Logo />
       </LogoLink>
       <ChipMenuWrapper>
