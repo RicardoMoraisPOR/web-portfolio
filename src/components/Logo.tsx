@@ -4,9 +4,9 @@ import { interpolateHexColors } from '../theme/AppThemeUtils';
 
 const SVGLogo = styled('svg')(({ theme }) => {
   return {
-    height: '3rem',
+    height: '48px',
     [theme.breakpoints.max.mobile]: {
-      height: '1.8rem',
+      height: '30px',
     },
   };
 });

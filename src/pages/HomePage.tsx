@@ -17,8 +17,8 @@ const StatusWrapper = styled('div')(({ theme }) => {
   return {
     display: 'flex',
     justifyContent: 'space-around',
-    width: 'clamp(5rem, 90vw, 60rem)',
-    padding: '1rem',
+    width: 'clamp(80px, 90vw, 960px)',
+    padding: '16px',
     [theme.breakpoints.max.mobile]: {
       width: '80vw',
     },
@@ -32,7 +32,7 @@ const StatusGroup = styled('div')(({ theme }) => {
     flexDirection: 'column',
     justifyContent: 'space-between',
     [theme.breakpoints.max.mobile]: {
-      height: '5rem',
+      height: '80px',
     },
   };
 });
@@ -90,8 +90,8 @@ const SocialIconLink = styled('a')(({ theme }) => {
     svg: {
       fill: theme.palette.primary,
       opacity: '20%',
-      width: '2rem',
-      height: '2rem',
+      width: '30px',
+      height: '30px',
       transition: `opacity ${theme.transitions.fast}ms ease, fill ${theme.transitions.fast}ms ease`,
     },
     '&:hover': {
@@ -113,9 +113,9 @@ const SocialIconLink = styled('a')(({ theme }) => {
 
 const SocialsWrapper = styled('div')({
   display: 'flex',
-  gap: '1rem',
+  gap: '16px',
   justifyContent: 'center',
-  padding: '1rem',
+  padding: '16px',
 });
 
 const StatusDescriptionWrapper = styled('div')({
@@ -133,15 +133,15 @@ const Company = styled('a')({
 
 const PositioningDiv = styled('div')(({ theme }) => {
   return {
-    marginTop: '6rem',
+    marginTop: '10vh',
     [theme.breakpoints.max.mobile]: {
-      marginTop: '2rem',
+      marginTop: '30px',
     },
   };
 });
 
 const Title = styled('h1')({
-  margin: '2rem 0px 1rem 0px',
+  margin: '30px 0px 16px 0px',
 });
 
 const HomePageWrapper = styled('div')({

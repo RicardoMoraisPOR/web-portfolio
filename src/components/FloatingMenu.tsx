@@ -7,8 +7,8 @@ import Logo from './Logo';
 import { Link } from 'react-router-dom';
 
 const ThemeToggleButton = styled('button')({
-  height: '1.8rem',
-  width: '1.8rem',
+  height: '30px',
+  width: '30px',
   borderRadius: '50%',
   backgroundColor: 'transparent',
   border: 'none',
@@ -21,7 +21,7 @@ const ThemeToggleButton = styled('button')({
 
 const ChipMenu = styled('div')(({ theme }) => {
   return {
-    height: '1.8rem',
+    height: '30px',
     padding: '0px 30px',
     display: 'flex',
     width: 'fit-content',
@@ -30,7 +30,7 @@ const ChipMenu = styled('div')(({ theme }) => {
     gap: 30,
     [theme.breakpoints.max.mobile]: {
       gap: 15,
-      padding: '0px 1.5rem',
+      padding: '0px 24px',
     },
   };
 });
