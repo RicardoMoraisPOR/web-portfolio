@@ -4,19 +4,26 @@ import {
   MouseEventHandler,
   PropsWithChildren,
   useCallback,
+  useEffect,
+  useRef,
   useState,
 } from 'react';
 import styled, { CSSObject } from 'styled-components';
 import { IntRange } from 'type-fest';
+import useTouching from '../hooks/useIsTouching';
 
 interface FlareCardCoordinatesProps {
   $x?: number;
   $y?: number;
   $intensity: IntRange<0, 101>;
   $borderRadius?: CSSObject['borderRadius'];
+  $isTouching?: boolean;
 }
 
-type FlareCardProps = Omit<FlareCardCoordinatesProps, '$x' | '$y'>;
+type FlareCardProps = Omit<
+  FlareCardCoordinatesProps,
+  '$x' | '$y' | '$isTouching'
+>;
 
 const FlareCardComponent = styled('div').attrs<FlareCardCoordinatesProps>(
   ({ $x, $y }) => ({
@@ -25,7 +32,7 @@ const FlareCardComponent = styled('div').attrs<FlareCardCoordinatesProps>(
       '--y': `${$y}px`,
     } as CSSProperties,
   })
-)(({ theme, $intensity, $borderRadius }) => {
+)(({ theme, $intensity, $borderRadius, $isTouching }) => {
   return {
     backgroundColor: theme.palette.secondary,
     borderRadius: $borderRadius ?? 'inherit',
@@ -39,7 +46,7 @@ const FlareCardComponent = styled('div').attrs<FlareCardCoordinatesProps>(
       content: '""',
       height: '100%',
       left: '0px',
-      opacity: 0,
+      opacity: $isTouching ? 1 : 0,
       position: 'absolute',
       top: '0px',
       transition: `opacity ${theme.transitions.slow}ms`,
@@ -48,9 +55,11 @@ const FlareCardComponent = styled('div').attrs<FlareCardCoordinatesProps>(
       zIndex: 1,
     },
 
-    '&:hover': {
-      '&::after': {
-        opacity: 1,
+    '@media (hover: hover) and (pointer: fine)': {
+      '&:hover': {
+        '&::after': {
+          opacity: 1,
+        },
       },
     },
   };
@@ -70,8 +79,10 @@ const FlareCard: FC<PropsWithChildren<FlareCardProps>> = ({
   children,
   ...props
 }) => {
+  const elementRef = useRef<HTMLDivElement>(null);
   const [mouseCoordinates, setMouseCoordinates] =
     useState<Pick<FlareCardCoordinatesProps, '$x' | '$y'>>();
+  const { isTouching, handleTouch } = useTouching();
 
   const handleMouseMove = useCallback<MouseEventHandler<HTMLDivElement>>(
     (e) => {
@@ -85,11 +96,44 @@ const FlareCard: FC<PropsWithChildren<FlareCardProps>> = ({
     []
   );
 
+  const handleTouchMove = useCallback((e: TouchEvent) => {
+    // Prevent the window from scrolling
+    e.preventDefault();
+
+    const touch = e?.touches?.[0]; // Get the first touch point
+    const rect = elementRef?.current?.getBoundingClientRect();
+
+    setMouseCoordinates({
+      $x: touch.clientX - (rect?.left ?? 0),
+      $y: touch.clientY - (rect?.top ?? 0),
+    });
+  }, []);
+
+  useEffect(() => {
+    const element = elementRef.current;
+
+    if (element) {
+      // remove passive
+      element.addEventListener('touchmove', handleTouchMove, {
+        passive: false,
+      });
+
+      return () => {
+        element.removeEventListener('touchmove', handleTouchMove);
+      };
+    }
+  }, [handleTouchMove]);
+
   return (
     <FlareCardComponent
+      ref={elementRef}
       {...mouseCoordinates}
       {...props}
+      $isTouching={isTouching}
       onMouseMove={handleMouseMove}
+      onTouchStart={handleTouch(true)}
+      onTouchEnd={handleTouch(false)}
+      onTouchCancel={handleTouch(false)}
     >
       <InnerContainer>{children}</InnerContainer>
     </FlareCardComponent>

@@ -9,7 +9,7 @@ import '@fontsource-variable/quicksand';
 import '@fontsource-variable/montserrat';
 
 const Container = styled('div')({
-  padding: '2rem',
+  padding: '32px',
 });
 
 const BaseLayout = () => {
