@@ -114,6 +114,12 @@ const Title = styled('h1')({
   margin: '30px 0px 16px 0px',
 });
 
+const Subtitle = styled('span')(({ theme }) => {
+  return {
+    color: theme.palette.primary,
+  };
+});
+
 const HomePageWrapper = styled('div')({
   width: '100%',
   display: 'flex',
@@ -244,7 +250,7 @@ const HomePage = () => {
           Morais.
         </Title>
       </PositioningDiv>
-      <span>I’m a Frontend Developer</span>
+      <Subtitle>I’m a Frontend Developer</Subtitle>
       <PositioningDiv>
         <SocialsWrapper>
           <SocialIcon
@@ -268,6 +274,7 @@ const HomePage = () => {
         </SocialsWrapper>
         {cardInfo}
       </PositioningDiv>
+      <PositioningDiv></PositioningDiv>
     </HomePageWrapper>
   );
 };

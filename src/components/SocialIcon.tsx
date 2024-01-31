@@ -19,7 +19,7 @@ const SocialIconLink = styled('a')<
     ...glowStyle.animation,
     svg: {
       fill: theme.palette.primary,
-      opacity: $isTouching ? '100%' : '20%',
+      opacity: $isTouching ? '100%' : '40%',
       width: '30px',
       height: '30px',
       transition: `opacity ${theme.transitions.fast}ms ease, fill ${theme.transitions.fast}ms ease`,

@@ -44,7 +44,7 @@ export const lightTheme: DefaultTheme = {
   palette: {
     accent: defaultAccent,
     primary: '#04AAF1',
-    secondary: '#CCEEFC',
+    secondary: '#B4E6FB',
     background: '#ECF9FE',
     text: '#071319',
   },
