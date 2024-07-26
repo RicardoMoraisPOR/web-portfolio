@@ -30,9 +30,14 @@ const GlobalStyles = createGlobalStyle(({ theme }) => {
     },
 
     h1: {
-      fontSize: 'clamp(2.2rem, 5vw, 4rem)',
-      fontFamily: theme.fonts.quicksand,
+      fontSize: 'clamp(2.2rem, 5vw, 3rem)',
+      fontFamily: theme.fonts.lato,
       textAlign: 'center',
+    },
+
+    span: {
+      lineHeight: 1.6,
+      letterSpacing: '0.5px',
     },
 
     body: {
@@ -41,6 +46,7 @@ const GlobalStyles = createGlobalStyle(({ theme }) => {
       color: theme.palette.text,
       backgroundColor: theme.palette.background,
       fontFamily: theme.fonts.montserrat,
+      overflow: 'hidden',
     },
   };
 });

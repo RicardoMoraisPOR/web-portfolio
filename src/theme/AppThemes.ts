@@ -16,8 +16,8 @@ const baseTheme: Except<DefaultTheme, 'palette'> = {
     },
   },
   fonts: {
-    quicksand: 'Quicksand Variable, sans-serif;',
-    montserrat: 'Montserrat Variable, sans-serif',
+    lato: 'Lato, sans-serif;',
+    montserrat: 'Montserrat, sans-serif',
   },
   transitions: {
     fast: 300,
@@ -26,16 +26,16 @@ const baseTheme: Except<DefaultTheme, 'palette'> = {
   },
 };
 
-const defaultAccent: Palette['accent'] = '#63CAFD';
+const defaultAccent: Palette['accent'] = '#9ca3af'; // slate-500
 
 export const darkTheme: DefaultTheme = {
   ...baseTheme,
   palette: {
     accent: defaultAccent,
-    primary: '#9ADDF9',
-    secondary: '#0D2530',
-    background: '#071319',
-    text: '#ECF9FE',
+    primary: '#d4d4d8', // zinc-400
+    secondary: '#3f3f46', // zinc-800
+    background: '#18181b', // zinc-900
+    text: '#fafafa', // zinc-100
   },
 };
 
@@ -43,9 +43,9 @@ export const lightTheme: DefaultTheme = {
   ...baseTheme,
   palette: {
     accent: defaultAccent,
-    primary: '#04AAF1',
-    secondary: '#B4E6FB',
-    background: '#ECF9FE',
-    text: '#071319',
+    primary: '#334155', // slate-700
+    secondary: '#cbd5e1', // slate-300
+    background: '#f8fafc', // slate-50
+    text: '#0f172a', // slate-900
   },
 };

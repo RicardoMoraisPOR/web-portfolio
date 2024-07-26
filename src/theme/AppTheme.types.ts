@@ -16,7 +16,7 @@ export type Palette = {
   text: ThemeColor;
 };
 export type Fonts = {
-  quicksand: ThemeFont;
+  lato: ThemeFont;
   montserrat: ThemeFont;
 };
 export type Transitions = {
