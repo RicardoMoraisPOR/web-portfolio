@@ -111,7 +111,7 @@ function FloatingMenu() {
           <GithubIcon />
         </SocialIcon>
         <SocialIcon
-          url="https://www.linkedin.com/in/ricardo-morais-aa3061205/"
+          url="https://www.linkedin.com/in/ricardo-dias-morais/"
           ariaLabel="Ricardo Morais LinkedIn profile"
         >
           <LinkedInIcon />

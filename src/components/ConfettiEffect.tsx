@@ -14,6 +14,8 @@ const ConfettiEffect: React.FC = () => {
         particleCount: 100,
         spread: 70,
         origin: { y: 0.6 },
+        gravity: 3, // Increase gravity to make confetti fall faster
+        ticks: 100, // Reduce ticks to shorten confetti lifespan
       });
     }
   }, []);

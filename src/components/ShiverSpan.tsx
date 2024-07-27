@@ -22,68 +22,68 @@ const ShiverSpan: FC<PropsWithChildren> = ({ children }) => {
         y: 0,
         rotate: 0,
         scale: 1,
-        duration: 0.5,
+        duration: 0.3,
       })
         .to(spanRef.current, {
-          x: 5,
+          x: 1,
           y: -2,
-          rotate: -5,
+          rotate: -45,
           scale: 0.95,
           duration: 0.2,
           ease: 'power1.inOut',
         })
         .to(spanRef.current, {
-          x: -5,
+          x: -1,
           y: 2,
-          rotate: 5,
+          rotate: -45,
           scale: 0.95,
           duration: 0.2,
-          ease: 'power1.inOut',
-        })
-        .to(spanRef.current, {
-          x: 4,
-          y: -1,
-          rotate: -4,
-          scale: 0.96,
-          duration: 0.1,
-          ease: 'power1.inOut',
-        })
-        .to(spanRef.current, {
-          x: -4,
-          y: 1,
-          rotate: 4,
-          scale: 0.96,
-          duration: 0.1,
-          ease: 'power1.inOut',
-        })
-        .to(spanRef.current, {
-          x: 3,
-          y: -1,
-          rotate: -3,
-          scale: 0.97,
-          duration: 0.1,
-          ease: 'power1.inOut',
-        })
-        .to(spanRef.current, {
-          x: -3,
-          y: 1,
-          rotate: 3,
-          scale: 0.97,
-          duration: 0.1,
           ease: 'power1.inOut',
         })
         .to(spanRef.current, {
           x: 2,
-          y: 0,
-          rotate: -2,
-          scale: 0.98,
+          y: -1,
+          rotate: -47,
+          scale: 0.96,
           duration: 0.1,
           ease: 'power1.inOut',
         })
         .to(spanRef.current, {
           x: -2,
+          y: 1,
+          rotate: -43,
+          scale: 0.96,
+          duration: 0.1,
+          ease: 'power1.inOut',
+        })
+        .to(spanRef.current, {
+          x: 1,
+          y: -1,
+          rotate: -45,
+          scale: 0.97,
+          duration: 0.1,
+          ease: 'power1.inOut',
+        })
+        .to(spanRef.current, {
+          x: -1,
+          y: 1,
+          rotate: -43,
+          scale: 0.97,
+          duration: 0.1,
+          ease: 'power1.inOut',
+        })
+        .to(spanRef.current, {
+          x: 1,
           y: 0,
-          rotate: 2,
+          rotate: -32,
+          scale: 0.98,
+          duration: 0.1,
+          ease: 'power1.inOut',
+        })
+        .to(spanRef.current, {
+          x: -1,
+          y: 0,
+          rotate: -21,
           scale: 0.98,
           duration: 0.1,
           ease: 'power1.inOut',
@@ -91,17 +91,17 @@ const ShiverSpan: FC<PropsWithChildren> = ({ children }) => {
         .to(spanRef.current, {
           x: 0,
           y: 0,
-          rotate: 0,
+          rotate: -11,
           scale: 1,
-          duration: 0.5,
+          duration: 0.2,
           ease: 'power1.inOut',
         });
 
       spanRef.current.addEventListener('click', () => {
-        setClicked('found');
+        setClicked((value) => (value === 'notFound' ? 'found' : value));
         setTimeout(() => {
           setClicked('disabled');
-        }, 5000);
+        }, 1500);
         tl.pause();
         gsap.to(spanRef.current, {
           x: 0,
@@ -122,15 +122,19 @@ const ShiverSpan: FC<PropsWithChildren> = ({ children }) => {
   return (
     <>
       {clicked === 'found' && <ConfettiEffect />}
-      <span
-        ref={spanRef}
-        style={{
-          display: 'inline-block',
-          cursor: clicked === 'notFound' ? 'pointer' : 'default',
-        }}
-      >
-        {children}
-      </span>
+      {clicked === 'disabled' ? (
+        <span>{children}</span>
+      ) : (
+        <span
+          ref={spanRef}
+          style={{
+            display: 'inline-block',
+            cursor: clicked === 'notFound' ? 'pointer' : 'default',
+          }}
+        >
+          {children}
+        </span>
+      )}
     </>
   );
 };

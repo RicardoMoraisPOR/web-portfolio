@@ -3,7 +3,6 @@ import { useRef } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { Link } from 'react-router-dom';
-import ConfettiEffect from '../components/ConfettiEffect';
 import ShiverSpan from '../components/ShiverSpan';
 
 const InlineDiv = styled('div')({
@@ -102,9 +101,7 @@ const HomePage = () => {
           Morais.
         </Title>
       </PositioningDiv>
-      <Subtitle>
-        I’m a <ShiverSpan>Frontend</ShiverSpan> Developer
-      </Subtitle>
+      <Subtitle>I’m a Fronten Developer</Subtitle>
       <PositioningDiv>
         <IntroTextWrapper>
           <IntroTextAbout>
@@ -113,11 +110,11 @@ const HomePage = () => {
             <CompanyThemeText to="https://www.nextbitt.com/">
               Nextbitt
             </CompanyThemeText>{' '}
-            while living on the beautiful Madeira Island 🏝️. I really enjoy
-            open-source, Lorem, ipsum dolor sit amet consectetur adipisicing
-            elit. Mollitia corrupti nobis nam harum voluptatum neque, facilis
-            tempore, unde sit et ipsa delectus necessitatibus quisquam totam
-            veniam repellat minus architecto quibusdam.
+            while living on the beautiful Madeira Island 🏝️. I didn't want this
+            to be just another generic portfolio website, so I've added some
+            secrets to make exploring the site more fun and engaging, happy
+            hunting! <ShiverSpan>🚀</ShiverSpan>. You can see more about me
+            here.
           </IntroTextAbout>
         </IntroTextWrapper>
       </PositioningDiv>
