@@ -21,79 +21,69 @@ const ShiverSpan: FC<PropsWithChildren> = ({ children }) => {
         x: 0,
         y: 0,
         rotate: 0,
-        scale: 1,
-        duration: 0.3,
+        duration: 0,
       })
         .to(spanRef.current, {
           x: 1,
           y: -2,
-          rotate: -45,
-          scale: 0.95,
-          duration: 0.2,
+          rotate: -11,
+          duration: 0.3,
           ease: 'power1.inOut',
         })
         .to(spanRef.current, {
           x: -1,
           y: 2,
-          rotate: -45,
-          scale: 0.95,
-          duration: 0.2,
+          rotate: -23,
+          duration: 0.3,
           ease: 'power1.inOut',
         })
         .to(spanRef.current, {
           x: 2,
           y: -1,
-          rotate: -47,
-          scale: 0.96,
-          duration: 0.1,
+          rotate: -35,
+          duration: 0.2,
           ease: 'power1.inOut',
         })
         .to(spanRef.current, {
           x: -2,
           y: 1,
           rotate: -43,
-          scale: 0.96,
-          duration: 0.1,
+          duration: 0.2,
           ease: 'power1.inOut',
         })
         .to(spanRef.current, {
           x: 1,
           y: -1,
           rotate: -45,
-          scale: 0.97,
-          duration: 0.1,
+          duration: 0.2,
           ease: 'power1.inOut',
         })
         .to(spanRef.current, {
           x: -1,
           y: 1,
-          rotate: -43,
-          scale: 0.97,
-          duration: 0.1,
+          rotate: -34,
+          duration: 0.2,
           ease: 'power1.inOut',
         })
         .to(spanRef.current, {
           x: 1,
           y: 0,
-          rotate: -32,
-          scale: 0.98,
-          duration: 0.1,
+          rotate: -26,
+          duration: 0.2,
           ease: 'power1.inOut',
         })
         .to(spanRef.current, {
           x: -1,
           y: 0,
-          rotate: -21,
-          scale: 0.98,
-          duration: 0.1,
+          rotate: -16,
+          duration: 0.2,
           ease: 'power1.inOut',
         })
         .to(spanRef.current, {
           x: 0,
           y: 0,
-          rotate: -11,
-          scale: 1,
-          duration: 0.2,
+          rotate: -8,
+          duration: 0.3,
           ease: 'power1.inOut',
         });
 
@@ -107,7 +97,6 @@ const ShiverSpan: FC<PropsWithChildren> = ({ children }) => {
           x: 0,
           y: 0,
           rotate: 0,
-          scale: 1,
           duration: 0.2,
           ease: 'power1.inOut',
         });

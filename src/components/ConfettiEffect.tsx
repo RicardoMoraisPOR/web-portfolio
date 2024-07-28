@@ -1,5 +1,6 @@
 import { useRef, useEffect } from 'react';
 import confetti from 'canvas-confetti';
+import { createPortal } from 'react-dom';
 
 const ConfettiEffect: React.FC = () => {
   const confettiRef = useRef<HTMLCanvasElement | null>(null);
@@ -12,15 +13,15 @@ const ConfettiEffect: React.FC = () => {
       });
       myConfetti({
         particleCount: 100,
-        spread: 70,
+        spread: 100,
         origin: { y: 0.6 },
-        gravity: 3, // Increase gravity to make confetti fall faster
+        gravity: 4, // Increase gravity to make confetti fall faster
         ticks: 100, // Reduce ticks to shorten confetti lifespan
       });
     }
   }, []);
 
-  return (
+  return createPortal(
     <canvas
       ref={confettiRef}
       style={{
@@ -30,7 +31,8 @@ const ConfettiEffect: React.FC = () => {
         width: '100%',
         height: '100%',
       }}
-    />
+    />,
+    document.body
   );
 };
 
