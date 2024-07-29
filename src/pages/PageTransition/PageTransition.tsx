@@ -12,20 +12,20 @@ const TransitionComponent: FC<PropsWithChildren> = ({ children }) => {
         timeout={500}
         onEnter={(node: gsap.TweenTarget) => {
           gsap.set(node, {
-            scale: 0.8,
+            y: 20,
             opacity: 0,
           });
           gsap
             .timeline({
               paused: true,
             })
-            .to(node, { scale: 1, opacity: 1, duration: 0.2 })
+            .to(node, { y: 0, opacity: 1, duration: 0.2 })
             .play();
         }}
         onExit={(node) => {
           gsap
             .timeline({ paused: true })
-            .to(node, { scale: 0.8, opacity: 0, duration: 0.2 })
+            .to(node, { y: 20, opacity: 0, duration: 0.2 })
             .play();
         }}
       >

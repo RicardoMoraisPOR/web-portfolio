@@ -1,48 +1,44 @@
-import styled, { useTheme } from 'styled-components';
-import { useRef } from 'react';
+import styled from 'styled-components';
+import { lazy, useRef } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { Link } from 'react-router-dom';
-import ReactLogo from '../assets/React';
-import TypescriptLogo from '../assets/Typescript';
-import ViteLogo from '../assets/Vite';
-import StitchesLogo from '../assets/Stitches';
 import ShiverSpan from '../components/ShiverSpan';
-import FlareCard from '../components/FlareCard';
-import GlowEffect from '../components/GlowEffect';
+import { useLottie } from 'lottie-react';
+import scrollAnimation from '../assets/scroll.json';
+import LoadableComponent from '../components/LoadableComponent';
+import { useInView } from 'react-intersection-observer';
+import useMediaQuery from '../hooks/useMediaQuery';
+
+const SkillsSection = LoadableComponent(
+  lazy(() => import('../components/SkillsSection'))
+);
+const ProjectsSection = LoadableComponent(
+  lazy(() => import('../components/ProjectsSection'))
+);
 
 const InlineDiv = styled('div')({
   display: 'inline-block',
 });
 
-const SkillWrapper = styled('div')({
-  height: '100px',
-  width: '100%',
-  '& div': {
-    width: '100%',
-  },
+const ScrollAnimationInnerWrapper = styled('div')({
+  opacity: 0,
 });
 
-const SkillInnerWrapper = styled('div')({
-  height: '100px',
-  width: '100%',
-  display: 'flex',
-  justifyContent: 'space-evenly',
-  alignItems: 'center',
-  flexDirection: 'column',
+const ScrollAnimationWrapper = styled('div')({
+  height: '31px',
 });
 
-const PositioningDiv = styled('div')(({ theme }) => {
+export const PositioningDiv = styled('div')(({ theme }) => {
   return {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
     marginTop: '10vh',
     [theme.breakpoints.max.mobile]: {
       marginTop: '30px',
     },
   };
-});
-
-const SkillsPositioningDiv = styled(PositioningDiv)({
-  width: '100%',
 });
 
 const Title = styled('h1')({
@@ -55,29 +51,14 @@ const Subtitle = styled('span')(({ theme }) => {
   };
 });
 
-const SkillsWrapper = styled(PositioningDiv)(({ theme }) => ({
-  display: 'grid',
-  gridTemplateColumns: 'repeat(4, 1fr)',
-  gap: '16px',
-  width: '100%',
-  justifyContent: 'center',
-  justifyItems: 'center',
-  alignItems: 'center',
-  marginTop: '20px',
-  [theme.breakpoints.max.tablet]: {
-    marginTop: '50px',
-    gridTemplateColumns: 'repeat(2, 1fr)',
-  },
-}));
-
-const IntroTextWrapper = styled('div')(({ theme }) => ({
+export const IntroTextWrapper = styled('div')(({ theme }) => ({
   width: '50vw',
   [theme.breakpoints.max.tablet]: {
     width: '100%',
   },
 }));
 
-const IntroTextAbout = styled('span')(({ theme }) => {
+export const IntroTextAbout = styled('span')(({ theme }) => {
   return {
     color: theme.palette.text,
   };
@@ -96,13 +77,45 @@ const HomePageWrapper = styled('div')({
   width: '100%',
   display: 'flex',
   flexDirection: 'column',
-  justifyContent: 'center',
+  justifyContent: 'space-evenly',
   alignItems: 'center',
+  height: 'calc(100vh - 62px - 2rem)',
 });
+
+const SectionPositioningDiv = styled(PositioningDiv)(({ theme }) => ({
+  width: '100%',
+  maxWidth: '2000px',
+  height: '50vh',
+  minHeight: '300px',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  [theme.breakpoints.max.tablet]: {
+    height: '70vh',
+    minHeight: '400px',
+    marginTop: '60px',
+  },
+}));
 
 const HomePage = () => {
   const emojiRef = useRef<HTMLDivElement>(null);
-  const theme = useTheme();
+  const scrollAnimationRef = useRef<HTMLDivElement>(null);
+  const isMobile = useMediaQuery('max', 'mobile');
+
+  useGSAP(() => {
+    gsap
+      .timeline({
+        paused: true,
+      })
+      .from(scrollAnimationRef.current, {
+        opacity: 0,
+        duration: 2,
+      })
+      .to(scrollAnimationRef.current, {
+        opacity: 0.5,
+      })
+      .play();
+  });
 
   useGSAP(() => {
     gsap
@@ -139,80 +152,81 @@ const HomePage = () => {
       .play();
   });
 
+  const { View: ScrollAnimation } = useLottie({
+    id: 'bubblesAnimationId',
+    animationData: scrollAnimation,
+    loop: true,
+    autoplay: true,
+    style: {
+      width: '30px',
+      height: '30px',
+    },
+  });
+
+  const { ref: skillsRef, inView: skillsInView } = useInView({
+    threshold: isMobile ? 0.3 : 0.3,
+    triggerOnce: true,
+    delay: 0.4,
+  });
+
+  const { ref: projectsRef, inView: projectsInView } = useInView({
+    threshold: isMobile ? 0.3 : 0.3,
+    triggerOnce: true,
+    delay: 0.4,
+  });
+
   return (
-    <HomePageWrapper>
-      <PositioningDiv>
-        <Title>
-          Hello <InlineDiv ref={emojiRef}>✌️</InlineDiv>, my name is Ricardo
-          Morais.
-        </Title>
-      </PositioningDiv>
-      <Subtitle>I’m a Frontend Developer</Subtitle>
-      <PositioningDiv>
-        <IntroTextWrapper>
-          <IntroTextAbout>
-            Currently working as{' '}
-            <IntroTextBold>Software Engineer</IntroTextBold> at{' '}
-            <CompanyThemeText to="https://www.nextbitt.com/">
-              Nextbitt
-            </CompanyThemeText>{' '}
-            while living on the beautiful Madeira Island 🏝️. I didn't want this
-            to be just another generic portfolio website, so I've added some
-            secrets to make exploring the site more fun and engaging, happy
-            hunting! <ShiverSpan>🚀</ShiverSpan>. You can see more about me{' '}
-            <Link to="/about">here</Link>.
-          </IntroTextAbout>
-        </IntroTextWrapper>
-      </PositioningDiv>
-      <SkillsPositioningDiv>
-        <h3>My main tech stack</h3>
-        <SkillsWrapper>
-          <SkillWrapper>
-            <GlowEffect $transparency={15}>
-              <FlareCard $intensity={40} $borderRadius={5}>
-                <SkillInnerWrapper>
-                  <ReactLogo fill={theme.palette.primary} />
-                  React
-                </SkillInnerWrapper>
-              </FlareCard>
-            </GlowEffect>
-          </SkillWrapper>
-          <SkillWrapper>
-            <GlowEffect $transparency={15}>
-              <FlareCard $intensity={40} $borderRadius={5}>
-                <SkillInnerWrapper>
-                  <TypescriptLogo fill={theme.palette.primary} />
-                  Typescript
-                </SkillInnerWrapper>
-              </FlareCard>
-            </GlowEffect>
-          </SkillWrapper>
-          <SkillWrapper>
-            <GlowEffect $transparency={15}>
-              <FlareCard $intensity={40} $borderRadius={5}>
-                <SkillInnerWrapper>
-                  <ViteLogo
-                    fill={theme.palette.primary}
-                    secondaryFill={theme.palette.accent}
-                  />
-                  Vite
-                </SkillInnerWrapper>
-              </FlareCard>
-            </GlowEffect>
-          </SkillWrapper>
-          <SkillWrapper>
-            <GlowEffect $transparency={15}>
-              <FlareCard $intensity={40} $borderRadius={5}>
-                <SkillInnerWrapper>
-                  <StitchesLogo fill={theme.palette.primary} />
-                  Stitches
-                </SkillInnerWrapper>
-              </FlareCard>
-            </GlowEffect>
-          </SkillWrapper>
-        </SkillsWrapper>
-      </SkillsPositioningDiv>
-    </HomePageWrapper>
+    <main>
+      <HomePageWrapper>
+        <div>
+          <PositioningDiv>
+            <Title>
+              Hello <InlineDiv ref={emojiRef}>✌️</InlineDiv>, my name is Ricardo
+              Morais.
+            </Title>
+            <Subtitle>I’m a Frontend Developer</Subtitle>
+          </PositioningDiv>
+          <PositioningDiv>
+            <IntroTextWrapper>
+              <IntroTextAbout>
+                Currently working as{' '}
+                <IntroTextBold>Software Engineer</IntroTextBold> at{' '}
+                <CompanyThemeText to="https://www.nextbitt.com/">
+                  Nextbitt
+                </CompanyThemeText>{' '}
+                🍃 while enjoying the vibrant life on the stunning Madeira
+                Island 🏝️. If you are interested, you can see more about me{' '}
+                <Link to="/about">here</Link>.
+              </IntroTextAbout>
+              <br />
+              <br />
+              <IntroTextAbout>
+                I didn't want this to be just another generic portfolio website,
+                so I've added some secrets that you can see{' '}
+                <Link to="/about">here</Link>. to make exploring the site a bit
+                more engaging, happy hunting! <ShiverSpan>🚀</ShiverSpan>
+              </IntroTextAbout>
+            </IntroTextWrapper>
+          </PositioningDiv>
+        </div>
+        <PositioningDiv>
+          <ScrollAnimationWrapper>
+            {!skillsInView && (
+              <ScrollAnimationInnerWrapper ref={scrollAnimationRef}>
+                {ScrollAnimation}
+              </ScrollAnimationInnerWrapper>
+            )}
+          </ScrollAnimationWrapper>
+        </PositioningDiv>
+      </HomePageWrapper>
+      <SectionPositioningDiv ref={skillsRef}>
+        {skillsInView && <SkillsSection />}
+      </SectionPositioningDiv>
+      <SectionPositioningDiv ref={projectsRef}>
+        {projectsInView && <ProjectsSection />}
+      </SectionPositioningDiv>
+      <div style={{ height: 2000 }} />
+    </main>
   );
 };
 

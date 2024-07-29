@@ -35,6 +35,11 @@ const GlobalStyles = createGlobalStyle(({ theme }) => {
       textAlign: 'center',
     },
 
+    h2: {
+      fontFamily: theme.fonts.lato,
+      textAlign: 'center',
+    },
+
     span: {
       lineHeight: 1.6,
       letterSpacing: '0.5px',
@@ -46,7 +51,6 @@ const GlobalStyles = createGlobalStyle(({ theme }) => {
       color: theme.palette.text,
       backgroundColor: theme.palette.background,
       fontFamily: theme.fonts.montserrat,
-      overflow: 'hidden',
     },
   };
 });

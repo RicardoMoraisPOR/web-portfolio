@@ -1,44 +1,54 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useState, useEffect } from 'react';
+import { DefaultTheme, useTheme } from 'styled-components';
+import { Breakpoints, BreakpointTypes } from '../theme/AppTheme.types';
 
-const getMatches = (query: string): boolean => {
-  if (typeof window !== 'undefined') {
-    return window.matchMedia(query).matches;
-  }
-  return false;
+const extractMediaQuery = (fullQuery: string): string | null => {
+  const match = fullQuery.match(/\(([^)]+)\)/);
+  return match ? `(${match[1]})` : null;
 };
 
-const useMediaQuery = (rawQuery: string) => {
-  const query = useMemo(() => rawQuery.replace('@media ', ''), [rawQuery]);
-  const [matches, setMatches] = useState<boolean>(getMatches(query));
+const getMediaQuery = (
+  theme: DefaultTheme,
+  type: keyof BreakpointTypes,
+  breakpoint: keyof Breakpoints
+) => {
+  const query = extractMediaQuery(theme.breakpoints[type][breakpoint]);
+  if (query) {
+    return window.matchMedia(query);
+  }
+  return null;
+};
+
+// Hook to check if the current breakpoint is met
+const useMediaQuery = (
+  type: keyof BreakpointTypes,
+  breakpoint: keyof Breakpoints
+) => {
+  const theme = useTheme();
+  const [isMatch, setIsMatch] = useState(false);
 
   useEffect(() => {
-    function handleChange() {
-      setMatches(getMatches(query));
-    }
-
-    const matchMedia = window.matchMedia(query);
-
-    handleChange();
-
-    // Use deprecated `addListener` and `removeListener` to support Safari < 14
-    if (matchMedia.addListener) {
-      matchMedia.addListener(handleChange);
-    } else {
-      matchMedia.addEventListener('change', handleChange);
-    }
-
-    return () => {
-      if (matchMedia.removeListener) {
-        matchMedia.removeListener(handleChange);
-      } else {
-        matchMedia.removeEventListener('change', handleChange);
-      }
+    const handleChange = (event: MediaQueryListEvent) => {
+      setIsMatch(event.matches);
     };
-  }, [query]);
 
-  return matches;
+    const mediaQueryList = getMediaQuery(theme, type, breakpoint);
+
+    if (mediaQueryList) {
+      // Update the state based on the initial value
+      setIsMatch(mediaQueryList.matches);
+
+      // Listener to update state on change
+      mediaQueryList.addListener(handleChange);
+    }
+
+    // Cleanup function to remove listener
+    return () => {
+      mediaQueryList?.removeListener(handleChange);
+    };
+  }, [breakpoint, theme, type]);
+
+  return isMatch;
 };
 
 export default useMediaQuery;
-
-// modified version of https://usehooks-ts.com/react-hook/use-media-query

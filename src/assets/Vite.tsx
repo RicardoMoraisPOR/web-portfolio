@@ -1,14 +1,17 @@
 import type { SVGProps } from 'react';
 import { CSSObject } from 'styled-components';
 
-const SvgVite = (
-  props: SVGProps<SVGSVGElement> & { secondaryFill: CSSObject['fill'] }
-) => {
+type ViteSVGProps = SVGProps<SVGSVGElement> & {
+  secondaryfill: CSSObject['fill'];
+};
+
+const SvgVite = (props: ViteSVGProps) => {
+  const { secondaryfill } = props;
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width={35}
-      height={35}
+      width={32}
+      height={32}
       fill="none"
       {...props}
     >
@@ -40,9 +43,9 @@ const SvgVite = (
           y2={23.231}
           gradientUnits="userSpaceOnUse"
         >
-          <stop stopColor={props.secondaryFill} />
-          <stop offset={0.083} stopColor={props.secondaryFill} />
-          <stop offset={1} stopColor={props.secondaryFill} />
+          <stop stopColor={secondaryfill} />
+          <stop offset={0.083} stopColor={secondaryfill} />
+          <stop offset={1} stopColor={secondaryfill} />
         </linearGradient>
       </defs>
     </svg>
