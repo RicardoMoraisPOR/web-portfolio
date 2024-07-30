@@ -6,7 +6,7 @@ import GlobalStyles from '../theme/GlobalStyles';
 import '@fontsource/lato';
 import '@fontsource/montserrat';
 import LoadableComponent from '../components/LoadableComponent';
-import { lazy } from 'react';
+import { lazy, useMemo } from 'react';
 
 const BaseLayoutBackground = LoadableComponent(
   lazy(() => import('../components/Background'))
@@ -15,9 +15,12 @@ const BaseLayoutBackground = LoadableComponent(
 const Container = styled('div')({
   padding: '3px',
   height: '100vh',
+  display: 'flex',
+  flexDirection: 'column',
 });
 
 const InnerContainer = styled('div')(({ theme }) => ({
+  flexGrow: 1,
   paddingLeft: 'clamp(2rem, 4vw + 2rem, 6rem)',
   paddingRight: 'clamp(2rem, 4vw + 2rem, 6rem)',
   paddingTop: '2rem',
@@ -39,17 +42,29 @@ const OutletContainer = styled('div')(({ theme }) => ({
   },
 }));
 
+const Trademark = styled('div')({
+  alignSelf: 'center',
+  justifySelf: 'end',
+  fontSize: '12px',
+  opacity: 0.3,
+});
+
 const BaseLayout = () => {
+  const currentYear = useMemo(() => {
+    return new Date().getFullYear();
+  }, []);
+
   return (
     <AppThemeProvider>
       <GlobalStyles />
       <BaseLayoutBackground />
-      <Container id="wrapper">
+      <Container>
         <InnerContainer>
           <FloatingMenu />
           <OutletContainer>
             <Outlet />
           </OutletContainer>
+          <Trademark>© {currentYear} Ricardo Morais | made in 🇵🇹</Trademark>
         </InnerContainer>
       </Container>
     </AppThemeProvider>

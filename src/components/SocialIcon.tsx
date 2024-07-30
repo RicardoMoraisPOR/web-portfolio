@@ -17,6 +17,9 @@ const SocialIconLink = styled('a')<
     cursor: 'pointer',
     display: 'flex',
     ...glowStyle.animation,
+    '&::after': {
+      content: 'none',
+    },
     svg: {
       fill: theme.palette.primary,
       opacity: $isTouching ? '100%' : '40%',

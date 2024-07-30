@@ -1,7 +1,13 @@
 import type { SVGProps } from 'react';
 
 const SvgTypescript = (props: SVGProps<SVGSVGElement>) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={32} height={32} {...props}>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={32}
+    height={32}
+    viewBox="0 0 32 32"
+    {...props}
+  >
     <defs>
       <mask id="mask0" x="0" y="0" width="100%" height="100%">
         <rect x="0" y="0" width="100%" height="100%" fill="white" />

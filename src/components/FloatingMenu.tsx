@@ -71,7 +71,9 @@ const LogoLink = styled(Link)<GlowEffectComponentProps>(
 
     return {
       ...glowStyle.animation,
-
+      '&::after': {
+        content: 'none',
+      },
       '& svg': {
         opacity: '40%',
         transition: `fill ${theme.transitions.fast}ms ease, opacity ${theme.transitions.fast}ms ease`,

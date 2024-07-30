@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { CSSObject } from 'styled-components';
 import { lazy, useRef } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
@@ -80,18 +80,22 @@ const HomePageWrapper = styled('div')({
   justifyContent: 'space-evenly',
   alignItems: 'center',
   height: 'calc(100vh - 62px - 2rem)',
+  minHeight: '500px',
 });
 
-const SectionPositioningDiv = styled(PositioningDiv)(({ theme }) => ({
+const SectionPositioningDiv = styled(PositioningDiv)<{
+  heightAfterReveal: CSSObject['height'];
+  heightAfterRevealMobile: CSSObject['height'];
+}>(({ theme, heightAfterReveal, heightAfterRevealMobile }) => ({
   width: '100%',
   maxWidth: '2000px',
-  height: '50vh',
+  height: heightAfterReveal,
   minHeight: '300px',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
   [theme.breakpoints.max.tablet]: {
-    height: '70vh',
+    height: heightAfterRevealMobile,
     minHeight: '400px',
     marginTop: '60px',
   },
@@ -219,13 +223,21 @@ const HomePage = () => {
           </ScrollAnimationWrapper>
         </PositioningDiv>
       </HomePageWrapper>
-      <SectionPositioningDiv ref={skillsRef}>
+      <SectionPositioningDiv
+        heightAfterReveal="50vh"
+        heightAfterRevealMobile="70vh"
+        ref={skillsRef}
+      >
         {skillsInView && <SkillsSection />}
       </SectionPositioningDiv>
-      <SectionPositioningDiv ref={projectsRef}>
+      <SectionPositioningDiv
+        heightAfterReveal="90vh"
+        heightAfterRevealMobile="fit-content"
+        ref={projectsRef}
+      >
         {projectsInView && <ProjectsSection />}
       </SectionPositioningDiv>
-      <div style={{ height: 2000 }} />
+      <PositioningDiv />
     </main>
   );
 };
