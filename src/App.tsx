@@ -2,7 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import BaseLayout from './pages/BaseLayout';
 import AboutPage from './pages/AboutPage';
-import ProjectsPage from './pages/ProjectsPage';
+import Page404 from './pages/Page404';
 import UsesPage from './pages/UsesPage';
 import PageTransition from './pages/PageTransition/PageTransition';
 
@@ -27,14 +27,6 @@ const App = () => {
           }
         />
         <Route
-          path="projects"
-          element={
-            <PageTransition>
-              <ProjectsPage />
-            </PageTransition>
-          }
-        />
-        <Route
           path="uses"
           element={
             <PageTransition>
@@ -42,7 +34,14 @@ const App = () => {
             </PageTransition>
           }
         />
-        <Route path="*" element={<>Ups</>} />
+        <Route
+          path="*"
+          element={
+            <PageTransition>
+              <Page404 />
+            </PageTransition>
+          }
+        />
       </Route>
     </Routes>
   );

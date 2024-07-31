@@ -1,4 +1,4 @@
-import styled, { CSSObject } from 'styled-components';
+import styled from 'styled-components';
 import { lazy, useRef } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
@@ -83,19 +83,16 @@ const HomePageWrapper = styled('div')({
   minHeight: '500px',
 });
 
-const SectionPositioningDiv = styled(PositioningDiv)<{
-  heightAfterReveal: CSSObject['height'];
-  heightAfterRevealMobile: CSSObject['height'];
-}>(({ theme, heightAfterReveal, heightAfterRevealMobile }) => ({
+const SectionPositioningDiv = styled(PositioningDiv)(({ theme }) => ({
   width: '100%',
   maxWidth: '2000px',
-  height: heightAfterReveal,
-  minHeight: '300px',
+  height: 'fit-content',
+  minHeight: '80vh',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
   [theme.breakpoints.max.tablet]: {
-    height: heightAfterRevealMobile,
+    height: 'fit-content',
     minHeight: '400px',
     marginTop: '60px',
   },
@@ -157,7 +154,7 @@ const HomePage = () => {
   });
 
   const { View: ScrollAnimation } = useLottie({
-    id: 'bubblesAnimationId',
+    id: 'scrollAnimationId',
     animationData: scrollAnimation,
     loop: true,
     autoplay: true,
@@ -185,10 +182,10 @@ const HomePage = () => {
         <div>
           <PositioningDiv>
             <Title>
-              Hello <InlineDiv ref={emojiRef}>✌️</InlineDiv>, my name is Ricardo
+              Hello <InlineDiv ref={emojiRef}>✌️</InlineDiv> my name is Ricardo
               Morais.
             </Title>
-            <Subtitle>I’m a Frontend Developer</Subtitle>
+            <Subtitle>I’m a Front-end Developer</Subtitle>
           </PositioningDiv>
           <PositioningDiv>
             <IntroTextWrapper>
@@ -223,18 +220,10 @@ const HomePage = () => {
           </ScrollAnimationWrapper>
         </PositioningDiv>
       </HomePageWrapper>
-      <SectionPositioningDiv
-        heightAfterReveal="50vh"
-        heightAfterRevealMobile="70vh"
-        ref={skillsRef}
-      >
+      <SectionPositioningDiv ref={skillsRef}>
         {skillsInView && <SkillsSection />}
       </SectionPositioningDiv>
-      <SectionPositioningDiv
-        heightAfterReveal="90vh"
-        heightAfterRevealMobile="fit-content"
-        ref={projectsRef}
-      >
+      <SectionPositioningDiv ref={projectsRef}>
         {projectsInView && <ProjectsSection />}
       </SectionPositioningDiv>
       <PositioningDiv />

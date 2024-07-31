@@ -36,6 +36,7 @@ const InnerContainer = styled('div')(({ theme }) => ({
 const OutletContainer = styled('div')(({ theme }) => ({
   paddingLeft: 'clamp(0px, 4vw, 6rem)',
   paddingRight: 'clamp(0px, 4vw, 6rem)',
+  minHeight: 'calc(100% - 62px - 2rem)',
   [theme.breakpoints.max.mobile]: {
     paddingLeft: '0px',
     paddingRight: '0px',

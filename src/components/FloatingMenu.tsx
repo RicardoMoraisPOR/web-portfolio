@@ -9,9 +9,9 @@ import Logo from './Logo';
 import { Link } from 'react-router-dom';
 import useTouching from '../hooks/useIsTouching';
 import SocialIcon from './SocialIcon';
-import StackOverflowIcon from '../assets/StackOverflow';
-import GithubIcon from '../assets/Github';
-import LinkedInIcon from '../assets/LinkedIn';
+import StackOverflowIcon from '../assets/Icons/StackOverflow';
+import GithubIcon from '../assets/Icons/Github';
+import LinkedInIcon from '../assets/Icons/LinkedIn';
 import FlareCard from './FlareCard';
 
 const ThemeToggleButton = styled('button')<
