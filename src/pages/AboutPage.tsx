@@ -3,7 +3,8 @@ import ImageMyself from '../assets/me.png';
 import FlareCard from '../components/FlareCard';
 import GlowEffect from '../components/GlowEffect';
 import { useCallback } from 'react';
-import { Link } from 'react-router-dom';
+import { useInView } from 'react-intersection-observer';
+import Timeline from '../components/Timeline';
 
 const ImageWrapper = styled('div')({
   borderRadius: '100px',
@@ -26,6 +27,7 @@ const AboutPageWrapper = styled('div')(({ theme }) => ({
   width: '100%',
   display: 'flex',
   padding: '40px 0px',
+  gap: '30px',
   [theme.breakpoints.max.desktop]: {
     flexDirection: 'column',
   },
@@ -42,13 +44,23 @@ const DescriptionText = styled('span')({
   justifySelf: 'start',
 });
 
-const BioSide = styled('div')({
+const BioSide = styled('section')({
   flexGrow: 1,
   width: '100%',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
   gap: '20px',
+});
+
+const ExperienceSide = styled('section')({
+  flexGrow: 3,
+  width: '100%',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  gap: '20px',
+  minHeight: '150px',
 });
 
 const AboutPage = () => {
@@ -67,11 +79,17 @@ const AboutPage = () => {
     return diference;
   }, []);
 
+  const { ref: experienceSideRef, inView: timelineInView } = useInView({
+    threshold: 0.3,
+    triggerOnce: true,
+    delay: 0.4,
+  });
+
   return (
     <AboutPageWrapper>
       <BioSide>
         <GlowEffect $transparency={10}>
-          <FlareCard $intensity={80} $borderRadius={100}>
+          <FlareCard $intensity={70} $borderRadius={100}>
             <ImageWrapper>
               <Image src={ImageMyself} />
             </ImageWrapper>
@@ -95,19 +113,20 @@ const AboutPage = () => {
           internationally.
         </DescriptionText>
         <DescriptionText>
-          When i work, i focus on getting things done fast, without breaking
+          When I work, I focus on getting things done fast, without breaking
           anything. I'm always committed into establishing a robust foundation
           that endures over time, recognizing the essential balance between
           swift delivery and the lasting advantages of well-structured and
           thoroughly documented code.
         </DescriptionText>
         <DescriptionText>
-          I'm a React and Typescript specialist and i'm currently working as a
-          Software Engineer at{' '}
-          <Link to="https://www.nextbitt.com/">Nextbitt</Link>
+          I'm a React and Typescript specialist and I'm currently working as a
+          Software Engineer.
         </DescriptionText>
       </BioSide>
-      <div style={{ flexGrow: 3, width: '100%' }}></div>
+      <ExperienceSide ref={experienceSideRef}>
+        {timelineInView && <Timeline />}
+      </ExperienceSide>
     </AboutPageWrapper>
   );
 };

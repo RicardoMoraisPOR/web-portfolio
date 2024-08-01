@@ -8,7 +8,6 @@ import { useLottie } from 'lottie-react';
 import scrollAnimation from '../assets/scroll.json';
 import LoadableComponent from '../components/LoadableComponent';
 import { useInView } from 'react-intersection-observer';
-import useMediaQuery from '../hooks/useMediaQuery';
 
 const SkillsSection = LoadableComponent(
   lazy(() => import('../components/SkillsSection'))
@@ -68,11 +67,6 @@ const IntroTextBold = styled(IntroTextAbout)({
   fontWeight: '800',
 });
 
-const CompanyThemeText = styled(Link)({
-  color: '#b5d823',
-  fontWeight: '800',
-});
-
 const HomePageWrapper = styled('div')({
   width: '100%',
   display: 'flex',
@@ -101,7 +95,6 @@ const SectionPositioningDiv = styled(PositioningDiv)(({ theme }) => ({
 const HomePage = () => {
   const emojiRef = useRef<HTMLDivElement>(null);
   const scrollAnimationRef = useRef<HTMLDivElement>(null);
-  const isMobile = useMediaQuery('max', 'mobile');
 
   useGSAP(() => {
     gsap
@@ -165,13 +158,13 @@ const HomePage = () => {
   });
 
   const { ref: skillsRef, inView: skillsInView } = useInView({
-    threshold: isMobile ? 0.3 : 0.3,
+    threshold: 0.3,
     triggerOnce: true,
     delay: 0.4,
   });
 
   const { ref: projectsRef, inView: projectsInView } = useInView({
-    threshold: isMobile ? 0.3 : 0.3,
+    threshold: 0.3,
     triggerOnce: true,
     delay: 0.4,
   });
@@ -192,11 +185,9 @@ const HomePage = () => {
               <IntroTextAbout>
                 Currently working as{' '}
                 <IntroTextBold>Software Engineer</IntroTextBold> at{' '}
-                <CompanyThemeText to="https://www.nextbitt.com/">
-                  Nextbitt
-                </CompanyThemeText>{' '}
-                🍃 while enjoying the vibrant life on the stunning Madeira
-                Island 🏝️. If you are interested, you can see more about me{' '}
+                <Link to="https://www.nextbitt.com/">Nextbitt</Link> 🍃 while
+                enjoying the vibrant life on the stunning Madeira Island 🏝️. If
+                you are interested, you can see more about me{' '}
                 <Link to="/about">here</Link>.
               </IntroTextAbout>
               <br />

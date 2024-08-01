@@ -78,7 +78,7 @@ const SkillsSection = () => {
           <>
             These technologies represent the core of my technical expertise.
             However, my skill set extends beyond these tools and frameworks
-            which you can explore in more detail <Link to="/about">here</Link>.
+            which you can explore in more detail <Link to="/uses">here</Link>.
           </>
         }
       />
