@@ -19,7 +19,7 @@ interface FlareCardCoordinatesProps {
   $intensity: IntRange<0, 101>;
   $borderRadius?: CSSObject['borderRadius'];
   $isTouching?: boolean;
-  disableTouch?: boolean;
+  $disableTouch?: boolean;
 }
 
 type FlareCardProps = Omit<
@@ -79,9 +79,9 @@ const InnerContainer = styled('div')(({ theme }) => {
 
 const FlareCard: FC<PropsWithChildren<FlareCardProps>> = ({
   children,
+  $disableTouch,
   ...props
 }) => {
-  const { disableTouch } = props;
   const elementRef = useRef<HTMLDivElement>(null);
   const [mouseCoordinates, setMouseCoordinates] =
     useState<Pick<FlareCardCoordinatesProps, '$x' | '$y'>>();
@@ -115,7 +115,7 @@ const FlareCard: FC<PropsWithChildren<FlareCardProps>> = ({
   useEffect(() => {
     const element = elementRef.current;
 
-    if (element && !disableTouch) {
+    if (element && !$disableTouch) {
       // remove passive
       element.addEventListener('touchmove', handleTouchMove, {
         passive: false,
@@ -125,7 +125,7 @@ const FlareCard: FC<PropsWithChildren<FlareCardProps>> = ({
         element.removeEventListener('touchmove', handleTouchMove);
       };
     }
-  }, [disableTouch, handleTouchMove]);
+  }, [$disableTouch, handleTouchMove]);
 
   return (
     <FlareCardComponent
@@ -134,9 +134,9 @@ const FlareCard: FC<PropsWithChildren<FlareCardProps>> = ({
       {...props}
       $isTouching={isTouching}
       onMouseMove={handleMouseMove}
-      onTouchStart={disableTouch ? noop : handleTouch(true)}
-      onTouchEnd={disableTouch ? noop : handleTouch(false)}
-      onTouchCancel={disableTouch ? noop : handleTouch(false)}
+      onTouchStart={$disableTouch ? noop : handleTouch(true)}
+      onTouchEnd={$disableTouch ? noop : handleTouch(false)}
+      onTouchCancel={$disableTouch ? noop : handleTouch(false)}
     >
       <InnerContainer>{children}</InnerContainer>
     </FlareCardComponent>

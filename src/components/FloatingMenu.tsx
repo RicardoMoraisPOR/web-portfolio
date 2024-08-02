@@ -88,7 +88,7 @@ const LogoLink = styled(Link)<GlowEffectComponentProps>(
   }
 );
 
-function FloatingMenu() {
+const FloatingMenu = () => {
   const { toggleTheme } = useAppThemeContext();
   const { isTouching, handleTouch } = useTouching();
 
@@ -144,6 +144,6 @@ function FloatingMenu() {
       </GlowEffect>
     </ChipMenuWrapper>
   );
-}
+};
 
 export default FloatingMenu;

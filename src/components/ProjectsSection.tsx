@@ -11,8 +11,6 @@ import { alphaHexConverter } from '../theme/AppThemeUtils';
 import Logo from './Logo';
 import HatLogo from '../assets/Icons/HatLogo';
 import { Link } from 'react-router-dom';
-import SvgTypescript from '../assets/Icons/Typescript';
-import SvgReact from '../assets/Icons/React';
 import SvgVite from '../assets/Icons/Vite';
 import SvgGsapGreensock from '../assets/Icons/GsapGreensock';
 import SvgLottieFilesLogo from '../assets/Icons/LottieFilesLogo';
@@ -21,6 +19,7 @@ import SvgStitches from '../assets/Icons/Stitches';
 import Tooltip from './Tooltip';
 import SvgRadixUi from '../assets/Icons/RadixUi';
 import SvgStyledComponentsLogo from '../assets/Icons/StyledComponentsLogo';
+import { SiPnpm, SiReact, SiTypescript } from '@icons-pack/react-simple-icons';
 
 const ProjectsWrapper = styled(PositioningDiv)(({ theme }) => ({
   display: 'grid',
@@ -115,24 +114,18 @@ const ProjectSkills = styled('div')(({ theme }) => ({
 }));
 
 interface ProjectSkillProps {
-  icon: (
-    props: SVGProps<SVGSVGElement> & {
-      secondaryfill?: CSSObject['fill'];
-    }
-  ) => JSX.Element;
-  iconSecondaryFill?: CSSObject['fill'];
+  icon?: (props: SVGProps<SVGSVGElement>) => JSX.Element;
+  iconComponent?: JSX.Element;
   name: string;
 }
 interface ProjectProps {
   title: string;
   icon: (
     props: SVGProps<SVGSVGElement> & {
-      secondaryfill?: CSSObject['fill'];
       $height?: CSSObject['height'];
     }
   ) => JSX.Element;
   height?: CSSObject['height'];
-  iconSecondaryFill?: CSSObject['fill'];
   link?: string;
   description?: string;
   skills: Array<ProjectSkillProps>;
@@ -157,8 +150,22 @@ const ProjectsSection = () => {
           },
           { name: 'Stitches', icon: SvgStitches },
           { name: 'Vercel', icon: SvgVercelLogo },
-          { name: 'React', icon: SvgReact },
-          { name: 'Typescript', icon: SvgTypescript },
+          {
+            name: 'React',
+            iconComponent: (
+              <SiReact height={20} width={20} fill={theme.palette.primary} />
+            ),
+          },
+          {
+            name: 'Typescript',
+            iconComponent: (
+              <SiTypescript
+                height={20}
+                width={20}
+                fill={theme.palette.primary}
+              />
+            ),
+          },
         ],
       },
       {
@@ -169,8 +176,17 @@ const ProjectsSection = () => {
         description:
           'This is my personal portfolio website, the one you are visiting right now, it was built using my favorite tools and technologies.',
         skills: [
+          {
+            name: 'pnpm',
+            iconComponent: (
+              <SiPnpm height={20} width={20} fill={theme.palette.primary} />
+            ),
+          },
           { name: 'Radix UI', icon: SvgRadixUi },
-          { name: 'Lottie', icon: SvgLottieFilesLogo },
+          {
+            name: 'Lottie',
+            icon: SvgLottieFilesLogo,
+          },
           { name: 'GSAP', icon: SvgGsapGreensock },
           {
             name: 'Vite',
@@ -179,8 +195,22 @@ const ProjectsSection = () => {
           },
           { name: 'Styled Components', icon: SvgStyledComponentsLogo },
           { name: 'Vercel', icon: SvgVercelLogo },
-          { name: 'React', icon: SvgReact },
-          { name: 'Typescript', icon: SvgTypescript },
+          {
+            name: 'React',
+            iconComponent: (
+              <SiReact height={20} width={20} fill={theme.palette.primary} />
+            ),
+          },
+          {
+            name: 'Typescript',
+            iconComponent: (
+              <SiTypescript
+                height={20}
+                width={20}
+                fill={theme.palette.primary}
+              />
+            ),
+          },
         ],
       },
       {
@@ -197,12 +227,26 @@ const ProjectsSection = () => {
           },
           { name: 'Stitches', icon: SvgStitches },
           { name: 'Vercel', icon: SvgVercelLogo },
-          { name: 'React', icon: SvgReact },
-          { name: 'Typescript', icon: SvgTypescript },
+          {
+            name: 'React',
+            iconComponent: (
+              <SiReact height={20} width={20} fill={theme.palette.primary} />
+            ),
+          },
+          {
+            name: 'Typescript',
+            iconComponent: (
+              <SiTypescript
+                height={20}
+                width={20}
+                fill={theme.palette.primary}
+              />
+            ),
+          },
         ],
       },
     ] as Array<ProjectProps>;
-  }, [theme.palette.accent, theme.palette.secondary]);
+  }, [theme.palette.accent, theme.palette.primary, theme.palette.secondary]);
 
   useGSAP(() => {
     if (projectsRef.current) {
@@ -237,19 +281,18 @@ const ProjectsSection = () => {
       />
       <ProjectsWrapper ref={projectsRef}>
         {projects.map((projectData) => (
-          <ProjectWrapper>
+          <ProjectWrapper key={projectData.title}>
             <GlowEffect $transparency={15}>
-              <FlareCard $intensity={80} $borderRadius={5} disableTouch>
+              <FlareCard $intensity={80} $borderRadius={5} $disableTouch>
                 <ProjectInnerWrapper>
                   <ProjectImageWrapper>
                     {projectData.icon({
                       fill: theme.palette.primary,
-                      secondaryfill: projectData.iconSecondaryFill,
                       $height: projectData.height,
                     })}
                   </ProjectImageWrapper>
                   {projectData.link ? (
-                    <ProjectTitle to={projectData.link}>
+                    <ProjectTitle to={projectData.link} target="_blank">
                       {projectData.title}
                     </ProjectTitle>
                   ) : (
@@ -260,13 +303,16 @@ const ProjectsSection = () => {
                   </ProjectDescription>
                   <ProjectSkills>
                     {projectData.skills.map((skillData) => (
-                      <Tooltip tooltipContent={skillData.name}>
-                        {skillData.icon({
-                          height: 20,
-                          width: 20,
-                          fill: theme.palette.primary,
-                          secondaryfill: skillData.iconSecondaryFill,
-                        })}
+                      <Tooltip
+                        tooltipContent={skillData.name}
+                        key={skillData.name}
+                      >
+                        {skillData.iconComponent ??
+                          skillData.icon?.({
+                            height: 20,
+                            width: 20,
+                            fill: theme.palette.primary,
+                          })}
                       </Tooltip>
                     ))}
                   </ProjectSkills>

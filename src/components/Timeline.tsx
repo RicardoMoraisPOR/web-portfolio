@@ -159,7 +159,9 @@ const Timeline = () => {
           <TimelineLine />
           <TimelineTitle>
             Mar 2024 - Present | Software Engineer at{' '}
-            <Link to="https://www.nextbitt.com/">Nextbitt</Link>
+            <Link to="https://www.nextbitt.com/" target="_blank">
+              Nextbitt
+            </Link>
           </TimelineTitle>
           <TimelineDescription>
             The place where I am currently working as a Software Engineer and
@@ -177,17 +179,24 @@ const Timeline = () => {
           <TimelineLine />
           <TimelineTitle>
             Feb 2021 - Mar 2024 | Front-end Developer at{' '}
-            <Link to="https://acin.pt/">ACIN Group</Link>
+            <Link to="https://acin.pt/" target="_blank">
+              ACIN Group
+            </Link>
           </TimelineTitle>
           <TimelineDescription>
             During my time at ACIN Group, I experienced remarkable and
             exponential professional growth. I began as a Junior Front-end
             Developer working on the company's internal UI Library and quickly
-            moved to the <Link to="https://globaltrustedsign.com/">GTS</Link>{' '}
+            moved to the{' '}
+            <Link to="https://globaltrustedsign.com/" target="_blank">
+              GTS
+            </Link>{' '}
             Software team, where I spent the majority of my time before
             advancing to a Senior role, where I joined the{' '}
-            <Link to="https://imed.pt/imed/home">iMED</Link> software team as a
-            PM redundancy and Front-end Team Leader.
+            <Link to="https://imed.pt/imed/home" target="_blank">
+              iMED
+            </Link>{' '}
+            software team as a PM redundancy and Front-end Team Leader.
           </TimelineDescription>
           <TimelineDescription>
             I played a key role in candidate interviews, starting by assisting
@@ -247,7 +256,9 @@ const Timeline = () => {
           <TimelineLine />
           <TimelineTitle>
             Sep 2018 - Oct 2020 | Software Developer at{' '}
-            <Link to="https://www.wig.pt/">WIG - Work is Good</Link>
+            <Link to="https://www.wig.pt/" target="_blank">
+              WIG - Work is Good
+            </Link>
           </TimelineTitle>
           <TimelineDescription>
             At WIG, I worked as a Software Developer specializing in web and
@@ -276,9 +287,12 @@ const Timeline = () => {
             Programming Technician
           </TimelineTitle>
           <TimelineDescription>
-            During this period 3 years period, I completed a comprehensive
-            technical education program at{' '}
-            <Link to="https://www.sefo.pt/">ESCO</Link> in Torres Vedras.
+            During this 3 years period, I completed a comprehensive technical
+            education program at{' '}
+            <Link to="https://www.sefo.pt/" target="_blank">
+              ESCO
+            </Link>{' '}
+            in Torres Vedras.
           </TimelineDescription>
           <TimelineDescription>
             This provided me with a solid foundation in various aspects of

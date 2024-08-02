@@ -185,10 +185,12 @@ const HomePage = () => {
               <IntroTextAbout>
                 Currently working as{' '}
                 <IntroTextBold>Software Engineer</IntroTextBold> at{' '}
-                <Link to="https://www.nextbitt.com/">Nextbitt</Link> 🍃 while
-                enjoying the vibrant life on the stunning Madeira Island 🏝️. If
-                you are interested, you can see more about me{' '}
-                <Link to="/about">here</Link>.
+                <Link to="https://www.nextbitt.com/" target="_blank">
+                  Nextbitt
+                </Link>{' '}
+                🍃 while enjoying the vibrant life on the stunning Madeira
+                Island 🏝️. If you are interested, you can see more in the{' '}
+                <Link to="/about">about</Link> page.
               </IntroTextAbout>
               <br />
               <br />

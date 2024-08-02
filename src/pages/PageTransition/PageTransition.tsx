@@ -1,17 +1,20 @@
 import { SwitchTransition, Transition } from 'react-transition-group';
 import { useLocation } from 'react-router-dom';
 import gsap from 'gsap';
-import { FC, PropsWithChildren } from 'react';
+import { FC, PropsWithChildren, useRef } from 'react';
 
 const TransitionComponent: FC<PropsWithChildren> = ({ children }) => {
   const location = useLocation();
+  const nodeRef = useRef(null);
+
   return (
     <SwitchTransition>
       <Transition
         key={location.pathname}
         timeout={500}
-        onEnter={(node: gsap.TweenTarget) => {
-          gsap.set(node, {
+        nodeRef={nodeRef}
+        onEnter={() => {
+          gsap.set(nodeRef.current, {
             y: 20,
             opacity: 0,
           });
@@ -19,17 +22,17 @@ const TransitionComponent: FC<PropsWithChildren> = ({ children }) => {
             .timeline({
               paused: true,
             })
-            .to(node, { y: 0, opacity: 1, duration: 0.2 })
+            .to(nodeRef.current, { y: 0, opacity: 1, duration: 0.2 })
             .play();
         }}
-        onExit={(node) => {
+        onExit={() => {
           gsap
             .timeline({ paused: true })
-            .to(node, { y: 20, opacity: 0, duration: 0.2 })
+            .to(nodeRef.current, { y: 20, opacity: 0, duration: 0.2 })
             .play();
         }}
       >
-        {children}
+        <div ref={nodeRef}>{children}</div>
       </Transition>
     </SwitchTransition>
   );

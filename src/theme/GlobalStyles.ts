@@ -49,9 +49,9 @@ const GlobalStyles = createGlobalStyle(({ theme }) => {
       lineHeight: 1.6,
       letterSpacing: '0.5px',
       color: theme.palette.text,
-      transition: `color ${theme.transitions.fast}ms ease`,
       width: 'fit-content',
       position: 'relative',
+      transition: `color ${theme.transitions.fast}ms linear`,
       textDecoration: 'none', // Remove the default underline
       '&:hover': {
         color: theme.palette.primary,
@@ -65,6 +65,10 @@ const GlobalStyles = createGlobalStyle(({ theme }) => {
         height: '1px', // Adjust the thickness of the underline
         backgroundColor: 'currentColor', // Use the text color for the underline
       },
+    },
+
+    svg: {
+      transition: `fill ${theme.transitions.fast}ms ease`,
     },
 
     body: {
