@@ -91,7 +91,7 @@ const ShiverSpan: FC<PropsWithChildren> = ({ children }) => {
         setClicked((value) => (value === 'notFound' ? 'found' : value));
         setTimeout(() => {
           setClicked('disabled');
-        }, 1500);
+        }, 3000);
         tl.pause();
         gsap.to(spanRef.current, {
           x: 0,

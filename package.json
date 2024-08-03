@@ -16,6 +16,7 @@
     "@gsap/react": "^2.0.2",
     "@icons-pack/react-simple-icons": "^9.6.0",
     "@radix-ui/react-select": "^2.1.1",
+    "@radix-ui/react-toast": "^1.2.1",
     "@radix-ui/react-tooltip": "^1.1.2",
     "gsap": "^3.12.5",
     "lodash": "^4.17.21",

@@ -8,6 +8,7 @@ import { useLottie } from 'lottie-react';
 import scrollAnimation from '../assets/scroll.json';
 import LoadableComponent from '../components/LoadableComponent';
 import { useInView } from 'react-intersection-observer';
+import ToastComponent from '../components/ToastComponent';
 
 const SkillsSection = LoadableComponent(
   lazy(() => import('../components/SkillsSection'))

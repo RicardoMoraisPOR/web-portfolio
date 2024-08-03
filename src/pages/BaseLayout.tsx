@@ -59,6 +59,7 @@ const BaseLayout = () => {
     <AppThemeProvider>
       <GlobalStyles />
       <BaseLayoutBackground />
+      <div id="bg-id-portal" />
       <Container>
         <InnerContainer>
           <FloatingMenu />
