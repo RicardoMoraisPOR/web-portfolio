@@ -10,6 +10,7 @@ import {
   useCallback,
   useEffect,
   useMemo,
+  useReducer,
   useRef,
   useState,
 } from 'react';
@@ -605,43 +606,87 @@ type TechItemProps = {
   icon?: (props: SVGProps<SVGSVGElement>) => JSX.Element;
 };
 
+interface State {
+  firstAnimation: boolean;
+  animateSearch: boolean;
+  searchValue: string;
+  selectedValue: Category;
+  searched: Array<TechItemProps>;
+}
+
+type Action =
+  | { type: 'SET_FIRST_ANIMATION'; payload: boolean }
+  | { type: 'SET_ANIMATE_SEARCH'; payload: boolean }
+  | { type: 'SET_SEARCH_VALUE'; payload: string }
+  | { type: 'SET_SELECTED_VALUE'; payload: Category }
+  | { type: 'SET_SEARCHED'; payload: Array<TechItemProps> };
+
 const UsesPage = () => {
   const theme = useTheme();
   const techRef = useRef<HTMLDivElement>(null);
   const debounceTimeout = useRef<NodeJS.Timeout>();
-  const [firstAnimation, setFirstAnimation] = useState(false);
-  const [animateSearch, setAnimateSearch] = useState(false);
-  const [searchValue, setSearchValue] = useState<string>('');
-  const [selectedValue, setSelectedValue] = useState<Category>('all');
+
   const techMemo = useMemo(() => techs(), []);
-  const [searched, setSearched] = useState<Array<TechItemProps>>(techMemo);
+
+  const reducer = (state: State, action: Action): State => {
+    switch (action.type) {
+      case 'SET_FIRST_ANIMATION':
+        return { ...state, firstAnimation: action.payload };
+      case 'SET_ANIMATE_SEARCH':
+        return { ...state, animateSearch: action.payload };
+      case 'SET_SEARCH_VALUE':
+        return { ...state, searchValue: action.payload };
+      case 'SET_SELECTED_VALUE':
+        return { ...state, selectedValue: action.payload };
+      case 'SET_SEARCHED':
+        return { ...state, searched: action.payload };
+      default:
+        return state;
+    }
+  };
+
+  const [state, dispatch] = useReducer(reducer, {
+    firstAnimation: false,
+    animateSearch: false,
+    searchValue: '',
+    selectedValue: 'all',
+    searched: techMemo,
+  });
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const onSelectedValue = useCallback(
     (value: Category) => {
       const searchedItems = techMemo.filter((tech) =>
-        tech.name.toLowerCase().includes(searchValue.toLowerCase())
+        tech.name.toLowerCase().includes(state.searchValue.toLowerCase())
       );
-      setSelectedValue(value);
+
+      dispatch({ type: 'SET_SELECTED_VALUE', payload: value });
 
       if (techRef.current) {
         gsap.to(techRef.current.children, {
           opacity: 0,
           y: -20,
-          duration: 0.5,
+          duration: 0.3,
           onComplete: () => {
-            setAnimateSearch(true);
+            dispatch({ type: 'SET_ANIMATE_SEARCH', payload: true });
             if (value === 'all') {
-              setSearched(searchedItems);
+              dispatch({ type: 'SET_SEARCHED', payload: searchedItems });
             } else {
-              setSearched(
-                searchedItems.filter((tech) => tech.category.includes(value))
-              );
+              dispatch({
+                type: 'SET_SEARCHED',
+                payload: searchedItems.filter((tech) =>
+                  tech.category.includes(value)
+                ),
+              });
             }
           },
         });
       }
     },
-    [searchValue, techMemo]
+    [state.searchValue, techMemo]
   );
 
   const onInputValue = useCallback<ChangeEventHandler<HTMLInputElement>>(
@@ -653,35 +698,35 @@ const UsesPage = () => {
 
       debounceTimeout.current = setTimeout(() => {
         const value = e.target.value.toLowerCase();
-        setSearchValue(value);
+        dispatch({ type: 'SET_SEARCH_VALUE', payload: value });
 
         const filteredItems = techs().filter(
           (item) =>
-            (selectedValue === 'all'
+            (state.selectedValue === 'all'
               ? true
-              : item.category.includes(selectedValue)) &&
+              : item.category.includes(state.selectedValue)) &&
             item.name.toLowerCase().includes(value)
         );
 
         if (techRef.current) {
           gsap.to(techRef.current.children, {
             opacity: 0,
-            y: -20,
-            duration: 0.5,
+            y: 20,
+            duration: 0.3,
             onComplete: () => {
-              setAnimateSearch(true);
-              setSearched(filteredItems);
+              dispatch({ type: 'SET_ANIMATE_SEARCH', payload: true });
+              dispatch({ type: 'SET_SEARCHED', payload: filteredItems });
             },
           });
         }
       }, 500);
     },
-    [selectedValue]
+    [state.selectedValue]
   );
 
   useEffect(() => {
-    if (firstAnimation && animateSearch && techRef.current) {
-      setAnimateSearch(false);
+    if (state.firstAnimation && state.animateSearch && techRef.current) {
+      dispatch({ type: 'SET_ANIMATE_SEARCH', payload: false });
       const items = techRef.current.children;
       gsap.fromTo(
         items,
@@ -696,7 +741,7 @@ const UsesPage = () => {
         }
       );
     }
-  }, [searched, firstAnimation, animateSearch]);
+  }, [state.searched, state.firstAnimation, state.animateSearch]);
 
   useGSAP(() => {
     if (techRef.current) {
@@ -713,7 +758,7 @@ const UsesPage = () => {
           ease: 'power2.out',
           delay: 0.3,
           onComplete: () => {
-            setFirstAnimation(true);
+            dispatch({ type: 'SET_FIRST_ANIMATION', payload: true });
           },
         }
       );
@@ -752,7 +797,7 @@ const UsesPage = () => {
             placeholder="Search for a technology"
             onChange={onInputValue}
           />
-          <Select.Root onValueChange={onSelectedValue} disabled={animateSearch}>
+          <Select.Root onValueChange={onSelectedValue}>
             <Trigger aria-label="Techs">
               <Select.Value placeholder="Select an category" />
             </Trigger>
@@ -822,8 +867,8 @@ const UsesPage = () => {
           gap: '10px',
         }}
       >
-        {searched.length === 0 && <ItemText>I never used that!</ItemText>}
-        {searched.map(({ name, icon, iconComponent: Icon }) => {
+        {state.searched.length === 0 && <ItemText>I never used that!</ItemText>}
+        {state.searched.map(({ name, icon, iconComponent: Icon }) => {
           return (
             <GlowEffect key={name} $transparency={20}>
               <FlareCard $intensity={15} $borderRadius={4} $disableTouch>

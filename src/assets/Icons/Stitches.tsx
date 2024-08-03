@@ -1,6 +1,11 @@
 import type { SVGProps } from 'react';
+import { CSSObject, useTheme } from 'styled-components';
 
 const SvgStitches = (props: SVGProps<SVGSVGElement>) => {
+  const theme = useTheme();
+  const styleForThemeSwap = {
+    transition: `stroke ${theme.transitions.fast}ms ease`,
+  } as CSSObject;
   const { fill } = props;
   return (
     <svg
@@ -11,16 +16,34 @@ const SvgStitches = (props: SVGProps<SVGSVGElement>) => {
       {...props}
       fill="none"
     >
-      <circle cx={17.5} cy={17.5} r={14.5} stroke={fill} strokeWidth={2} />
-      <path stroke={fill} d="m12.818 31.322 19.053-11M3.318 14.867l19.053-11" />
+      <circle
+        style={styleForThemeSwap}
+        cx={17.5}
+        cy={17.5}
+        r={14.5}
+        stroke={fill}
+        strokeWidth={2}
+      />
       <path
+        style={styleForThemeSwap}
+        stroke={fill}
+        d="m12.818 31.322 19.053-11M3.318 14.867l19.053-11"
+      />
+      <path
+        style={styleForThemeSwap}
         stroke={fill}
         strokeLinecap="round"
         strokeLinejoin="round"
         d="m8.653 29.108 17.32-10"
       />
-      <path stroke={fill} strokeLinecap="round" d="m9.216 16.081 17.32-10" />
       <path
+        style={styleForThemeSwap}
+        stroke={fill}
+        strokeLinecap="round"
+        d="m9.216 16.081 17.32-10"
+      />
+      <path
+        style={styleForThemeSwap}
         stroke={fill}
         strokeLinecap="round"
         strokeLinejoin="round"
