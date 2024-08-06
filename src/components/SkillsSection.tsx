@@ -6,7 +6,7 @@ import FlareCard from './FlareCard';
 import GlowEffect from './GlowEffect';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import RevealingSection from './RevealingSection';
 import SvgVercelLogo from '../assets/Icons/VercelLogo';
@@ -50,41 +50,58 @@ const SkillInnerWrapper = styled('div')({
   flexDirection: 'column',
 });
 
-const SkillsSection = () => {
+interface InViewProps {
+  inView?: boolean;
+}
+
+const SkillsSection = ({ inView }: InViewProps) => {
   const skillsRef = useRef<HTMLDivElement>(null);
   const theme = useTheme();
+  const inViewRef = useRef(false);
 
   useGSAP(() => {
     if (skillsRef.current) {
       const items = skillsRef.current.children;
-      gsap.fromTo(
-        items,
-        { opacity: 0, y: 70 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1,
-          stagger: 0.2,
-          ease: 'power2.out',
-          delay: 0.6,
-        }
-      );
+      gsap.set(items, { opacity: 0, y: 70 });
     }
   }, []);
 
+  useEffect(() => {
+    if (inView && !inViewRef.current) {
+      inViewRef.current = true;
+      if (skillsRef.current) {
+        const items = skillsRef.current.children;
+        gsap.fromTo(
+          items,
+          { opacity: 0, y: 70 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            stagger: 0.2,
+            ease: 'power2.out',
+            delay: 0.6,
+          }
+        );
+      }
+    }
+  }, [inView]);
+
   return (
     <>
-      <RevealingSection
-        title="My main tech stack"
-        description={
-          <>
-            These technologies represent the core of my technical expertise.
-            However, my skill set extends beyond these tools and frameworks
-            which you can explore in more detail in my{' '}
-            <Link to="/uses">uses tech</Link> page.
-          </>
-        }
-      />
+      {inView && (
+        <RevealingSection
+          title="My main tech stack"
+          description={
+            <>
+              These technologies represent the core of my technical expertise.
+              However, my skill set extends beyond these tools and frameworks
+              which you can explore in more detail in my{' '}
+              <Link to="/uses">uses tech</Link> page.
+            </>
+          }
+        />
+      )}
       <SkillsWrapper ref={skillsRef}>
         <SkillWrapper>
           <GlowEffect $transparency={15}>

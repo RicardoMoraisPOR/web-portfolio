@@ -27,6 +27,7 @@ const GlobalStyles = createGlobalStyle(({ theme }) => {
 
     '&:focus-visible': {
       outline: `1px dashed ${alphaHexConverter(theme.palette.primary, 30)}`,
+      outlineOffset: '2px',
     },
 
     h1: {

@@ -4,8 +4,8 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 
 type RevealingSectionProps = {
-  title: string;
-  description: JSX.Element;
+  title?: string;
+  description?: JSX.Element;
 };
 
 const RevealingSection = ({ title, description }: RevealingSectionProps) => {

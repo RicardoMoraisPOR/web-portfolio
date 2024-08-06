@@ -8,7 +8,6 @@ import { useLottie } from 'lottie-react';
 import scrollAnimation from '../assets/scroll.json';
 import LoadableComponent from '../components/LoadableComponent';
 import { useInView } from 'react-intersection-observer';
-import ToastComponent from '../components/ToastComponent';
 
 const SkillsSection = LoadableComponent(
   lazy(() => import('../components/SkillsSection'))
@@ -215,10 +214,10 @@ const HomePage = () => {
         </PositioningDiv>
       </HomePageWrapper>
       <SectionPositioningDiv ref={skillsRef}>
-        {skillsInView && <SkillsSection />}
+        <SkillsSection inView={skillsInView} />
       </SectionPositioningDiv>
       <SectionPositioningDiv ref={projectsRef}>
-        {projectsInView && <ProjectsSection />}
+        <ProjectsSection inView={projectsInView} />
       </SectionPositioningDiv>
       <PositioningDiv />
     </main>

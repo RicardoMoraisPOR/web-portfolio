@@ -1,7 +1,8 @@
 import * as Toast from '@radix-ui/react-toast';
 import styled from 'styled-components';
-import FlareCard from './FlareCard';
-import GlowEffect from './GlowEffect';
+import { alphaHexConverter } from '../theme/AppThemeUtils';
+import { useCallback, useState } from 'react';
+import { ToastComponentProps } from '../contexts/ToastContext';
 
 const ToastViewport = styled(Toast.Viewport)({
   '--viewport-padding': '25px',
@@ -12,7 +13,7 @@ const ToastViewport = styled(Toast.Viewport)({
   flexDirection: 'column',
   padding: 'var(--viewport-padding)',
   gap: '10px',
-  width: '390px',
+  width: '450px',
   maxWidth: '100vw',
   margin: 0,
   listStyle: 'none',
@@ -21,8 +22,9 @@ const ToastViewport = styled(Toast.Viewport)({
 });
 
 const ToastRoot = styled(Toast.Root)(({ theme }) => ({
-  backgroundColor: 'transparent',
-  borderRadius: '4px',
+  backgroundColor: theme.palette.primary,
+  color: theme.palette.background,
+  borderRadius: '8px',
   minWidth: '340px',
   boxShadow:
     'hsl(206 22% 7% / 35%) 0px 10px 38px -10px, hsl(206 22% 7% / 20%) 0px 10px 20px -15px',
@@ -30,7 +32,7 @@ const ToastRoot = styled(Toast.Root)(({ theme }) => ({
     animation: 'slideIn 150ms cubic-bezier(0.16, 1, 0.3, 1)',
   },
   "&[data-state='closed']": {
-    animation: 'hide 100ms ease-in',
+    animation: 'swipeOut 100ms ease-in',
   },
   "&[data-swipe='move']": {
     transform: 'translateX(var(--radix-toast-swipe-move-x))',
@@ -42,10 +44,6 @@ const ToastRoot = styled(Toast.Root)(({ theme }) => ({
   "&[data-swipe='end']": {
     animation: 'swipeOut 100ms ease-out',
   },
-  '@keyframes hide': {
-    from: { opacity: 1 },
-    to: { opacity: 0 },
-  },
   '@keyframes slideIn': {
     from: { transform: 'translateX(calc(100% + var(--viewport-padding)))' },
     to: { transform: 'translateX(0)' },
@@ -54,54 +52,86 @@ const ToastRoot = styled(Toast.Root)(({ theme }) => ({
     from: { transform: 'translateX(var(--radix-toast-swipe-end-x))' },
     to: { transform: 'translateX(calc(100% + var(--viewport-padding)))' },
   },
-  '& div': {
-    width: '100%',
+}));
+
+const MessageContent = styled('div')<{ $isGrabbing: boolean }>(
+  ({ $isGrabbing }) => ({
+    cursor: $isGrabbing ? 'grabbing' : 'grab',
+    minHeight: '80px',
+    display: 'flex',
+    padding: '4px 8px',
     height: '100%',
+  })
+);
+
+const ActionButton = styled('button')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  padding: '1rem 1.5rem',
+  borderRadius: '4px',
+  border: `1px solid ${theme.palette.secondary}`,
+  fontSize: '14px',
+  margin: '0px 20px',
+  color: theme.palette.background,
+  backgroundColor: 'transparent',
+  cursor: 'pointer',
+  height: '14px',
+  justifySelf: 'center',
+  alignSelf: 'center',
+  whiteSpace: 'nowrap',
+  '&:hover': {
+    backgroundColor: alphaHexConverter(theme.palette.accent, 20),
   },
 }));
 
-const MessageContent = styled('div')({
-  minHeight: '80px',
-  display: 'flex',
-  padding: '4px 8px',
-  height: '100%',
-});
+const ToastComponent = ({
+  open,
+  message,
+  title,
+  actionText,
+  action,
+  onClose,
+}: ToastComponentProps) => {
+  const [isGrabbing, setIsGrabbing] = useState(false);
 
-// ToastComponent
-const ToastComponent = () => {
+  const onGrabAction = useCallback(
+    (grab: boolean) => () => {
+      setIsGrabbing(grab);
+    },
+    []
+  );
+
+  const onActionClick = useCallback(() => {
+    action?.();
+    onClose();
+  }, [action, onClose]);
+
   return (
     <Toast.Provider>
-      <ToastRoot open={true}>
-        <GlowEffect $transparency={10}>
-          <FlareCard $intensity={20} $borderRadius={4}>
-            <MessageContent>
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  padding: '8px 8px',
-                  justifyContent: 'space-evenly',
-                  alignItems: 'space-evenly',
-                }}
-              >
-                <span style={{ fontSize: '16px' }}>Title</span>
-                <span style={{ fontSize: '12px' }}>
-                  You have found a secret! check your progesse here You have
-                  found a secret! check your progesse here
-                </span>
-              </div>
-              <button
-                style={{
-                  height: '30px',
-                  justifySelf: 'center',
-                  alignSelf: 'center',
-                }}
-              >
-                teste
-              </button>
-            </MessageContent>
-          </FlareCard>
-        </GlowEffect>
+      <ToastRoot
+        open={open}
+        onSwipeStart={onGrabAction(true)}
+        onSwipeCancel={onGrabAction(false)}
+        onSwipeEnd={onClose}
+      >
+        <MessageContent $isGrabbing={isGrabbing}>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              padding: '8px 8px',
+              justifyContent: 'space-evenly',
+              alignItems: 'space-evenly',
+            }}
+          >
+            <span style={{ fontSize: '14px', fontWeight: '700' }}>{title}</span>
+            <span style={{ fontSize: '12px' }}>{message}</span>
+          </div>
+          <ActionButton type="button" onClick={onActionClick}>
+            {actionText}
+          </ActionButton>
+        </MessageContent>
       </ToastRoot>
       <ToastViewport />
     </Toast.Provider>

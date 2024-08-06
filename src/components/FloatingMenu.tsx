@@ -6,13 +6,15 @@ import GlowEffect, {
   GlowEffectComponentProps,
 } from './GlowEffect';
 import Logo from './Logo';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useTouching from '../hooks/useIsTouching';
 import SocialIcon from './SocialIcon';
 import StackOverflowIcon from '../assets/Icons/StackOverflow';
 import GithubIcon from '../assets/Icons/Github';
 import LinkedInIcon from '../assets/Icons/LinkedIn';
 import FlareCard from './FlareCard';
+import { useCallback, useRef } from 'react';
+import { useToast } from '../hooks/useToast';
 
 const ThemeToggleButton = styled('button')<
   Pick<GlowEffectComponentProps, '$isTouching'>
@@ -89,8 +91,35 @@ const LogoLink = styled(Link)<GlowEffectComponentProps>(
 );
 
 const FloatingMenu = () => {
+  const toast = useToast();
+  const navigate = useNavigate();
   const { toggleTheme } = useAppThemeContext();
   const { isTouching, handleTouch } = useTouching();
+  const counterDebounce = useRef<NodeJS.Timeout>();
+  const clickCounterRef = useRef<number>(0);
+  const disableClicks = useRef<boolean>(false);
+
+  const onThemeToggle = useCallback(() => {
+    toggleTheme?.();
+    if (counterDebounce.current) {
+      clearTimeout(counterDebounce.current);
+    }
+    if (!disableClicks.current) {
+      clickCounterRef.current = clickCounterRef.current + 1;
+      if (clickCounterRef.current === 10) {
+        disableClicks.current = true;
+        toast({
+          title: '🍪 Not a clicker game',
+          message: 'You have found a secret! check your progress!',
+          actionText: 'View',
+          action: () => navigate('/secrets'),
+        });
+      }
+      counterDebounce.current = setTimeout(() => {
+        clickCounterRef.current = 0;
+      }, 1000);
+    }
+  }, [navigate, toast, toggleTheme]);
 
   return (
     <ChipMenuWrapper>
@@ -134,9 +163,7 @@ const FloatingMenu = () => {
             onTouchStart={handleTouch(true)}
             onTouchEnd={handleTouch(false)}
             onTouchCancel={handleTouch(false)}
-            onClick={() => {
-              toggleTheme?.();
-            }}
+            onClick={onThemeToggle}
           >
             <ThemeToggleAnimation />
           </ThemeToggleButton>

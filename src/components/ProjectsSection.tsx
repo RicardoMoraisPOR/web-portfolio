@@ -4,7 +4,7 @@ import FlareCard from './FlareCard';
 import GlowEffect from './GlowEffect';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
-import { SVGProps, useMemo, useRef } from 'react';
+import { SVGProps, useEffect, useMemo, useRef } from 'react';
 import RevealingSection from './RevealingSection';
 import TailwindJssLogo from '../assets/Icons/TailwindJssLogo';
 import { alphaHexConverter } from '../theme/AppThemeUtils';
@@ -131,9 +131,14 @@ interface ProjectProps {
   skills: Array<ProjectSkillProps>;
 }
 
-const ProjectsSection = () => {
+interface InViewProps {
+  inView?: boolean;
+}
+
+const ProjectsSection = ({ inView }: InViewProps) => {
   const projectsRef = useRef<HTMLDivElement>(null);
   const theme = useTheme();
+  const inViewRef = useRef(false);
 
   const projects: Array<ProjectProps> = useMemo(() => {
     return [
@@ -251,34 +256,46 @@ const ProjectsSection = () => {
   useGSAP(() => {
     if (projectsRef.current) {
       const items = projectsRef.current.children;
-      gsap.fromTo(
-        items,
-        { opacity: 0, y: 100 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1,
-          stagger: 0.5,
-          ease: 'power2.out',
-          delay: 0.6,
-        }
-      );
+      gsap.set(items, { opacity: 0, y: 100 });
     }
   }, []);
 
+  useEffect(() => {
+    if (inView && !inViewRef.current) {
+      inViewRef.current = true;
+      if (projectsRef.current) {
+        const items = projectsRef.current.children;
+        gsap.fromTo(
+          items,
+          { opacity: 0, y: 100 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            stagger: 0.5,
+            ease: 'power2.out',
+            delay: 0.6,
+          }
+        );
+      }
+    }
+  }, [inView]);
+
   return (
     <>
-      <RevealingSection
-        title="Personal Projects"
-        description={
-          <>
-            Here are some of my projects, I developed them because I couldn't
-            find suitable solutions for some of my day to day coding needs. They
-            are all open-sourced so feel free to explore the details and see
-            what I'm currently working on.
-          </>
-        }
-      />
+      {inView && (
+        <RevealingSection
+          title="Personal Projects"
+          description={
+            <>
+              Here are some of my projects, I developed them because I couldn't
+              find suitable solutions for some of my day to day coding needs.
+              They are all open-sourced so feel free to explore the details and
+              see what I'm currently working on.
+            </>
+          }
+        />
+      )}
       <ProjectsWrapper ref={projectsRef}>
         {projects.map((projectData) => (
           <ProjectWrapper key={projectData.title}>

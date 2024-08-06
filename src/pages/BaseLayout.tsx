@@ -7,6 +7,7 @@ import '@fontsource/lato';
 import '@fontsource/montserrat';
 import LoadableComponent from '../components/LoadableComponent';
 import { lazy, useMemo } from 'react';
+import { ToastProvider } from '../contexts/ToastContext';
 
 const BaseLayoutBackground = LoadableComponent(
   lazy(() => import('../components/Background'))
@@ -60,15 +61,17 @@ const BaseLayout = () => {
       <GlobalStyles />
       <BaseLayoutBackground />
       <div id="bg-id-portal" />
-      <Container>
-        <InnerContainer>
-          <FloatingMenu />
-          <OutletContainer>
-            <Outlet />
-          </OutletContainer>
-          <Trademark>© {currentYear} Ricardo Morais | made in 🇵🇹</Trademark>
-        </InnerContainer>
-      </Container>
+      <ToastProvider>
+        <Container>
+          <InnerContainer>
+            <FloatingMenu />
+            <OutletContainer>
+              <Outlet />
+            </OutletContainer>
+            <Trademark>© {currentYear} Ricardo Morais | made in 🇵🇹</Trademark>
+          </InnerContainer>
+        </Container>
+      </ToastProvider>
     </AppThemeProvider>
   );
 };

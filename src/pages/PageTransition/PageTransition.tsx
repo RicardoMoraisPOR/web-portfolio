@@ -1,6 +1,7 @@
 import { SwitchTransition, Transition } from 'react-transition-group';
 import { useLocation } from 'react-router-dom';
 import gsap from 'gsap';
+import { animateScroll } from 'react-scroll';
 import { FC, PropsWithChildren, useRef } from 'react';
 
 const TransitionComponent: FC<PropsWithChildren> = ({ children }) => {
@@ -11,7 +12,7 @@ const TransitionComponent: FC<PropsWithChildren> = ({ children }) => {
     <SwitchTransition>
       <Transition
         key={location.pathname}
-        timeout={500}
+        timeout={200}
         nodeRef={nodeRef}
         onEnter={() => {
           gsap.set(nodeRef.current, {
@@ -27,8 +28,20 @@ const TransitionComponent: FC<PropsWithChildren> = ({ children }) => {
         }}
         onExit={() => {
           gsap
-            .timeline({ paused: true })
-            .to(nodeRef.current, { y: 20, opacity: 0, duration: 0.2 })
+            .timeline({
+              paused: true,
+            })
+            .to(nodeRef.current, {
+              y: 20,
+              opacity: 0,
+              duration: 0.2,
+              onComplete: () => {
+                animateScroll.scrollToTop({
+                  duration: 500,
+                  smooth: 'easeOutCubic',
+                });
+              },
+            })
             .play();
         }}
       >

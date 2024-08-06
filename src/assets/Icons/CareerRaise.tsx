@@ -1,5 +1,5 @@
-import * as React from 'react';
 import type { SVGProps } from 'react';
+
 const SvgCareerRaise = (props: SVGProps<SVGSVGElement>) => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" {...props}>
     <path d="M60.68 39.77h-.09a2.323 2.323 0 0 1-2.23-2.41l.9-22.74-22.74.9c-1.27.03-2.36-.95-2.41-2.23s.95-2.36 2.23-2.41l25.25-1c.64-.02 1.27.22 1.73.68s.7 1.09.68 1.73l-1 25.25a2.324 2.324 0 0 1-2.32 2.23" />

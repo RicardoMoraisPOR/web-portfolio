@@ -652,10 +652,6 @@ const UsesPage = () => {
     searched: techMemo,
   });
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   const onSelectedValue = useCallback(
     (value: Category) => {
       const searchedItems = techMemo.filter((tech) =>
