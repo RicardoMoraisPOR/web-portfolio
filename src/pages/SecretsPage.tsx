@@ -4,7 +4,6 @@ import FlareCard from '../components/FlareCard';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { useCallback, useRef } from 'react';
-import useMediaQuery from '../hooks/useMediaQuery';
 import { useSecretContext } from '../hooks/useSecret';
 import { SecretType } from '../contexts/SecretsContext';
 import PinField from 'react-pin-field';
@@ -148,7 +147,6 @@ const StyledPinField = styled(PinField)(({ theme }) => ({
 const SecretsPage = () => {
   const secretsRef = useRef<HTMLDivElement>(null);
   const toast = useToast();
-  const isTablet = useMediaQuery('max', 'tablet');
   const { revealTitle, secrets, setFoundSecret } = useSecretContext();
   const pinRef = useRef<HTMLInputElement[]>([]);
 
@@ -214,11 +212,7 @@ const SecretsPage = () => {
       <SecretsPageContainer ref={secretsRef}>
         <div>
           <GlowEffect $transparency={10}>
-            <FlareCard
-              $intensity={50}
-              $borderRadius={8}
-              $disableTouch={isTablet}
-            >
+            <FlareCard $intensity={50} $borderRadius={8} $disableTouch>
               <SecretItem>
                 <SecretEmoji $revealed={secrets.secretMoon.hasFoundSecret}>
                   🚀
@@ -237,11 +231,7 @@ const SecretsPage = () => {
         </div>
         <div>
           <GlowEffect $transparency={10}>
-            <FlareCard
-              $intensity={50}
-              $borderRadius={8}
-              $disableTouch={isTablet}
-            >
+            <FlareCard $intensity={50} $borderRadius={8} $disableTouch>
               <SecretItem>
                 <SecretEmoji $revealed={secrets.secretCookie.hasFoundSecret}>
                   🍪
@@ -260,11 +250,7 @@ const SecretsPage = () => {
         </div>
         <div>
           <GlowEffect $transparency={10}>
-            <FlareCard
-              $intensity={50}
-              $borderRadius={8}
-              $disableTouch={isTablet}
-            >
+            <FlareCard $intensity={50} $borderRadius={8} $disableTouch>
               <SecretItem>
                 <SecretEmoji $revealed={secrets.secretBug.hasFoundSecret}>
                   🪲
@@ -283,11 +269,7 @@ const SecretsPage = () => {
         </div>
         <div>
           <GlowEffect $transparency={10}>
-            <FlareCard
-              $intensity={50}
-              $borderRadius={8}
-              $disableTouch={isTablet}
-            >
+            <FlareCard $intensity={50} $borderRadius={8} $disableTouch>
               <SecretItem>
                 <SecretEmoji $revealed={secrets.secretPin.hasFoundSecret}>
                   🔦
@@ -317,11 +299,7 @@ const SecretsPage = () => {
         </div>
         <div>
           <GlowEffect $transparency={10}>
-            <FlareCard
-              $intensity={50}
-              $borderRadius={8}
-              $disableTouch={isTablet}
-            >
+            <FlareCard $intensity={50} $borderRadius={8} $disableTouch>
               <SecretItem>
                 <SecretEmoji $revealed={secrets.secretPixel.hasFoundSecret}>
                   📐
