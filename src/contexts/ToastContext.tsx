@@ -1,4 +1,10 @@
-import { createContext, useState, useCallback, ReactNode } from 'react';
+import {
+  createContext,
+  useState,
+  useCallback,
+  PropsWithChildren,
+  FC,
+} from 'react';
 import ToastComponent from '../components/ToastComponent';
 import ConfettiEffect from '../components/ConfettiEffect';
 
@@ -20,9 +26,7 @@ interface ToastContextType {
 
 const ToastContext = createContext<ToastContextType | undefined>(undefined);
 
-export const ToastProvider: React.FC<{ children: ReactNode }> = ({
-  children,
-}) => {
+export const ToastProvider: FC<PropsWithChildren> = ({ children }) => {
   const [toastProps, setToastProps] = useState<Omit<
     ToastComponentProps,
     'onClose'

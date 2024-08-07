@@ -17,6 +17,7 @@ import {
   SiTestinglibrary,
   SiTypescript,
 } from '@icons-pack/react-simple-icons';
+import ShiverSpan from './ShiverSpan';
 
 const SkillsWrapper = styled(PositioningDiv)(({ theme }) => ({
   display: 'grid',
@@ -64,44 +65,40 @@ const SkillsSection = ({ inView }: InViewProps) => {
       const items = skillsRef.current.children;
       gsap.set(items, { opacity: 0, y: 70 });
     }
-  }, []);
+  }, [inView]);
 
   useEffect(() => {
     if (inView && !inViewRef.current) {
       inViewRef.current = true;
       if (skillsRef.current) {
         const items = skillsRef.current.children;
-        gsap.fromTo(
-          items,
-          { opacity: 0, y: 70 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 1,
-            stagger: 0.2,
-            ease: 'power2.out',
-            delay: 0.6,
-          }
-        );
+        gsap.to(items, {
+          opacity: 1,
+          y: 0,
+          duration: 0.7,
+          stagger: 0.2,
+          ease: 'power2.out',
+          delay: 0.6,
+        });
       }
     }
   }, [inView]);
 
   return (
     <>
-      {inView && (
-        <RevealingSection
-          title="My main tech stack"
-          description={
-            <>
-              These technologies represent the core of my technical expertise.
-              However, my skill set extends beyond these tools and frameworks
-              which you can explore in more detail in my{' '}
-              <Link to="/uses">uses tech</Link> page.
-            </>
-          }
-        />
-      )}
+      <RevealingSection
+        inView={inView}
+        title="My main tech stack"
+        description={
+          <>
+            These technologies represent the core of my technical expertise.
+            However, my skill set extends beyond these tools and frameworks,
+            which you can explore my <Link to="/uses">uses page</Link> to dive
+            deeper into the technology I utilize to create cutting-edge software{' '}
+            <ShiverSpan>🚀</ShiverSpan>
+          </>
+        }
+      />
       <SkillsWrapper ref={skillsRef}>
         <SkillWrapper>
           <GlowEffect $transparency={15}>

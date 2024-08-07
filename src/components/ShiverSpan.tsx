@@ -9,18 +9,22 @@ import {
 import { gsap } from 'gsap';
 import { useToast } from '../hooks/useToast';
 import { useNavigate } from 'react-router-dom';
+import { useSecretContext } from '../hooks/useSecret';
+
+type SecretType = 'notFound' | 'found' | 'disabled';
 
 const ShiverSpan: FC<PropsWithChildren> = ({ children }) => {
   const toast = useToast();
   const navigate = useNavigate();
   const spanRef = useRef<HTMLSpanElement | null>(null);
   const timelineRef = useRef<gsap.core.Timeline | null>(null);
-  const [clicked, setClicked] = useState<'notFound' | 'found' | 'disabled'>(
-    'notFound'
+  const { secrets, setFoundSecret } = useSecretContext();
+  const [clicked, setClicked] = useState<SecretType>(
+    secrets.secretMoon.hasFoundSecret ? 'found' : 'notFound'
   );
 
   useEffect(() => {
-    if (spanRef.current) {
+    if (spanRef.current && !secrets.secretMoon.hasFoundSecret) {
       timelineRef.current = gsap.timeline({
         repeat: -1,
         yoyo: true,
@@ -107,6 +111,7 @@ const ShiverSpan: FC<PropsWithChildren> = ({ children }) => {
   }, []);
 
   const onSpanClick = useCallback(() => {
+    setFoundSecret('secretMoon');
     toast({
       title: '🚀 To the moon!',
       message: 'You have found a secret! check your progress!',
@@ -125,7 +130,7 @@ const ShiverSpan: FC<PropsWithChildren> = ({ children }) => {
       duration: 0.2,
       ease: 'power1.inOut',
     });
-  }, [navigate, toast]);
+  }, [navigate, setFoundSecret, toast]);
 
   return (
     <>

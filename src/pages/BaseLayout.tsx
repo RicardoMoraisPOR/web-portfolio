@@ -8,6 +8,7 @@ import '@fontsource/montserrat';
 import LoadableComponent from '../components/LoadableComponent';
 import { lazy, useMemo } from 'react';
 import { ToastProvider } from '../contexts/ToastContext';
+import { useSecretContext } from '../hooks/useSecret';
 
 const BaseLayoutBackground = LoadableComponent(
   lazy(() => import('../components/Background'))
@@ -51,7 +52,13 @@ const Trademark = styled('div')({
   opacity: 0.3,
 });
 
+const SecretPin = styled('span')(({ theme }) => ({
+  fontSize: '12px',
+  color: theme.palette.background,
+}));
+
 const BaseLayout = () => {
+  const { secrets } = useSecretContext();
   const currentYear = useMemo(() => {
     return new Date().getFullYear();
   }, []);
@@ -68,7 +75,10 @@ const BaseLayout = () => {
             <OutletContainer>
               <Outlet />
             </OutletContainer>
-            <Trademark>© {currentYear} Ricardo Morais | made in 🇵🇹</Trademark>
+            <Trademark>
+              © {currentYear} Ricardo Morais | made in 🇵🇹{' '}
+              {!secrets.secretPin.hasFoundSecret && <SecretPin>P1N</SecretPin>}
+            </Trademark>
           </InnerContainer>
         </Container>
       </ToastProvider>

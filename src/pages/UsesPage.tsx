@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled, { useTheme } from 'styled-components';
 
 import { alphaHexConverter } from '../theme/AppThemeUtils';
@@ -92,6 +92,8 @@ import {
 } from '@icons-pack/react-simple-icons';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
+import { useSecretContext } from '../hooks/useSecret';
+import { useToast } from '../hooks/useToast';
 
 const techs = () => {
   const shuffleArray = (array: Array<TechItemProps>) => {
@@ -583,6 +585,28 @@ const ItemText = styled(Select.Separator)({
   fontSize: '12px',
 });
 
+const ItemTextSecret = styled('button')<{ $found: boolean }>(
+  ({ $found, theme }) => ({
+    background: 'none',
+    border: 'none',
+    padding: '0',
+    margin: '0',
+    color: 'inherit',
+    font: 'inherit',
+    cursor: 'pointer',
+    fontSize: '12px',
+    transition: `transform ${theme.transitions.fast}ms ease`,
+    transform: $found ? 'none' : 'translateX(-10px) skew(3deg, -4deg)',
+    textDecoration: 'none',
+    '&:hover': {
+      textDecoration: 'none',
+    },
+    '&:focus': {
+      outline: 'none',
+    },
+  })
+);
+
 type Category =
   | 'all'
   | 'using'
@@ -621,6 +645,9 @@ type Action =
   | { type: 'SET_SEARCHED'; payload: Array<TechItemProps> };
 
 const UsesPage = () => {
+  const { secrets, setFoundSecret } = useSecretContext();
+  const toast = useToast();
+  const navigate = useNavigate();
   const theme = useTheme();
   const techRef = useRef<HTMLDivElement>(null);
   const debounceTimeout = useRef<NodeJS.Timeout>();
@@ -760,6 +787,16 @@ const UsesPage = () => {
     }
   }, []);
 
+  const onFoundSecret = useCallback(() => {
+    setFoundSecret('secretPixel');
+    toast({
+      title: '📐 Pixel perfectionist!',
+      message: 'You have found a secret! check your progress!',
+      actionText: 'View',
+      action: () => navigate('/secrets'),
+    });
+  }, [navigate, setFoundSecret, toast]);
+
   return (
     <div
       style={{
@@ -877,16 +914,16 @@ const UsesPage = () => {
                       fill: theme.palette.primary,
                     })
                   )}
-                  <ItemText
-                    style={{
-                      transform:
-                        name === 'CSS'
-                          ? 'translateX(-10px) skew(3deg, -4deg)'
-                          : undefined,
-                    }}
-                  >
-                    {name}
-                  </ItemText>
+                  {name === 'CSS' ? (
+                    <ItemTextSecret
+                      onClick={onFoundSecret}
+                      $found={secrets.secretPixel.hasFoundSecret}
+                    >
+                      {name}
+                    </ItemTextSecret>
+                  ) : (
+                    <ItemText>{name}</ItemText>
+                  )}
                 </TechItem>
               </FlareCard>
             </GlowEffect>

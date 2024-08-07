@@ -37,6 +37,7 @@ export type BreakpointTypes = {
 };
 
 export default interface Theme {
+  isDarkTheme: boolean;
   breakpoints: BreakpointTypes;
   transitions: Transitions;
   fonts: Fonts;

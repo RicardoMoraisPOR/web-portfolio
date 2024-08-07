@@ -265,37 +265,32 @@ const ProjectsSection = ({ inView }: InViewProps) => {
       inViewRef.current = true;
       if (projectsRef.current) {
         const items = projectsRef.current.children;
-        gsap.fromTo(
-          items,
-          { opacity: 0, y: 100 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 1,
-            stagger: 0.5,
-            ease: 'power2.out',
-            delay: 0.6,
-          }
-        );
+        gsap.to(items, {
+          opacity: 1,
+          y: 0,
+          duration: 0.7,
+          stagger: 0.3,
+          ease: 'power2.out',
+          delay: 0.6,
+        });
       }
     }
   }, [inView]);
 
   return (
     <>
-      {inView && (
-        <RevealingSection
-          title="Personal Projects"
-          description={
-            <>
-              Here are some of my projects, I developed them because I couldn't
-              find suitable solutions for some of my day to day coding needs.
-              They are all open-sourced so feel free to explore the details and
-              see what I'm currently working on.
-            </>
-          }
-        />
-      )}
+      <RevealingSection
+        inView={inView}
+        title="Personal Projects"
+        description={
+          <>
+            Here are some of my projects, I developed them because I couldn't
+            find suitable solutions for some of my day to day coding needs. They
+            are all open-sourced so feel free to explore the details and see
+            what I'm currently working on.
+          </>
+        }
+      />
       <ProjectsWrapper ref={projectsRef}>
         {projects.map((projectData) => (
           <ProjectWrapper key={projectData.title}>

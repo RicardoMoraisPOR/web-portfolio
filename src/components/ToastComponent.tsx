@@ -128,9 +128,11 @@ const ToastComponent = ({
             <span style={{ fontSize: '14px', fontWeight: '700' }}>{title}</span>
             <span style={{ fontSize: '12px' }}>{message}</span>
           </div>
-          <ActionButton type="button" onClick={onActionClick}>
-            {actionText}
-          </ActionButton>
+          {Boolean(actionText && actionText?.length > 0) && (
+            <ActionButton type="button" onClick={onActionClick}>
+              {actionText}
+            </ActionButton>
+          )}
         </MessageContent>
       </ToastRoot>
       <ToastViewport />

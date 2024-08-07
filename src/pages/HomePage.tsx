@@ -3,7 +3,6 @@ import { lazy, useRef } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { Link } from 'react-router-dom';
-import ShiverSpan from '../components/ShiverSpan';
 import { useLottie } from 'lottie-react';
 import scrollAnimation from '../assets/scroll.json';
 import LoadableComponent from '../components/LoadableComponent';
@@ -95,6 +94,24 @@ const SectionPositioningDiv = styled(PositioningDiv)(({ theme }) => ({
 const HomePage = () => {
   const emojiRef = useRef<HTMLDivElement>(null);
   const scrollAnimationRef = useRef<HTMLDivElement>(null);
+  const heroRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    gsap
+      .timeline({
+        paused: true,
+      })
+      .from(heroRef.current, {
+        opacity: 0,
+        y: 70,
+        duration: 0.4,
+      })
+      .to(heroRef.current, {
+        y: 0,
+        opacity: 1,
+      })
+      .play();
+  });
 
   useGSAP(() => {
     gsap
@@ -172,7 +189,7 @@ const HomePage = () => {
   return (
     <main>
       <HomePageWrapper>
-        <div>
+        <div ref={heroRef}>
           <PositioningDiv>
             <Title>
               Hello <InlineDiv ref={emojiRef}>✌️</InlineDiv> my name is Ricardo
@@ -197,8 +214,8 @@ const HomePage = () => {
               <IntroTextAbout>
                 I didn't want this to be just another generic portfolio website,
                 so I've added some secrets that you can see{' '}
-                <Link to="/about">here</Link>. to make exploring the site a bit
-                more engaging, happy hunting! <ShiverSpan>🚀</ShiverSpan>
+                <Link to="/secrets">here</Link>. to make exploring the site a
+                bit more engaging, happy hunting!
               </IntroTextAbout>
             </IntroTextWrapper>
           </PositioningDiv>
@@ -213,7 +230,7 @@ const HomePage = () => {
           </ScrollAnimationWrapper>
         </PositioningDiv>
       </HomePageWrapper>
-      <SectionPositioningDiv ref={skillsRef}>
+      <SectionPositioningDiv id="target2" ref={skillsRef}>
         <SkillsSection inView={skillsInView} />
       </SectionPositioningDiv>
       <SectionPositioningDiv ref={projectsRef}>

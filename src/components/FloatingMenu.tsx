@@ -6,7 +6,7 @@ import GlowEffect, {
   GlowEffectComponentProps,
 } from './GlowEffect';
 import Logo from './Logo';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import useTouching from '../hooks/useIsTouching';
 import SocialIcon from './SocialIcon';
 import StackOverflowIcon from '../assets/Icons/StackOverflow';
@@ -15,6 +15,7 @@ import LinkedInIcon from '../assets/Icons/LinkedIn';
 import FlareCard from './FlareCard';
 import { useCallback, useRef } from 'react';
 import { useToast } from '../hooks/useToast';
+import { useSecretContext } from '../hooks/useSecret';
 
 const ThemeToggleButton = styled('button')<
   Pick<GlowEffectComponentProps, '$isTouching'>
@@ -93,33 +94,46 @@ const LogoLink = styled(Link)<GlowEffectComponentProps>(
 const FloatingMenu = () => {
   const toast = useToast();
   const navigate = useNavigate();
+  const location = useLocation();
   const { toggleTheme } = useAppThemeContext();
   const { isTouching, handleTouch } = useTouching();
+  const { secrets, setFoundSecret } = useSecretContext();
   const counterDebounce = useRef<NodeJS.Timeout>();
   const clickCounterRef = useRef<number>(0);
-  const disableClicks = useRef<boolean>(false);
 
   const onThemeToggle = useCallback(() => {
     toggleTheme?.();
     if (counterDebounce.current) {
       clearTimeout(counterDebounce.current);
     }
-    if (!disableClicks.current) {
+    if (!secrets.secretCookie.hasFoundSecret) {
       clickCounterRef.current = clickCounterRef.current + 1;
       if (clickCounterRef.current === 10) {
-        disableClicks.current = true;
+        setFoundSecret('secretCookie');
+        const isInSecretsPage = location.pathname === '/secrets';
         toast({
-          title: '🍪 Not a clicker game',
-          message: 'You have found a secret! check your progress!',
-          actionText: 'View',
-          action: () => navigate('/secrets'),
+          title: '🍪 Not a clicker game!',
+          message: `You have found a secret!${
+            !isInSecretsPage && ' check your progress!'
+          }`,
+          ...(!isInSecretsPage && {
+            actionText: 'View',
+            action: () => navigate('/secrets'),
+          }),
         });
       }
       counterDebounce.current = setTimeout(() => {
         clickCounterRef.current = 0;
       }, 1000);
     }
-  }, [navigate, toast, toggleTheme]);
+  }, [
+    location.pathname,
+    navigate,
+    secrets.secretCookie.hasFoundSecret,
+    setFoundSecret,
+    toast,
+    toggleTheme,
+  ]);
 
   return (
     <ChipMenuWrapper>
@@ -155,7 +169,7 @@ const FloatingMenu = () => {
         </SocialIcon>
       </SocialsWrapper>
       <GlowEffect $transparency={50}>
-        <FlareCard $intensity={8} $borderRadius={50}>
+        <FlareCard $intensity={50} $borderRadius={50}>
           <ThemeToggleButton
             type="button"
             aria-label="Theme Toggle"

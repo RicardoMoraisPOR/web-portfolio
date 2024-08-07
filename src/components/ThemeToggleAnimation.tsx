@@ -39,9 +39,9 @@ const ThemeToggleAnimation = memo(() => {
     return deepRGBAReplace(
       themeAnimation,
       [1, 0.819607853889, 0.372549027205, 1],
-      hexToLottieRGBA(theme.palette.accent)
+      hexToLottieRGBA(theme.palette.primary)
     );
-  }, [theme.palette.accent]);
+  }, [theme.palette.primary]);
 
   const {
     View,

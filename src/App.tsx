@@ -1,10 +1,16 @@
 import { Routes, Route } from 'react-router-dom';
-import HomePage from './pages/HomePage';
 import BaseLayout from './pages/BaseLayout';
-import AboutPage from './pages/AboutPage';
 import Page404 from './pages/Page404';
-import UsesPage from './pages/UsesPage';
 import PageTransition from './pages/PageTransition/PageTransition';
+import LoadableComponent from './components/LoadableComponent';
+import { lazy } from 'react';
+
+const HomePage = LoadableComponent(lazy(() => import('./pages/HomePage')));
+const AboutPage = LoadableComponent(lazy(() => import('./pages/AboutPage')));
+const UsesPage = LoadableComponent(lazy(() => import('./pages/UsesPage')));
+const SecretsPage = LoadableComponent(
+  lazy(() => import('./pages/SecretsPage'))
+);
 
 const App = () => {
   return (
@@ -31,6 +37,14 @@ const App = () => {
           element={
             <PageTransition>
               <UsesPage />
+            </PageTransition>
+          }
+        />
+        <Route
+          path="secrets"
+          element={
+            <PageTransition>
+              <SecretsPage />
             </PageTransition>
           }
         />

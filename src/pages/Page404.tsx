@@ -5,6 +5,7 @@ import { useToast } from '../hooks/useToast';
 import { useNavigate } from 'react-router-dom';
 import { useCallback, useRef } from 'react';
 import gsap from 'gsap';
+import { useSecretContext } from '../hooks/useSecret';
 
 const AnimationContainer = styled('div')(({ theme }) => ({
   height: 'calc(80vh)',
@@ -46,6 +47,7 @@ const Page404 = () => {
   const toast = useToast();
   const navigate = useNavigate();
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const { secrets, setFoundSecret } = useSecretContext();
 
   const onBugClick = useCallback(() => {
     if (buttonRef.current) {
@@ -57,6 +59,7 @@ const Page404 = () => {
         rotation: 20,
         ease: 'power2.inOut',
         onComplete: () => {
+          setFoundSecret('secretBug');
           toast({
             title: '🪲 Lost, but found!',
             message: 'You have found a secret! check your progress!',
@@ -66,7 +69,7 @@ const Page404 = () => {
         },
       });
     }
-  }, [navigate, toast]);
+  }, [navigate, setFoundSecret, toast]);
 
   const { View } = useLottie({
     id: '404AnimationId',
@@ -87,9 +90,11 @@ const Page404 = () => {
     <AnimationContainer>
       {View}
       <span>How did you end up here?</span>
-      <UnstyledButton ref={buttonRef} onClick={onBugClick}>
-        🪲
-      </UnstyledButton>
+      {!secrets.secretBug.hasFoundSecret && (
+        <UnstyledButton ref={buttonRef} onClick={onBugClick}>
+          🪲
+        </UnstyledButton>
+      )}
     </AnimationContainer>
   );
 };

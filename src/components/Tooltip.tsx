@@ -59,6 +59,11 @@ const NoActionButton = styled.button({
   font: 'inherit',
   outline: 'none',
   alignItems: 'stretch',
+  '&:focus': {
+    svg: {
+      opacity: '100%',
+    },
+  },
 });
 
 const Tooltip: FC<PropsWithChildren<TooltipProps>> = ({

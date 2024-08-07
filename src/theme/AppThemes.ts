@@ -2,7 +2,7 @@ import { DefaultTheme } from 'styled-components';
 import { Palette } from './AppTheme.types';
 import type { Except } from 'type-fest';
 
-const baseTheme: Except<DefaultTheme, 'palette'> = {
+const baseTheme: Except<DefaultTheme, 'palette' | 'isDarkTheme'> = {
   breakpoints: {
     min: {
       mobile: '@media only screen and (min-width: 600px)',
@@ -30,6 +30,7 @@ const defaultAccent: Palette['accent'] = '#9ca3af'; // slate-500
 
 export const darkTheme: DefaultTheme = {
   ...baseTheme,
+  isDarkTheme: true,
   palette: {
     accent: defaultAccent,
     primary: '#d4d4d8', // zinc-400
@@ -41,6 +42,7 @@ export const darkTheme: DefaultTheme = {
 
 export const lightTheme: DefaultTheme = {
   ...baseTheme,
+  isDarkTheme: false,
   palette: {
     accent: defaultAccent,
     primary: '#334155', // slate-700
