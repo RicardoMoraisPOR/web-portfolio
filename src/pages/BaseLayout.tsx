@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 import FloatingMenu from '../components/FloatingMenu';
 import AppThemeProvider from '../theme/AppThemeProvider';
 import GlobalStyles from '../theme/GlobalStyles';
@@ -7,8 +7,8 @@ import '@fontsource/lato';
 import '@fontsource/montserrat';
 import LoadableComponent from '../components/LoadableComponent';
 import { lazy, useMemo } from 'react';
-import { ToastProvider } from '../contexts/ToastContext';
 import { useSecretContext } from '../hooks/useSecret';
+import { Toaster } from 'sonner';
 
 const BaseLayoutBackground = LoadableComponent(
   lazy(() => import('../components/Background'))
@@ -57,6 +57,35 @@ const SecretPin = styled('span')(({ theme }) => ({
   color: theme.palette.background,
 }));
 
+const StyledToaster = styled(Toaster)(({ theme }) => ({
+  fontSize: '12px',
+  '& li': {
+    background: theme.palette.primary,
+    '& > div': {
+      color: theme.palette.background,
+    },
+    '& > button': {
+      background: 'red',
+    },
+  },
+}));
+
+const ToasterComponent = () => {
+  const theme = useTheme();
+  return (
+    <StyledToaster
+      duration={7000}
+      expand={true}
+      toastOptions={{
+        actionButtonStyle: {
+          background: theme.palette.secondary,
+          color: theme.palette.text,
+        },
+      }}
+    />
+  );
+};
+
 const BaseLayout = () => {
   const { secrets } = useSecretContext();
   const currentYear = useMemo(() => {
@@ -68,20 +97,19 @@ const BaseLayout = () => {
       <GlobalStyles />
       <BaseLayoutBackground />
       <div id="bg-id-portal" />
-      <ToastProvider>
-        <Container>
-          <InnerContainer>
-            <FloatingMenu />
-            <OutletContainer>
-              <Outlet />
-            </OutletContainer>
-            <Trademark>
-              © {currentYear} Ricardo Morais | made in 🇵🇹{' '}
-              {!secrets.secretPin.hasFoundSecret && <SecretPin>P1N</SecretPin>}
-            </Trademark>
-          </InnerContainer>
-        </Container>
-      </ToastProvider>
+      <ToasterComponent />
+      <Container>
+        <InnerContainer>
+          <FloatingMenu />
+          <OutletContainer>
+            <Outlet />
+          </OutletContainer>
+          <Trademark>
+            © {currentYear} Ricardo Morais | made in 🇵🇹{' '}
+            {!secrets.secretPin.hasFoundSecret && <SecretPin>P1N</SecretPin>}
+          </Trademark>
+        </InnerContainer>
+      </Container>
     </AppThemeProvider>
   );
 };

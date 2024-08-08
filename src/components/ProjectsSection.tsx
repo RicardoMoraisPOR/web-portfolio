@@ -20,6 +20,7 @@ import Tooltip from './Tooltip';
 import SvgRadixUi from '../assets/Icons/RadixUi';
 import SvgStyledComponentsLogo from '../assets/Icons/StyledComponentsLogo';
 import { SiPnpm, SiReact, SiTypescript } from '@icons-pack/react-simple-icons';
+import { useSecretContext } from '../hooks/useSecret';
 
 const ProjectsWrapper = styled(PositioningDiv)(({ theme }) => ({
   display: 'grid',
@@ -85,6 +86,36 @@ const ProjectTitle = styled(Link)(({ theme }) => ({
   fontSize: '20px',
 }));
 
+const ProjectTitleButton = styled('button')(({ theme }) => ({
+  fontFamily: theme.fonts.lato,
+  fontSize: '20px',
+  background: 'none',
+  border: 'none',
+  padding: '0',
+  margin: '0',
+  font: 'inherit',
+  cursor: 'pointer',
+  width: 'fit-content',
+  lineHeight: 1.6,
+  letterSpacing: '0.5px',
+  color: theme.palette.text,
+  position: 'relative',
+  transition: `color ${theme.transitions.fast}ms linear`,
+  textDecoration: 'none', // Remove the default underline
+  '&:hover': {
+    color: theme.palette.primary,
+  },
+  '&::after': {
+    content: '""',
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: '-1.5px', // Adjust this value to move the underline lower
+    height: '1px', // Adjust the thickness of the underline
+    backgroundColor: 'currentColor', // Use the text color for the underline
+  },
+}));
+
 const ProjectTitleNoLink = styled('span')(({ theme }) => ({
   fontFamily: theme.fonts.lato,
   fontSize: '20px',
@@ -126,7 +157,7 @@ interface ProjectProps {
     }
   ) => JSX.Element;
   height?: CSSObject['height'];
-  link?: string;
+  link?: string | (() => void);
   description?: string;
   skills: Array<ProjectSkillProps>;
 }
@@ -137,6 +168,7 @@ interface InViewProps {
 
 const ProjectsSection = ({ inView }: InViewProps) => {
   const projectsRef = useRef<HTMLDivElement>(null);
+  const { secrets } = useSecretContext();
   const theme = useTheme();
   const inViewRef = useRef(false);
 
@@ -177,7 +209,13 @@ const ProjectsSection = ({ inView }: InViewProps) => {
         icon: Logo,
         height: 90,
         title: 'Portfolio Website',
-        link: 'https://ricardomorais.dev/',
+        link: secrets.secretRecursion.hasFoundSecret
+          ? 'https://ricardomorais.dev'
+          : () => {
+              localStorage.setItem('recursionInit', 'true');
+              // eslint-disable-next-line no-self-assign
+              window.location.reload();
+            },
         description:
           'This is my personal portfolio website, the one you are visiting right now, it was built using my favorite tools and technologies.',
         skills: [
@@ -251,7 +289,12 @@ const ProjectsSection = ({ inView }: InViewProps) => {
         ],
       },
     ] as Array<ProjectProps>;
-  }, [theme.palette.accent, theme.palette.primary, theme.palette.secondary]);
+  }, [
+    secrets.secretRecursion.hasFoundSecret,
+    theme.palette.accent,
+    theme.palette.primary,
+    theme.palette.secondary,
+  ]);
 
   useGSAP(() => {
     if (projectsRef.current) {
@@ -303,11 +346,18 @@ const ProjectsSection = ({ inView }: InViewProps) => {
                       $height: projectData.height,
                     })}
                   </ProjectImageWrapper>
-                  {projectData.link ? (
+                  {projectData.link && typeof projectData.link === 'string' && (
                     <ProjectTitle to={projectData.link} target="_blank">
                       {projectData.title}
                     </ProjectTitle>
-                  ) : (
+                  )}
+                  {projectData.link &&
+                    typeof projectData.link === 'function' && (
+                      <ProjectTitleButton onClick={projectData.link}>
+                        {projectData.title}
+                      </ProjectTitleButton>
+                    )}
+                  {projectData.link === undefined && (
                     <ProjectTitleNoLink>{projectData.title}</ProjectTitleNoLink>
                   )}
                   <ProjectDescription>

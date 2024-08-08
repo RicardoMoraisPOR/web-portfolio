@@ -3,12 +3,14 @@ import GlowEffect from '../components/GlowEffect';
 import FlareCard from '../components/FlareCard';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
-import { useCallback, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useSecretContext } from '../hooks/useSecret';
 import { SecretType } from '../contexts/SecretsContext';
 import PinField from 'react-pin-field';
 import { alphaHexConverter } from '../theme/AppThemeUtils';
-import { useToast } from '../hooks/useToast';
+import useToast from '../hooks/useSonnerToast';
+import ConfettiEffect from '../components/ConfettiEffect';
+import { Link } from 'react-router-dom';
 
 const PageContainer = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -21,21 +23,23 @@ const PageContainer = styled('div')(({ theme }) => ({
   },
 }));
 
-const SecretsPageContainer = styled('div')(({ theme }) => ({
-  display: 'flex',
-  flexWrap: 'wrap',
-  justifyContent: 'center',
-  alignItems: 'center',
-  gap: '20px',
-  [theme.breakpoints.max.desktop]: {
-    margin: '100px 0px',
-    gap: '40px',
-    padding: '20px 20px',
-  },
-  [theme.breakpoints.max.mobile]: {
-    gap: '60px',
-  },
-}));
+const SecretsPageContainer = styled('div')<{ $foundAll: boolean }>(
+  ({ theme, $foundAll }) => ({
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: '20px',
+    [theme.breakpoints.max.desktop]: {
+      margin: $foundAll ? '20px 0px' : '100px 0px',
+      gap: '40px',
+      padding: '20px 20px',
+    },
+    [theme.breakpoints.max.mobile]: {
+      gap: '60px',
+    },
+  })
+);
 
 const SecretItem = styled('div')({
   minHeight: '200px',
@@ -74,20 +78,47 @@ const SecretTitle = styled('span')({
   fontWeight: 900,
 });
 
-const RevealText = styled('button')({
+const RevealText = styled('button')(({ theme }) => ({
+  fontSize: '12px !important',
   background: 'none',
   border: 'none',
   padding: '0',
-  color: 'inherit',
+  margin: '0',
   font: 'inherit',
   cursor: 'pointer',
-  fontSize: '12px',
-  margin: '10px 0px',
-  textDecoration: 'underline',
-  '&:focus': {
-    outline: 'none',
+  width: 'fit-content',
+  lineHeight: 1.6,
+  letterSpacing: '0.5px',
+  color: theme.palette.text,
+  position: 'relative',
+  transition: `color ${theme.transitions.fast}ms linear`,
+  textDecoration: 'none', // Remove the default underline
+  '&:hover': {
+    color: theme.palette.primary,
   },
-});
+  '&::after': {
+    content: '""',
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: '-1.5px', // Adjust this value to move the underline lower
+    height: '1px', // Adjust the thickness of the underline
+    backgroundColor: 'currentColor', // Use the text color for the underline
+  },
+}));
+
+const ThankYouNote = styled('div')(({ theme }) => ({
+  maxWidth: '50vw',
+  margin: '50px 0px',
+  textAlign: 'center',
+
+  [theme.breakpoints.max.tablet]: {
+    maxWidth: '80vw',
+  },
+  [theme.breakpoints.max.mobile]: {
+    maxWidth: '100%',
+  },
+}));
 
 const PinFieldContainer = styled('div')({
   position: 'absolute',
@@ -145,10 +176,12 @@ const StyledPinField = styled(PinField)(({ theme }) => ({
 }));
 
 const SecretsPage = () => {
+  const { callToast, confetti } = useToast();
   const secretsRef = useRef<HTMLDivElement>(null);
-  const toast = useToast();
-  const { revealTitle, secrets, setFoundSecret } = useSecretContext();
+  const { revealTitle, secrets, setFoundSecret, foundAll } = useSecretContext();
   const pinRef = useRef<HTMLInputElement[]>([]);
+  const thankYouRef = useRef<HTMLDivElement>(null);
+  const founAllEffectInterval = useRef<NodeJS.Timeout>();
 
   useGSAP(() => {
     if (secretsRef.current) {
@@ -166,6 +199,39 @@ const SecretsPage = () => {
       );
     }
   }, []);
+
+  useGSAP(() => {
+    if (pinRef.current && !secrets.secretPin.hasFoundSecret) {
+      gsap.fromTo(
+        pinRef.current,
+        { opacity: 0, y: 10 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.7,
+          stagger: 0.1,
+          ease: 'power2.out',
+          delay: 1,
+        }
+      );
+    }
+  }, []);
+
+  useGSAP(() => {
+    if (foundAll) {
+      gsap.fromTo(
+        thankYouRef.current,
+        { opacity: 0, y: 70 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.7,
+          stagger: 0.1,
+          ease: 'power2.out',
+        }
+      );
+    }
+  }, [foundAll]);
 
   const onTitleReveal = useCallback(
     (type: SecretType) => () => {
@@ -193,9 +259,8 @@ const SecretsPage = () => {
             ease: 'power2.out',
             onComplete: () => {
               setFoundSecret('secretPin');
-              toast({
-                title: '🔦 Hidden in plain sight!',
-                message: 'You have found a secret!',
+              callToast('🔦 Hidden in plain sight!', {
+                description: 'You have found a secret!',
               });
             },
           }
@@ -204,24 +269,48 @@ const SecretsPage = () => {
         pinRef.current.forEach((input) => input.classList.add('invalid'));
       }
     },
-    [setFoundSecret, toast]
+    [callToast, setFoundSecret]
   );
+
+  const [confettiKey, setConfettiKey] = useState(0);
+
+  useEffect(() => {
+    if (foundAll) {
+      founAllEffectInterval.current = setInterval(() => {
+        setConfettiKey((prevKey) => prevKey + 1);
+      }, 2500);
+
+      return () => clearInterval(founAllEffectInterval.current); // Cleanup interval on component unmount
+    }
+  }, [foundAll]);
 
   return (
     <PageContainer>
-      <SecretsPageContainer ref={secretsRef}>
+      {confetti}
+      {foundAll && (
+        <>
+          <ConfettiEffect key={confettiKey} />
+          <ThankYouNote ref={thankYouRef}>
+            Thank you for your effort in uncovering all the secrets! I hope you
+            enjoyed the hunt as much as I enjoyed hiding them. As a reward, you
+            now have access to the <Link to="/theme">theme editor page</Link> to
+            customize the website theme, have fun!.
+          </ThankYouNote>
+        </>
+      )}
+      <SecretsPageContainer $foundAll={foundAll} ref={secretsRef}>
         <div>
           <GlowEffect $transparency={10}>
             <FlareCard $intensity={50} $borderRadius={8} $disableTouch>
               <SecretItem>
-                <SecretEmoji $revealed={secrets.secretMoon.hasFoundSecret}>
-                  🚀
+                <SecretEmoji $revealed={secrets.secretRecursion.hasFoundSecret}>
+                  🔄
                 </SecretEmoji>
-                {secrets.secretMoon.hasFoundSecret ||
-                secrets.secretMoon.hasRevealedTitle ? (
-                  <SecretTitle>To the moon!</SecretTitle>
+                {secrets.secretRecursion.hasFoundSecret ||
+                secrets.secretRecursion.hasRevealedTitle ? (
+                  <SecretTitle>Did you mean "recursion"?</SecretTitle>
                 ) : (
-                  <RevealText onClick={onTitleReveal('secretMoon')}>
+                  <RevealText onClick={onTitleReveal('secretRecursion')}>
                     Reveal Title Hint
                   </RevealText>
                 )}
@@ -282,8 +371,8 @@ const SecretsPage = () => {
                     Reveal Title Hint
                   </RevealText>
                 )}
-                {!secrets.secretPin.hasFoundSecret && (
-                  <PinFieldContainer>
+                <PinFieldContainer>
+                  {!secrets.secretPin.hasFoundSecret && (
                     <StyledPinField
                       ref={pinRef}
                       length={3}
@@ -291,8 +380,8 @@ const SecretsPage = () => {
                       onChange={onPinChange}
                       onComplete={onPinComplete}
                     />
-                  </PinFieldContainer>
-                )}
+                  )}
+                </PinFieldContainer>
               </SecretItem>
             </FlareCard>
           </GlowEffect>
@@ -306,7 +395,7 @@ const SecretsPage = () => {
                 </SecretEmoji>
                 {secrets.secretPixel.hasFoundSecret ||
                 secrets.secretPixel.hasRevealedTitle ? (
-                  <SecretTitle>Pixel perfectionist!</SecretTitle>
+                  <SecretTitle>Pixel perfect!</SecretTitle>
                 ) : (
                   <RevealText onClick={onTitleReveal('secretPixel')}>
                     Reveal Title Hint

@@ -93,7 +93,7 @@ import {
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { useSecretContext } from '../hooks/useSecret';
-import { useToast } from '../hooks/useToast';
+import useToast from '../hooks/useSonnerToast';
 
 const techs = () => {
   const shuffleArray = (array: Array<TechItemProps>) => {
@@ -491,6 +491,30 @@ const StyledInput = styled('input')(({ theme }) => ({
   },
 }));
 
+const UsesPageWrapper = styled('div')({
+  display: 'flex',
+  width: '100%',
+  alignItems: 'center',
+  flexDirection: 'column',
+  padding: '40px 0px',
+});
+
+const UsesPageInfoWrapper = styled('div')({
+  display: 'flex',
+  maxWidth: '700px',
+  flexDirection: 'column',
+  gap: '30px',
+  padding: '40px 0px',
+});
+
+const UsesPageTechWrapper = styled('div')({
+  width: '100%',
+  display: 'flex',
+  justifyContent: 'center',
+  flexWrap: 'wrap',
+  gap: '10px',
+});
+
 const TechItem = styled('div')({
   padding: '8px',
   display: 'flex',
@@ -645,8 +669,8 @@ type Action =
   | { type: 'SET_SEARCHED'; payload: Array<TechItemProps> };
 
 const UsesPage = () => {
+  const { callToast, confetti } = useToast();
   const { secrets, setFoundSecret } = useSecretContext();
-  const toast = useToast();
   const navigate = useNavigate();
   const theme = useTheme();
   const techRef = useRef<HTMLDivElement>(null);
@@ -789,33 +813,19 @@ const UsesPage = () => {
 
   const onFoundSecret = useCallback(() => {
     setFoundSecret('secretPixel');
-    toast({
-      title: '📐 Pixel perfectionist!',
-      message: 'You have found a secret! check your progress!',
-      actionText: 'View',
-      action: () => navigate('/secrets'),
+    callToast('📐 Pixel perfect!', {
+      description: 'You have found a secret! check your progress!',
+      action: {
+        label: 'View',
+        onClick: () => navigate('/secrets'),
+      },
     });
-  }, [navigate, setFoundSecret, toast]);
+  }, [callToast, navigate, setFoundSecret]);
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        width: '100%',
-        alignItems: 'center',
-        flexDirection: 'column',
-        padding: '40px 0px',
-      }}
-    >
-      <div
-        style={{
-          display: 'flex',
-          maxWidth: '700px',
-          flexDirection: 'column',
-          gap: '30px',
-          padding: '40px 0px',
-        }}
-      >
+    <UsesPageWrapper>
+      {confetti}
+      <UsesPageInfoWrapper>
         <h1>Uses Tech</h1>
         <span>
           Here's a collection of the tools, products and technologies I relied
@@ -888,17 +898,8 @@ const UsesPage = () => {
             </Content>
           </Select.Root>
         </SearchWrapper>
-      </div>
-      <div
-        ref={techRef}
-        style={{
-          width: '100%',
-          display: 'flex',
-          justifyContent: 'center',
-          flexWrap: 'wrap',
-          gap: '10px',
-        }}
-      >
+      </UsesPageInfoWrapper>
+      <UsesPageTechWrapper ref={techRef}>
         {state.searched.length === 0 && <ItemText>I never used that!</ItemText>}
         {state.searched.map(({ name, icon, iconComponent: Icon }) => {
           return (
@@ -929,8 +930,8 @@ const UsesPage = () => {
             </GlowEffect>
           );
         })}
-      </div>
-    </div>
+      </UsesPageTechWrapper>
+    </UsesPageWrapper>
   );
 };
 

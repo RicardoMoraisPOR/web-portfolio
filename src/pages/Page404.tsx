@@ -1,11 +1,11 @@
 import { useLottie } from 'lottie-react';
 import Animation404 from '../assets/404.json';
 import styled from 'styled-components';
-import { useToast } from '../hooks/useToast';
 import { useNavigate } from 'react-router-dom';
 import { useCallback, useRef } from 'react';
 import gsap from 'gsap';
 import { useSecretContext } from '../hooks/useSecret';
+import useToast from '../hooks/useSonnerToast';
 
 const AnimationContainer = styled('div')(({ theme }) => ({
   height: 'calc(80vh)',
@@ -44,13 +44,15 @@ const UnstyledButton = styled('button')({
 });
 
 const Page404 = () => {
-  const toast = useToast();
+  const { callToast, confetti } = useToast();
   const navigate = useNavigate();
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const animationStart = useRef(false);
   const { secrets, setFoundSecret } = useSecretContext();
 
   const onBugClick = useCallback(() => {
-    if (buttonRef.current) {
+    if (buttonRef.current && !animationStart.current) {
+      animationStart.current = true;
       gsap.to(buttonRef.current, {
         duration: 2,
         x: '20',
@@ -60,16 +62,18 @@ const Page404 = () => {
         ease: 'power2.inOut',
         onComplete: () => {
           setFoundSecret('secretBug');
-          toast({
-            title: '🪲 Lost, but found!',
-            message: 'You have found a secret! check your progress!',
-            actionText: 'View',
-            action: () => navigate('/secrets'),
+          callToast('🪲 Lost, but found!', {
+            description: 'You have found a secret! check your progress!',
+
+            action: {
+              label: 'View',
+              onClick: () => navigate('/secrets'),
+            },
           });
         },
       });
     }
-  }, [navigate, setFoundSecret, toast]);
+  }, [callToast, navigate, setFoundSecret]);
 
   const { View } = useLottie({
     id: '404AnimationId',
@@ -88,6 +92,7 @@ const Page404 = () => {
 
   return (
     <AnimationContainer>
+      {confetti}
       {View}
       <span>How did you end up here?</span>
       {!secrets.secretBug.hasFoundSecret && (

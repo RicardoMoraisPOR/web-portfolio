@@ -1,12 +1,14 @@
 import styled from 'styled-components';
-import { lazy, useRef } from 'react';
+import { lazy, useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useLottie } from 'lottie-react';
 import scrollAnimation from '../assets/scroll.json';
 import LoadableComponent from '../components/LoadableComponent';
 import { useInView } from 'react-intersection-observer';
+import { useSecretContext } from '../hooks/useSecret';
+import useToast from '../hooks/useSonnerToast';
 
 const SkillsSection = LoadableComponent(
   lazy(() => import('../components/SkillsSection'))
@@ -62,6 +64,10 @@ export const IntroTextAbout = styled('span')(({ theme }) => {
   };
 });
 
+export const IntroTextAboutSmall = styled(IntroTextAbout)({
+  fontSize: '12px',
+});
+
 const IntroTextBold = styled(IntroTextAbout)({
   fontWeight: '800',
 });
@@ -92,9 +98,34 @@ const SectionPositioningDiv = styled(PositioningDiv)(({ theme }) => ({
 }));
 
 const HomePage = () => {
+  const { callToast, confetti } = useToast();
+  const { setFoundSecret, secrets } = useSecretContext();
+  const navigate = useNavigate();
   const emojiRef = useRef<HTMLDivElement>(null);
   const scrollAnimationRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // Check if the secret should be shown after page reload
+    if (
+      localStorage.getItem('recursionInit') === 'true' &&
+      !secrets.secretRecursion.hasFoundSecret
+    ) {
+      localStorage.removeItem('recursionInit');
+      setFoundSecret('secretRecursion');
+      setTimeout(() => {
+        callToast('🔄 Did you mean "recursion"?', {
+          description: 'You have found a secret! check your progress!',
+
+          action: {
+            label: 'View',
+            onClick: () => navigate('/secrets'),
+          },
+        });
+      }, 500);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useGSAP(() => {
     gsap
@@ -188,6 +219,7 @@ const HomePage = () => {
 
   return (
     <main>
+      {confetti}
       <HomePageWrapper>
         <div ref={heroRef}>
           <PositioningDiv>
@@ -211,12 +243,12 @@ const HomePage = () => {
               </IntroTextAbout>
               <br />
               <br />
-              <IntroTextAbout>
+              <IntroTextAboutSmall>
                 I didn't want this to be just another generic portfolio website,
-                so I've added some secrets that you can see{' '}
-                <Link to="/secrets">here</Link>. to make exploring the site a
-                bit more engaging, happy hunting!
-              </IntroTextAbout>
+                so I've added some secrets to make exploring the site a bit more
+                engaging, you can see them in the{' '}
+                <Link to="/secrets">secrets page</Link>. happy hunting!
+              </IntroTextAboutSmall>
             </IntroTextWrapper>
           </PositioningDiv>
         </div>

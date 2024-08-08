@@ -8,7 +8,7 @@ import {
 } from 'react';
 
 export type SecretType =
-  | 'secretMoon'
+  | 'secretRecursion'
   | 'secretCookie'
   | 'secretBug'
   | 'secretPin'
@@ -21,6 +21,7 @@ interface SecretContextProps {
   >;
   setFoundSecret: (secretKey: SecretType) => void;
   revealTitle: (secretKey: SecretType) => void;
+  foundAll: boolean;
 }
 
 const SecretContext = createContext<SecretContextProps | undefined>(undefined);
@@ -29,7 +30,7 @@ export const SecretProvider: FC<PropsWithChildren> = ({ children }) => {
   const [secrets, setSecrets] = useState<
     Record<SecretType, { hasFoundSecret: boolean; hasRevealedTitle: boolean }>
   >({
-    secretMoon: { hasFoundSecret: false, hasRevealedTitle: false },
+    secretRecursion: { hasFoundSecret: false, hasRevealedTitle: false },
     secretCookie: { hasFoundSecret: false, hasRevealedTitle: false },
     secretBug: { hasFoundSecret: false, hasRevealedTitle: false },
     secretPin: { hasFoundSecret: false, hasRevealedTitle: false },
@@ -78,8 +79,18 @@ export const SecretProvider: FC<PropsWithChildren> = ({ children }) => {
     localStorage.setItem(`${secretKey}-title-reveal`, JSON.stringify('yes'));
   }, []);
 
+  const foundAll = Boolean(
+    secrets.secretRecursion.hasFoundSecret &&
+      secrets.secretPixel.hasFoundSecret &&
+      secrets.secretPin.hasFoundSecret &&
+      secrets.secretCookie.hasFoundSecret &&
+      secrets.secretBug.hasFoundSecret
+  );
+
   return (
-    <SecretContext.Provider value={{ secrets, setFoundSecret, revealTitle }}>
+    <SecretContext.Provider
+      value={{ secrets, setFoundSecret, revealTitle, foundAll }}
+    >
       {children}
     </SecretContext.Provider>
   );

@@ -4,6 +4,7 @@ import Page404 from './pages/Page404';
 import PageTransition from './pages/PageTransition/PageTransition';
 import LoadableComponent from './components/LoadableComponent';
 import { lazy } from 'react';
+import { useSecretContext } from './hooks/useSecret';
 
 const HomePage = LoadableComponent(lazy(() => import('./pages/HomePage')));
 const AboutPage = LoadableComponent(lazy(() => import('./pages/AboutPage')));
@@ -11,8 +12,12 @@ const UsesPage = LoadableComponent(lazy(() => import('./pages/UsesPage')));
 const SecretsPage = LoadableComponent(
   lazy(() => import('./pages/SecretsPage'))
 );
+const ThemeEditorPage = LoadableComponent(
+  lazy(() => import('./pages/ThemeEditorPage'))
+);
 
 const App = () => {
+  const { foundAll } = useSecretContext();
   return (
     <Routes>
       <Route path="/" element={<BaseLayout />}>
@@ -48,6 +53,16 @@ const App = () => {
             </PageTransition>
           }
         />
+        {foundAll && (
+          <Route
+            path="theme"
+            element={
+              <PageTransition>
+                <ThemeEditorPage />
+              </PageTransition>
+            }
+          />
+        )}
         <Route
           path="*"
           element={

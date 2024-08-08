@@ -17,7 +17,6 @@ import {
   SiTestinglibrary,
   SiTypescript,
 } from '@icons-pack/react-simple-icons';
-import ShiverSpan from './ShiverSpan';
 
 const SkillsWrapper = styled(PositioningDiv)(({ theme }) => ({
   display: 'grid',
@@ -92,10 +91,9 @@ const SkillsSection = ({ inView }: InViewProps) => {
         description={
           <>
             These technologies represent the core of my technical expertise.
-            However, my skill set extends beyond these tools and frameworks,
-            which you can explore my <Link to="/uses">uses page</Link> to dive
-            deeper into the technology I utilize to create cutting-edge software{' '}
-            <ShiverSpan>🚀</ShiverSpan>
+            However, my skill set extends beyond these tools and frameworks
+            which you can explore in more detail in my{' '}
+            <Link to="/uses">uses page</Link>.
           </>
         }
       />

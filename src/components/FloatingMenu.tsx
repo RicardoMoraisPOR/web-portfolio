@@ -14,8 +14,8 @@ import GithubIcon from '../assets/Icons/Github';
 import LinkedInIcon from '../assets/Icons/LinkedIn';
 import FlareCard from './FlareCard';
 import { useCallback, useRef } from 'react';
-import { useToast } from '../hooks/useToast';
 import { useSecretContext } from '../hooks/useSecret';
+import useToast from '../hooks/useSonnerToast';
 
 const ThemeToggleButton = styled('button')<
   Pick<GlowEffectComponentProps, '$isTouching'>
@@ -92,7 +92,7 @@ const LogoLink = styled(Link)<GlowEffectComponentProps>(
 );
 
 const FloatingMenu = () => {
-  const toast = useToast();
+  const { callToast, confetti } = useToast();
   const navigate = useNavigate();
   const location = useLocation();
   const { toggleTheme } = useAppThemeContext();
@@ -111,14 +111,16 @@ const FloatingMenu = () => {
       if (clickCounterRef.current === 10) {
         setFoundSecret('secretCookie');
         const isInSecretsPage = location.pathname === '/secrets';
-        toast({
-          title: '🍪 Not a clicker game!',
-          message: `You have found a secret!${
-            !isInSecretsPage && ' check your progress!'
+        callToast('🍪 Not a clicker game!', {
+          description: `You have found a secret!${
+            isInSecretsPage ? '' : ' check your progress!'
           }`,
+
           ...(!isInSecretsPage && {
-            actionText: 'View',
-            action: () => navigate('/secrets'),
+            action: {
+              label: 'View',
+              onClick: () => navigate('/secrets'),
+            },
           }),
         });
       }
@@ -127,11 +129,11 @@ const FloatingMenu = () => {
       }, 1000);
     }
   }, [
+    callToast,
     location.pathname,
     navigate,
     secrets.secretCookie.hasFoundSecret,
     setFoundSecret,
-    toast,
     toggleTheme,
   ]);
 
@@ -183,6 +185,7 @@ const FloatingMenu = () => {
           </ThemeToggleButton>
         </FlareCard>
       </GlowEffect>
+      {confetti}
     </ChipMenuWrapper>
   );
 };

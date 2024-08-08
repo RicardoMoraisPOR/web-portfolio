@@ -1,7 +1,17 @@
 import { useRef, useEffect } from 'react';
 import confetti from 'canvas-confetti';
 import { createPortal } from 'react-dom';
-import { useTheme } from 'styled-components';
+import styled, { useTheme } from 'styled-components';
+
+const StyledCanvas = styled('canvas')({
+  position: 'fixed',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: '100%',
+  height: '100%',
+  pointerEvents: 'none',
+});
 
 const ConfettiEffect: React.FC = () => {
   const theme = useTheme();
@@ -29,45 +39,37 @@ const ConfettiEffect: React.FC = () => {
         gravity: 3,
         origin: {
           x: 0.5,
-          // since they fall down, start a bit higher than random
           y: 0.1,
         },
       };
 
-      createConfetti(options);
-      createConfetti({
-        ...options,
-        origin: {
-          x: Math.random() * 0.2 + 0.6,
-          // since they fall down, start a bit higher than random
-          y: Math.random() * 0.2 + 0.1,
-        },
-      });
-      createConfetti({
-        ...options,
-        origin: {
-          x: Math.random() * 0.2 + 0.2,
-          // since they fall down, start a bit higher than random
-          y: Math.random() * 0.2 + 0.3,
-        },
-      });
+      setTimeout(() => {
+        createConfetti(options);
+      }, Math.floor(Math.random() * (200 - 0 + 1)));
+      setTimeout(() => {
+        createConfetti({
+          ...options,
+          origin: {
+            x: Math.random() * 0.2 + 0.6,
+            y: Math.random() * 0.2 + 0.1,
+          },
+        });
+      }, Math.floor(Math.random() * (200 - 0 + 1)));
+      setTimeout(() => {
+        createConfetti({
+          ...options,
+          origin: {
+            x: Math.random() * 0.2 + 0.2,
+            y: Math.random() * 0.2 + 0.3,
+          },
+        });
+      }, Math.floor(Math.random() * (200 - 0 + 1)));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return createPortal(
-    <canvas
-      ref={confettiRef}
-      style={{
-        position: 'fixed',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: '100%',
-        height: '100%',
-        pointerEvents: 'none',
-      }}
-    />,
+    <StyledCanvas ref={confettiRef} />,
     document.getElementById('bg-id-portal') as HTMLElement
   );
 };
