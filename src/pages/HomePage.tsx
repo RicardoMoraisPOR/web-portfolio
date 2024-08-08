@@ -239,7 +239,7 @@ const HomePage = () => {
                 </Link>{' '}
                 🍃 while enjoying the vibrant life on the stunning Madeira
                 Island 🏝️. If you are interested, you can see more in the{' '}
-                <Link to="/about">about</Link> page.
+                <Link to="/about">about page</Link>.
               </IntroTextAbout>
               <br />
               <br />
