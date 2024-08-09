@@ -1,27 +1,13 @@
 import { useLottie } from 'lottie-react';
-import styled, { useTheme } from 'styled-components';
-import bubblesAnimation from '../assets/bubbles.json';
+import { useTheme } from 'styled-components';
+import scrollAnimation from '../assets/scroll.json';
 import cloneDeepWith from 'lodash/cloneDeepWith';
 import isEqual from 'lodash/isEqual';
 import cloneDeep from 'lodash/cloneDeep';
 import { useMemo } from 'react';
 import { hexToLottieRGBA } from '../theme/AppThemeUtils';
 
-const BubblesContainer = styled('div')({
-  position: 'fixed',
-  top: 0,
-  left: 0,
-  width: '100%',
-  height: '100%',
-  overflow: 'hidden',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  opacity: '0.2',
-  pointerEvents: 'none',
-});
-
-const Background = () => {
+const ScrollAnimationComponent = () => {
   const theme = useTheme();
   const deepRGBAReplace = (
     obj: Record<string, unknown>,
@@ -37,26 +23,24 @@ const Background = () => {
 
   const AnimationWithTheme = useMemo(() => {
     return deepRGBAReplace(
-      bubblesAnimation,
+      scrollAnimation,
       [0.6118, 0.6392, 0.6863],
       hexToLottieRGBA(theme.palette.accent)
     );
   }, [theme.palette.accent]);
 
-  const { View } = useLottie({
-    id: 'bubblesAnimationId',
+  const { View: ScrollAnimation } = useLottie({
+    id: 'scrollAnimationId',
     animationData: AnimationWithTheme,
     loop: true,
     autoplay: true,
     style: {
-      width: '100%',
-      height: '100%',
-    },
-    rendererSettings: {
-      preserveAspectRatio: 'xMidYMid slice',
+      width: '30px',
+      height: '30px',
     },
   });
-  return <BubblesContainer>{View}</BubblesContainer>;
+
+  return ScrollAnimation;
 };
 
-export default Background;
+export default ScrollAnimationComponent;

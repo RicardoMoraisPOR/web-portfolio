@@ -1,11 +1,15 @@
 import { useLottie } from 'lottie-react';
 import Animation404 from '../assets/404.json';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { useCallback, useRef } from 'react';
+import { useCallback, useMemo, useRef } from 'react';
 import gsap from 'gsap';
 import { useSecretContext } from '../hooks/useSecret';
 import useToast from '../hooks/useSonnerToast';
+import cloneDeepWith from 'lodash/cloneDeepWith';
+import isEqual from 'lodash/isEqual';
+import cloneDeep from 'lodash/cloneDeep';
+import { hexToLottieRGBA } from '../theme/AppThemeUtils';
 
 const AnimationContainer = styled('div')(({ theme }) => ({
   height: 'calc(80vh)',
@@ -44,11 +48,32 @@ const UnstyledButton = styled('button')({
 });
 
 const Page404 = () => {
+  const theme = useTheme();
   const { callToast, confetti } = useToast();
   const navigate = useNavigate();
   const buttonRef = useRef<HTMLButtonElement>(null);
   const animationStart = useRef(false);
   const { secrets, setFoundSecret } = useSecretContext();
+
+  const deepRGBAReplace = (
+    obj: Record<string, unknown>,
+    target: Array<number>,
+    replacement: Array<number>
+  ) => {
+    return cloneDeepWith(obj, (value) => {
+      if (isEqual(value, target)) {
+        return cloneDeep(replacement);
+      }
+    });
+  };
+
+  const AnimationWithTheme = useMemo(() => {
+    return deepRGBAReplace(
+      Animation404,
+      [0.6118, 0.6392, 0.6863],
+      hexToLottieRGBA(theme.palette.accent)
+    );
+  }, [theme.palette.accent]);
 
   const onBugClick = useCallback(() => {
     if (buttonRef.current && !animationStart.current) {
@@ -78,7 +103,7 @@ const Page404 = () => {
   const { View } = useLottie({
     id: '404AnimationId',
     className: '404-animation-class',
-    animationData: Animation404,
+    animationData: AnimationWithTheme,
     loop: false,
     autoplay: true,
     rendererSettings: {

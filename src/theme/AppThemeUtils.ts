@@ -108,3 +108,57 @@ export const hexToLottieRGBA = (hexColor: string) => {
   // Return the RGBA array
   return [redNormalized, greenNormalized, blueNormalized, alphaValue];
 };
+
+export const invertHexColor = (hex: string) => {
+  // Remove the '#' if it is there
+  const color = hex.startsWith('#') ? hex.slice(1) : hex;
+
+  // Parse the color as a number
+  let r = parseInt(color.substring(0, 2), 16);
+  let g = parseInt(color.substring(2, 4), 16);
+  let b = parseInt(color.substring(4, 6), 16);
+
+  // Invert each color component
+  r = 255 - r;
+  g = 255 - g;
+  b = 255 - b;
+
+  // Convert the RGB back to a hex string and pad with zeroes if necessary
+  const invertedColor = `#${r.toString(16).padStart(2, '0')}${g
+    .toString(16)
+    .padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
+
+  return invertedColor;
+};
+
+export const isColorLight = (hex: string) => {
+  // Remove the '#' if it is there
+  const color = hex.startsWith('#') ? hex.slice(1) : hex;
+
+  // Convert hex to RGB
+  const r = parseInt(color.substring(0, 2), 16);
+  const g = parseInt(color.substring(2, 4), 16);
+  const b = parseInt(color.substring(4, 6), 16);
+
+  // Calculate the relative luminance
+  const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+
+  // Return whether the color is light or dark
+  return luminance > 128;
+};
+
+export const getLuminanceLevel = (hex: string) => {
+  // Remove the '#' if it is there
+  const color = hex.startsWith('#') ? hex.slice(1) : hex;
+
+  // Convert hex to RGB
+  const r = parseInt(color.substring(0, 2), 16);
+  const g = parseInt(color.substring(2, 4), 16);
+  const b = parseInt(color.substring(4, 6), 16);
+
+  // Calculate the relative luminance
+  const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+
+  // Return whether the color is light or dark
+  return luminance;
+};

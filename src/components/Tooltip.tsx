@@ -13,6 +13,7 @@ import useMediaQuery from '../hooks/useMediaQuery';
 
 type TooltipProps = {
   tooltipContent: ReactNode;
+  side?: 'left' | 'right' | 'bottom' | 'top';
 };
 
 const Content = styled(RadixTooltip.Content)(({ theme }) => ({
@@ -26,6 +27,7 @@ const Content = styled(RadixTooltip.Content)(({ theme }) => ({
       transform: 'translateY(0)',
     },
   },
+  maxWidth: '95vw',
   color: theme.palette.background,
   borderRadius: 4,
   padding: '10px',
@@ -69,6 +71,7 @@ const NoActionButton = styled.button({
 const Tooltip: FC<PropsWithChildren<TooltipProps>> = ({
   children,
   tooltipContent,
+  side = 'top',
 }) => {
   const isMobile = useMediaQuery('max', 'mobile');
   const [open, setOpen] = useState(false);
@@ -99,7 +102,7 @@ const Tooltip: FC<PropsWithChildren<TooltipProps>> = ({
           </NoActionButton>
         </RadixTooltip.Trigger>
         <RadixTooltip.Portal>
-          <Content sideOffset={5} side="top">
+          <Content sideOffset={5} side={side}>
             {tooltipContent}
             <Arrow />
           </Content>

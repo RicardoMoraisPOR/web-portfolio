@@ -3,12 +3,11 @@ import { lazy, useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useLottie } from 'lottie-react';
-import scrollAnimation from '../assets/scroll.json';
 import LoadableComponent from '../components/LoadableComponent';
 import { useInView } from 'react-intersection-observer';
 import { useSecretContext } from '../hooks/useSecret';
 import useToast from '../hooks/useSonnerToast';
+import ScrollAnimationComponent from '../components/ScrollAnimationComponent';
 
 const SkillsSection = LoadableComponent(
   lazy(() => import('../components/SkillsSection'))
@@ -194,17 +193,6 @@ const HomePage = () => {
       .play();
   });
 
-  const { View: ScrollAnimation } = useLottie({
-    id: 'scrollAnimationId',
-    animationData: scrollAnimation,
-    loop: true,
-    autoplay: true,
-    style: {
-      width: '30px',
-      height: '30px',
-    },
-  });
-
   const { ref: skillsRef, inView: skillsInView } = useInView({
     threshold: 0.3,
     triggerOnce: true,
@@ -256,7 +244,7 @@ const HomePage = () => {
           <ScrollAnimationWrapper>
             {!skillsInView && (
               <ScrollAnimationInnerWrapper ref={scrollAnimationRef}>
-                {ScrollAnimation}
+                <ScrollAnimationComponent />
               </ScrollAnimationInnerWrapper>
             )}
           </ScrollAnimationWrapper>

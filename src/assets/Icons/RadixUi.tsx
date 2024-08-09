@@ -8,7 +8,7 @@ const SvgRadixUi = (props: SVGProps<SVGSVGElement>) => (
     {...props}
   >
     <path
-      fill="currentcolor"
+      fill={props.fill}
       d="M12 25a8 8 0 1 1 0-16zm0-25H4v8h8zm5 8a4 4 0 1 0 0-8 4 4 0 0 0 0 8"
     />
   </svg>
