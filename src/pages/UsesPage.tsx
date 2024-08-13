@@ -812,15 +812,17 @@ const UsesPage = () => {
   }, []);
 
   const onFoundSecret = useCallback(() => {
-    setFoundSecret('secretPixel');
-    callToast('📐 Pixel perfect!', {
-      description: 'You have found a secret! check your progress!',
-      action: {
-        label: 'View',
-        onClick: () => navigate('/secrets'),
-      },
-    });
-  }, [callToast, navigate, setFoundSecret]);
+    if (!secrets.secretPixel.hasFoundSecret) {
+      setFoundSecret('secretPixel');
+      callToast('📐 Pixel perfect!', {
+        description: 'You have found a secret! check your progress!',
+        action: {
+          label: 'View',
+          onClick: () => navigate('/secrets'),
+        },
+      });
+    }
+  }, [callToast, navigate, secrets.secretPixel.hasFoundSecret, setFoundSecret]);
 
   return (
     <UsesPageWrapper>

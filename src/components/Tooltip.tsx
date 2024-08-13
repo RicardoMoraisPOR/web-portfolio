@@ -14,6 +14,7 @@ import useMediaQuery from '../hooks/useMediaQuery';
 type TooltipProps = {
   tooltipContent: ReactNode;
   side?: 'left' | 'right' | 'bottom' | 'top';
+  name: string;
 };
 
 const Content = styled(RadixTooltip.Content)(({ theme }) => ({
@@ -70,6 +71,7 @@ const NoActionButton = styled.button({
 
 const Tooltip: FC<PropsWithChildren<TooltipProps>> = ({
   children,
+  name,
   tooltipContent,
   side = 'top',
 }) => {
@@ -94,6 +96,7 @@ const Tooltip: FC<PropsWithChildren<TooltipProps>> = ({
       <RadixTooltip.Root open={open} onOpenChange={setOpen}>
         <RadixTooltip.Trigger asChild>
           <NoActionButton
+            name={name}
             onClick={onClickCallback}
             onMouseDown={preventDefaultCallback}
             onTouchStart={preventDefaultCallback}

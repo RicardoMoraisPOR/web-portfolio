@@ -1,10 +1,12 @@
 import styled from 'styled-components';
-import ImageMyself from '../assets/me.png';
+import ImageMyself from '../assets/me.webp';
 import FlareCard from '../components/FlareCard';
 import GlowEffect from '../components/GlowEffect';
-import { useCallback } from 'react';
+import { useCallback, useRef } from 'react';
 import { useInView } from 'react-intersection-observer';
 import Timeline from '../components/Timeline';
+import { useGSAP } from '@gsap/react';
+import gsap from 'gsap';
 
 const ImageWrapper = styled('div')({
   borderRadius: '100px',
@@ -64,6 +66,7 @@ const ExperienceSide = styled('section')({
 });
 
 const AboutPage = () => {
+  const bioRef = useRef<HTMLDivElement>(null);
   const getYearsDiference = useCallback((dateFrom: Date) => {
     const today = new Date();
     let diference = today.getFullYear() - dateFrom.getFullYear();
@@ -79,6 +82,21 @@ const AboutPage = () => {
     return diference;
   }, []);
 
+  useGSAP(() => {
+    if (bioRef.current) {
+      gsap.fromTo(
+        bioRef.current,
+        { opacity: 0, y: 70 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+          ease: 'power2.out',
+        }
+      );
+    }
+  }, []);
+
   const { ref: experienceSideRef, inView: timelineInView } = useInView({
     threshold: 0.3,
     triggerOnce: true,
@@ -87,11 +105,11 @@ const AboutPage = () => {
 
   return (
     <AboutPageWrapper>
-      <BioSide>
+      <BioSide ref={bioRef}>
         <GlowEffect $transparency={10}>
           <FlareCard $intensity={70} $borderRadius={100}>
             <ImageWrapper>
-              <Image src={ImageMyself} />
+              <Image src={ImageMyself} alt="Ricardo Morais Dev Face Image" />
             </ImageWrapper>
           </FlareCard>
         </GlowEffect>

@@ -1,6 +1,6 @@
 import styled, { ThemeProvider, useTheme } from 'styled-components';
 import ColorPicker from '../components/ColorPicker';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import {
   darkTheme as defaultDark,
   lightTheme as defaultLight,
@@ -13,6 +13,8 @@ import { getLuminanceLevel, isColorLight } from '../theme/AppThemeUtils';
 import Tooltip from '../components/Tooltip';
 import isEqual from 'lodash/isEqual';
 import { useCustomThemeContext } from '../hooks/useCustomTheme';
+import { useGSAP } from '@gsap/react';
+import gsap from 'gsap';
 
 const PageContainer = styled('div')(({ theme }) => ({
   display: 'grid',
@@ -212,8 +214,27 @@ const checkThemeRules = (
 
 const ThemeEditorPage = () => {
   const theme = useTheme();
+  const pageRef = useRef<HTMLDivElement | null>(null);
   const { customDarkTheme, customLightTheme, setCustomTheme } =
     useCustomThemeContext();
+
+  useGSAP(() => {
+    if (pageRef.current) {
+      const sections = pageRef.current.children;
+      gsap.fromTo(
+        sections,
+        { opacity: 0, y: 70, scale: 0.9 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.5,
+          stagger: 0.2,
+          ease: 'power2.out',
+        }
+      );
+    }
+  }, []);
 
   const darkTheme = useMemo(() => {
     return customDarkTheme ?? defaultDark.palette;
@@ -281,7 +302,7 @@ const ThemeEditorPage = () => {
   );
 
   return (
-    <PageContainer>
+    <PageContainer ref={pageRef}>
       <div>
         <ThemeTitleWrapper>
           <h3>Theme 1</h3>
@@ -425,6 +446,7 @@ const RuleSetComponent = ({
   return (
     <RulesWrapper>
       <Tooltip
+        name="primary-rules"
         tooltipContent={
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <span>
@@ -443,6 +465,7 @@ const RuleSetComponent = ({
         </RuleItem>
       </Tooltip>
       <Tooltip
+        name="secondary-rules"
         tooltipContent={
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <span>
@@ -462,6 +485,7 @@ const RuleSetComponent = ({
         </RuleItem>
       </Tooltip>
       <Tooltip
+        name="accent-rules"
         tooltipContent={
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <span>
@@ -481,6 +505,7 @@ const RuleSetComponent = ({
         </RuleItem>
       </Tooltip>
       <Tooltip
+        name="background-rules"
         tooltipContent={
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <span>
@@ -500,6 +525,7 @@ const RuleSetComponent = ({
         </RuleItem>
       </Tooltip>
       <Tooltip
+        name="text-rules"
         tooltipContent={
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <span>

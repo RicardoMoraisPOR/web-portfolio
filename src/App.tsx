@@ -17,7 +17,7 @@ const ThemeEditorPage = LoadableComponent(
 );
 
 const App = () => {
-  const { foundAll } = useSecretContext();
+  const { foundAll, computing } = useSecretContext();
   return (
     <Routes>
       <Route path="/" element={<BaseLayout />}>
@@ -53,16 +53,14 @@ const App = () => {
             </PageTransition>
           }
         />
-        {foundAll && (
-          <Route
-            path="theme"
-            element={
-              <PageTransition>
-                <ThemeEditorPage />
-              </PageTransition>
-            }
-          />
-        )}
+        <Route
+          path="theme"
+          element={
+            <PageTransition>
+              {computing ? <></> : foundAll ? <ThemeEditorPage /> : <Page404 />}
+            </PageTransition>
+          }
+        />
         <Route
           path="*"
           element={

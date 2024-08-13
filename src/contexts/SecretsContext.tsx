@@ -22,11 +22,13 @@ interface SecretContextProps {
   setFoundSecret: (secretKey: SecretType) => void;
   revealTitle: (secretKey: SecretType) => void;
   foundAll: boolean;
+  computing: boolean;
 }
 
 const SecretContext = createContext<SecretContextProps | undefined>(undefined);
 
 export const SecretProvider: FC<PropsWithChildren> = ({ children }) => {
+  const [computing, setComputing] = useState(true);
   const [secrets, setSecrets] = useState<
     Record<SecretType, { hasFoundSecret: boolean; hasRevealedTitle: boolean }>
   >({
@@ -60,6 +62,7 @@ export const SecretProvider: FC<PropsWithChildren> = ({ children }) => {
         },
       }));
     });
+    setComputing(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -89,7 +92,7 @@ export const SecretProvider: FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <SecretContext.Provider
-      value={{ secrets, setFoundSecret, revealTitle, foundAll }}
+      value={{ secrets, setFoundSecret, revealTitle, foundAll, computing }}
     >
       {children}
     </SecretContext.Provider>

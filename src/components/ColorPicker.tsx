@@ -75,6 +75,27 @@ const StyledHexColorPicker = styled(HexColorPicker)<{
   },
 }));
 
+const ColorTitleWrapper = styled('div')({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'start',
+  gap: '2px',
+});
+
+const ColorTitle = styled('span')({
+  fontSize: '14px',
+  lineHeight: 1,
+  fontWeight: '600',
+});
+
+const ColorHex = styled('span')({
+  fontSize: '10px',
+  lineHeight: 1,
+  opacity: 0.6,
+});
+
+const PickerWrapper = styled('div')({ display: 'flex', gap: '10px' });
+
 interface ColorPickerProps {
   title?: string;
   color: string;
@@ -93,23 +114,10 @@ const ColorPicker = ({
       <Popover.Trigger asChild>
         <Button $color={color}>
           <ColorBlock color={color} />
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'start',
-              gap: '2px',
-            }}
-          >
-            <span
-              style={{ fontSize: '14px', lineHeight: 1, fontWeight: '600' }}
-            >
-              {title}
-            </span>
-            <span style={{ fontSize: '10px', lineHeight: 1, opacity: 0.5 }}>
-              {color}
-            </span>
-          </div>
+          <ColorTitleWrapper>
+            <ColorTitle>{title}</ColorTitle>
+            <ColorHex>{color}</ColorHex>
+          </ColorTitleWrapper>
         </Button>
       </Popover.Trigger>
       <Popover.Portal>
@@ -191,10 +199,10 @@ const DefaultResetComponent = ({
   }, [defaultColor, color]);
 
   return (
-    <div ref={elementRef} style={{ display: 'flex', gap: '10px' }}>
+    <PickerWrapper ref={elementRef}>
       <ColorBlock color={defaultColor} onClick={applyDefault} />
       <span>Default</span>
-    </div>
+    </PickerWrapper>
   );
 };
 

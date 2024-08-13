@@ -21,12 +21,11 @@ const ConfettiEffect: React.FC = () => {
     if (confettiRef.current) {
       const createConfetti = confetti.create(confettiRef.current, {
         resize: true,
-        useWorker: true,
       });
 
       const options: confetti.Options = {
         scalar: 1,
-        particleCount: 30,
+        particleCount: 20,
         startVelocity: 35,
         spread: 360,
         colors: [

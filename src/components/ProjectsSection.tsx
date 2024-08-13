@@ -366,6 +366,7 @@ const ProjectsSection = ({ inView }: InViewProps) => {
                   <ProjectSkills>
                     {projectData.skills.map((skillData) => (
                       <Tooltip
+                        name={`${projectData.title}-${skillData.name}`}
                         tooltipContent={skillData.name}
                         key={skillData.name}
                       >

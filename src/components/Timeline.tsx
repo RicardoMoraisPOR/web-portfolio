@@ -205,23 +205,20 @@ const Timeline = () => {
             significant influence on the company's technology decisions.
           </TimelineDescription>
           <TimelineDescription>
-            Despite some conflicts with the company towards the end, I hold no
-            grudge and deeply appreciate Sofia for all the opportunities she
-            provided.
+            I deeply appreciate Sofia for all the opportunities she provided.
           </TimelineDescription>
           <br />
           <TimelineAchievement>
             <SvgCareerRaise />
             <TimelineDescription>
-              2023 - Promoted to PM Redundancy and Front-end Team Leader of IMED
-              Software (4 members)
+              2023 - Promoted to second-in-command of the IMED team and Team
+              Leader of the Front-end
             </TimelineDescription>
           </TimelineAchievement>
           <TimelineAchievement>
             <SvgCareerRaise />
             <TimelineDescription>
-              2023 - Promoted to Maintainer of the Internal UI Library (12
-              members).
+              2023 - Promoted to Maintainer of the Internal UI Library.
             </TimelineDescription>
           </TimelineAchievement>
           <TimelineAchievement>
