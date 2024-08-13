@@ -83,8 +83,8 @@ const RevealText = styled('button')(({ theme }) => ({
   fontSize: '12px !important',
   background: 'none',
   border: 'none',
-  padding: '0',
-  margin: '0',
+  padding: '5px',
+  margin: '15px',
   font: 'inherit',
   cursor: 'pointer',
   width: 'fit-content',
@@ -102,7 +102,7 @@ const RevealText = styled('button')(({ theme }) => ({
     position: 'absolute',
     left: 0,
     right: 0,
-    bottom: '-1.5px', // Adjust this value to move the underline lower
+    bottom: '4px', // Adjust this value to move the underline lower
     height: '1px', // Adjust the thickness of the underline
     backgroundColor: 'currentColor', // Use the text color for the underline
   },
