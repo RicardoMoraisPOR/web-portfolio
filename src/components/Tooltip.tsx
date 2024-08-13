@@ -96,7 +96,7 @@ const Tooltip: FC<PropsWithChildren<TooltipProps>> = ({
       <RadixTooltip.Root open={open} onOpenChange={setOpen}>
         <RadixTooltip.Trigger asChild>
           <NoActionButton
-            name={name}
+            aria-label={name}
             onClick={onClickCallback}
             onMouseDown={preventDefaultCallback}
             onTouchStart={preventDefaultCallback}
