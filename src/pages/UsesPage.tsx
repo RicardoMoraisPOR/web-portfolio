@@ -94,6 +94,7 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { useSecretContext } from '../hooks/useSecret';
 import useToast from '../hooks/useSonnerToast';
+import MetaTag from '../components/MetaTag';
 
 const techs = () => {
   const shuffleArray = (array: Array<TechItemProps>) => {
@@ -826,6 +827,7 @@ const UsesPage = () => {
 
   return (
     <UsesPageWrapper>
+      <MetaTag />
       {confetti}
       <UsesPageInfoWrapper>
         <h1>Uses Tech</h1>

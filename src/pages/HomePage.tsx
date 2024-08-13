@@ -8,6 +8,7 @@ import { useInView } from 'react-intersection-observer';
 import { useSecretContext } from '../hooks/useSecret';
 import useToast from '../hooks/useSonnerToast';
 import ScrollAnimationComponent from '../components/ScrollAnimationComponent';
+import MetaTag from '../components/MetaTag';
 
 const SkillsSection = LoadableComponent(
   lazy(() => import('../components/SkillsSection'))
@@ -207,6 +208,7 @@ const HomePage = () => {
 
   return (
     <main>
+      <MetaTag />
       {confetti}
       <HomePageWrapper>
         <div ref={heroRef}>

@@ -7,6 +7,7 @@ import { useInView } from 'react-intersection-observer';
 import Timeline from '../components/Timeline';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
+import MetaTag from '../components/MetaTag';
 
 const ImageWrapper = styled('div')({
   borderRadius: '100px',
@@ -105,6 +106,7 @@ const AboutPage = () => {
 
   return (
     <AboutPageWrapper>
+      <MetaTag />
       <BioSide ref={bioRef}>
         <GlowEffect $transparency={10}>
           <FlareCard $intensity={70} $borderRadius={100}>

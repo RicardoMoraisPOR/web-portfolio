@@ -15,6 +15,7 @@ import isEqual from 'lodash/isEqual';
 import { useCustomThemeContext } from '../hooks/useCustomTheme';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
+import MetaTag from '../components/MetaTag';
 
 const PageContainer = styled('div')(({ theme }) => ({
   display: 'grid',
@@ -303,6 +304,7 @@ const ThemeEditorPage = () => {
 
   return (
     <PageContainer ref={pageRef}>
+      <MetaTag />
       <div>
         <ThemeTitleWrapper>
           <h3>Theme 1</h3>

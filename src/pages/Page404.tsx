@@ -10,6 +10,7 @@ import cloneDeepWith from 'lodash/cloneDeepWith';
 import isEqual from 'lodash/isEqual';
 import cloneDeep from 'lodash/cloneDeep';
 import { hexToLottieRGBA } from '../theme/AppThemeUtils';
+import MetaTag from '../components/MetaTag';
 
 const AnimationContainer = styled('div')(({ theme }) => ({
   height: 'calc(80vh)',
@@ -117,6 +118,7 @@ const Page404 = () => {
 
   return (
     <AnimationContainer>
+      <MetaTag />
       {confetti}
       {View}
       <span>How did you end up here?</span>

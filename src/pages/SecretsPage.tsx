@@ -11,6 +11,7 @@ import { alphaHexConverter } from '../theme/AppThemeUtils';
 import useToast from '../hooks/useSonnerToast';
 import ConfettiEffect from '../components/ConfettiEffect';
 import { Link } from 'react-router-dom';
+import MetaTag from '../components/MetaTag';
 
 const PageContainer = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -286,6 +287,7 @@ const SecretsPage = () => {
 
   return (
     <PageContainer>
+      <MetaTag />
       {confetti}
       {foundAll && (
         <>
