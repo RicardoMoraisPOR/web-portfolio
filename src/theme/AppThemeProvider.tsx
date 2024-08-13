@@ -3,6 +3,7 @@ import {
   PropsWithChildren,
   createContext,
   useCallback,
+  useEffect,
   useMemo,
   useState,
 } from 'react';
@@ -59,6 +60,32 @@ export const AppThemeProvider: FC<PropsWithChildren> = ({ children }) => {
         }
       : defaultLight;
   }, [customLightTheme]);
+
+  useEffect(() => {
+    const updateFavicon = () => {
+      const isDarkMode = window.matchMedia(
+        '(prefers-color-scheme: dark)'
+      ).matches;
+      const favicon = document.getElementById('favicon') as HTMLLinkElement;
+      if (favicon) {
+        favicon.href = isDarkMode
+          ? '/logo-dark-theme.svg'
+          : '/logo-light-theme.svg';
+      }
+    };
+
+    updateFavicon();
+
+    const darkModeMediaQuery = window.matchMedia(
+      '(prefers-color-scheme: dark)'
+    );
+    darkModeMediaQuery.addEventListener('change', updateFavicon);
+
+    // Cleanup listener on component unmount
+    return () => {
+      darkModeMediaQuery.removeEventListener('change', updateFavicon);
+    };
+  }, []);
 
   return (
     <ThemeTypeContext.Provider value={contextValue}>
