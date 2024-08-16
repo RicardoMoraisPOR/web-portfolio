@@ -1,7 +1,6 @@
 import styled, { useTheme } from 'styled-components';
 import { PositioningDiv } from '../pages/HomePage';
 import ViteLogo from '../assets/Icons/Vite';
-import StitchesLogo from '../assets/Icons/Stitches';
 import FlareCard from './FlareCard';
 import GlowEffect from './GlowEffect';
 import gsap from 'gsap';
@@ -17,6 +16,7 @@ import {
   SiTestinglibrary,
   SiTypescript,
 } from '@icons-pack/react-simple-icons';
+import SvgStyledComponentsLogo from '../assets/Icons/StyledComponentsLogo';
 
 const SkillsWrapper = styled(PositioningDiv)(({ theme }) => ({
   display: 'grid',
@@ -136,8 +136,12 @@ const SkillsSection = ({ inView }: InViewProps) => {
           <GlowEffect $transparency={15}>
             <FlareCard $intensity={40} $borderRadius={5} $disableTouch>
               <SkillInnerWrapper>
-                <StitchesLogo fill={theme.palette.primary} />
-                Stitches
+                <SvgStyledComponentsLogo
+                  fill={theme.palette.primary}
+                  height={32}
+                  width={32}
+                />
+                Styled Components
               </SkillInnerWrapper>
             </FlareCard>
           </GlowEffect>
