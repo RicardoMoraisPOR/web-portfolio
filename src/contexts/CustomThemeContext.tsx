@@ -43,7 +43,6 @@ export const CustomThemeProvider: FC<PropsWithChildren> = ({ children }) => {
 
     setCustomLightTheme(customLight);
     setCustomDarkTheme(customDark);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const setCustomTheme = useCallback(

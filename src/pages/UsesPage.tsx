@@ -675,6 +675,7 @@ const UsesPage = () => {
   const navigate = useNavigate();
   const theme = useTheme();
   const techRef = useRef<HTMLDivElement>(null);
+  const techIntroRef = useRef<HTMLDivElement>(null);
   const debounceTimeout = useRef<NodeJS.Timeout>();
 
   const techMemo = useMemo(() => techs(), []);
@@ -812,6 +813,22 @@ const UsesPage = () => {
     }
   }, []);
 
+  useGSAP(() => {
+    if (techIntroRef.current) {
+      gsap.fromTo(
+        techIntroRef.current,
+        { opacity: 0, y: 70 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+          zIndex: 2,
+          ease: 'power2.out',
+        }
+      );
+    }
+  }, []);
+
   const onFoundSecret = useCallback(() => {
     if (!secrets.secretPixel.hasFoundSecret) {
       setFoundSecret('secretPixel');
@@ -829,7 +846,7 @@ const UsesPage = () => {
     <UsesPageWrapper>
       <MetaTag />
       {confetti}
-      <UsesPageInfoWrapper>
+      <UsesPageInfoWrapper ref={techIntroRef}>
         <h1>Uses Tech</h1>
         <span>
           Here's a collection of the tools, products and technologies I relied

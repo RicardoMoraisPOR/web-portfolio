@@ -213,7 +213,6 @@ const ProjectsSection = ({ inView }: InViewProps) => {
           ? 'https://ricardomorais.dev'
           : () => {
               localStorage.setItem('recursionInit', 'true');
-              // eslint-disable-next-line no-self-assign
               window.location.reload();
             },
         description:
