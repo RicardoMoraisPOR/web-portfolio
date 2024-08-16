@@ -469,7 +469,7 @@ const techs = () => {
   ] as Array<TechItemProps>);
 };
 
-const StyledInput = styled('input')(({ theme }) => ({
+const StyledInput = styled.input(({ theme }) => ({
   flex: 1,
   background: 'none',
   border: '1px solid',
@@ -492,7 +492,7 @@ const StyledInput = styled('input')(({ theme }) => ({
   },
 }));
 
-const UsesPageWrapper = styled('div')({
+const UsesPageWrapper = styled.div({
   display: 'flex',
   width: '100%',
   alignItems: 'center',
@@ -500,7 +500,7 @@ const UsesPageWrapper = styled('div')({
   padding: '40px 0px',
 });
 
-const UsesPageInfoWrapper = styled('div')({
+const UsesPageInfoWrapper = styled.div({
   display: 'flex',
   maxWidth: '700px',
   flexDirection: 'column',
@@ -508,7 +508,7 @@ const UsesPageInfoWrapper = styled('div')({
   padding: '40px 0px',
 });
 
-const UsesPageTechWrapper = styled('div')({
+const UsesPageTechWrapper = styled.div({
   width: '100%',
   display: 'flex',
   justifyContent: 'center',
@@ -516,7 +516,7 @@ const UsesPageTechWrapper = styled('div')({
   gap: '10px',
 });
 
-const TechItem = styled('div')({
+const TechItem = styled.div({
   padding: '8px',
   display: 'flex',
   alignItems: 'center',
@@ -584,7 +584,7 @@ const Item = styled(Select.Item)(({ theme }) => ({
   },
 }));
 
-const SearchWrapper = styled('div')(({ theme }) => ({
+const SearchWrapper = styled.div(({ theme }) => ({
   display: 'flex',
   gap: '10px',
   [theme.breakpoints.max.mobile]: {
@@ -610,7 +610,7 @@ const ItemText = styled(Select.Separator)({
   fontSize: '12px',
 });
 
-const ItemTextSecret = styled('button')<{ $found: boolean }>(
+const ItemTextSecret = styled.button<{ $found: boolean }>(
   ({ $found, theme }) => ({
     background: 'none',
     border: 'none',

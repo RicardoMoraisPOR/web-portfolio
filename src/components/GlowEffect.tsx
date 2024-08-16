@@ -28,7 +28,7 @@ export const GlowEffectStyle = (
   };
 };
 
-const GlowEffectComponent = styled('div')<GlowEffectComponentProps>(
+const GlowEffectComponent = styled.div<GlowEffectComponentProps>(
   ({ theme, $isTouching, ...rest }) => {
     const style = GlowEffectStyle(theme, rest);
     return {

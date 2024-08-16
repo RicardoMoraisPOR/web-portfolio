@@ -75,26 +75,26 @@ const StyledHexColorPicker = styled(HexColorPicker)<{
   },
 }));
 
-const ColorTitleWrapper = styled('div')({
+const ColorTitleWrapper = styled.div({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'start',
   gap: '2px',
 });
 
-const ColorTitle = styled('span')({
+const ColorTitle = styled.span({
   fontSize: '14px',
   lineHeight: 1,
   fontWeight: '600',
 });
 
-const ColorHex = styled('span')({
+const ColorHex = styled.span({
   fontSize: '10px',
   lineHeight: 1,
   opacity: 0.6,
 });
 
-const PickerWrapper = styled('div')({ display: 'flex', gap: '10px' });
+const PickerWrapper = styled.div({ display: 'flex', gap: '10px' });
 
 interface ColorPickerProps {
   title?: string;

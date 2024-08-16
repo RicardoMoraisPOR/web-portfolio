@@ -3,7 +3,7 @@ import confetti from 'canvas-confetti';
 import { createPortal } from 'react-dom';
 import styled, { useTheme } from 'styled-components';
 
-const StyledCanvas = styled('canvas')({
+const StyledCanvas = styled.canvas({
   position: 'fixed',
   top: '50%',
   left: '50%',

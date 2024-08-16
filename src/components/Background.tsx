@@ -7,7 +7,7 @@ import cloneDeep from 'lodash/cloneDeep';
 import { useMemo } from 'react';
 import { hexToLottieRGBA } from '../theme/AppThemeUtils';
 
-const BubblesContainer = styled('div')({
+const BubblesContainer = styled.div({
   position: 'fixed',
   top: 0,
   left: 0,

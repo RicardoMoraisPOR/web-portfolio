@@ -27,7 +27,7 @@ type FlareCardProps = Omit<
   '$x' | '$y' | '$isTouching'
 >;
 
-const FlareCardComponent = styled('div').attrs<FlareCardCoordinatesProps>(
+const FlareCardComponent = styled.div.attrs<FlareCardCoordinatesProps>(
   ({ $x, $y }) => ({
     style: {
       '--x': `${$x}px`,
@@ -67,7 +67,7 @@ const FlareCardComponent = styled('div').attrs<FlareCardCoordinatesProps>(
   };
 });
 
-const InnerContainer = styled('div')(({ theme }) => {
+const InnerContainer = styled.div(({ theme }) => {
   return {
     backgroundColor: theme.palette.secondary,
     borderRadius: 'inherit',

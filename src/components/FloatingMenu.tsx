@@ -17,7 +17,7 @@ import { useCallback, useRef } from 'react';
 import { useSecretContext } from '../hooks/useSecret';
 import useToast from '../hooks/useSonnerToast';
 
-const ThemeToggleButton = styled('button')<
+const ThemeToggleButton = styled.button<
   Pick<GlowEffectComponentProps, '$isTouching'>
 >(({ $isTouching, theme }) => {
   const glowStyle = GlowEffectStyle(theme, { $transparency: 100 });
@@ -47,13 +47,13 @@ const ThemeToggleButton = styled('button')<
   };
 });
 
-const ChipMenuWrapper = styled('div')({
+const ChipMenuWrapper = styled.div({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
 });
 
-const SocialsWrapper = styled('div')({
+const SocialsWrapper = styled.div({
   display: 'flex',
   gap: '16px',
   justifyContent: 'center',

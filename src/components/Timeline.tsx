@@ -8,7 +8,7 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { useRef } from 'react';
 
-const Container = styled('div')(({ theme }) => ({
+const Container = styled.div(({ theme }) => ({
   paddingLeft: '1rem',
   paddingRight: '1rem',
   [theme.breakpoints.min.tablet]: {
@@ -17,7 +17,7 @@ const Container = styled('div')(({ theme }) => ({
   },
 }));
 
-const FlexCenter = styled('div')({
+const FlexCenter = styled.div({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
@@ -26,15 +26,15 @@ const FlexCenter = styled('div')({
   gap: '1rem',
 });
 
-const HeadingContainer = styled('div')({
+const HeadingContainer = styled.div({
   gap: '0.5rem',
 });
 
-const Heading = styled('h1')({
+const Heading = styled.h1({
   fontWeight: 'bold',
 });
 
-const TimelineContainer = styled('div')({
+const TimelineContainer = styled.div({
   position: 'relative',
   paddingLeft: '1.5rem',
   display: 'grid',
@@ -51,7 +51,7 @@ const TimelineContainer = styled('div')({
   },
 });
 
-const TimelineItem = styled('div')(({ theme }) => ({
+const TimelineItem = styled.div(({ theme }) => ({
   display: 'grid',
   gap: '0.25rem',
   fontSize: '0.875rem',
@@ -65,7 +65,7 @@ const TimelineItem = styled('div')(({ theme }) => ({
   },
 }));
 
-const TimelineMarker = styled('div')(({ theme }) => ({
+const TimelineMarker = styled.div(({ theme }) => ({
   aspectRatio: '1 / 1',
   width: '0.75rem',
   backgroundColor: theme.palette.primary,
@@ -77,7 +77,7 @@ const TimelineMarker = styled('div')(({ theme }) => ({
   top: '0.25rem',
 }));
 
-const TimelineLine = styled('div')(({ theme }) => ({
+const TimelineLine = styled.div(({ theme }) => ({
   aspectRatio: '1 / 1',
   width: '2px',
   borderLeft: `1px dashed ${theme.palette.secondary}`,
@@ -90,7 +90,7 @@ const TimelineLine = styled('div')(({ theme }) => ({
   top: '1.4rem',
 }));
 
-const TimelineAchievement = styled('div')(({ theme }) => ({
+const TimelineAchievement = styled.div(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   gap: '10px',
@@ -99,7 +99,7 @@ const TimelineAchievement = styled('div')(({ theme }) => ({
   },
 }));
 
-const TimelineTitle = styled('span')(({ theme }) => ({
+const TimelineTitle = styled.span(({ theme }) => ({
   fontFamily: theme.fonts.lato,
   fontWeight: '700',
   fontSize: '14px',
@@ -108,7 +108,7 @@ const TimelineTitle = styled('span')(({ theme }) => ({
   },
 }));
 
-const TimelineDescription = styled('span')({
+const TimelineDescription = styled.span({
   fontSize: '12px',
 });
 

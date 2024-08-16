@@ -13,7 +13,7 @@ import ConfettiEffect from '../components/ConfettiEffect';
 import { Link } from 'react-router-dom';
 import MetaTag from '../components/MetaTag';
 
-const PageContainer = styled('div')(({ theme }) => ({
+const PageContainer = styled.div(({ theme }) => ({
   display: 'flex',
   minHeight: '80vh',
   justifyContent: 'center',
@@ -24,7 +24,7 @@ const PageContainer = styled('div')(({ theme }) => ({
   },
 }));
 
-const SecretsPageContainer = styled('div')<{ $foundAll: boolean }>(
+const SecretsPageContainer = styled.div<{ $foundAll: boolean }>(
   ({ theme, $foundAll }) => ({
     display: 'flex',
     flexWrap: 'wrap',
@@ -42,7 +42,7 @@ const SecretsPageContainer = styled('div')<{ $foundAll: boolean }>(
   })
 );
 
-const SecretItem = styled('div')({
+const SecretItem = styled.div({
   minHeight: '200px',
   width: '200px',
   display: 'flex',
@@ -51,7 +51,7 @@ const SecretItem = styled('div')({
   flexDirection: 'column',
 });
 
-const SecretEmoji = styled('span')<{ $revealed?: boolean }>(
+const SecretEmoji = styled.span<{ $revealed?: boolean }>(
   ({ theme, $revealed }) => {
     const bluredStyle: CSSObject = {
       filter: theme.isDarkTheme
@@ -73,13 +73,13 @@ const SecretEmoji = styled('span')<{ $revealed?: boolean }>(
   }
 );
 
-const SecretTitle = styled('span')({
+const SecretTitle = styled.span({
   margin: '10px 0px',
   fontSize: '12px',
   fontWeight: 900,
 });
 
-const RevealText = styled('button')(({ theme }) => ({
+const RevealText = styled.button(({ theme }) => ({
   fontSize: '12px !important',
   background: 'none',
   border: 'none',
@@ -108,7 +108,7 @@ const RevealText = styled('button')(({ theme }) => ({
   },
 }));
 
-const ThankYouNote = styled('div')(({ theme }) => ({
+const ThankYouNote = styled.div(({ theme }) => ({
   maxWidth: '50vw',
   margin: '50px 0px',
   textAlign: 'center',
@@ -121,7 +121,7 @@ const ThankYouNote = styled('div')(({ theme }) => ({
   },
 }));
 
-const PinFieldContainer = styled('div')({
+const PinFieldContainer = styled.div({
   position: 'absolute',
   top: '82%',
   display: 'grid',

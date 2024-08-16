@@ -2,16 +2,14 @@ import styled, { CSSObject, useTheme } from 'styled-components';
 import { useMemo } from 'react';
 import { interpolateHexColors } from '../theme/AppThemeUtils';
 
-const SVGLogo = styled('svg')<Pick<LogoProps, '$height'>>(
-  ({ theme, $height }) => {
-    return {
-      height: $height || '48px',
-      [theme.breakpoints.max.mobile]: {
-        height: $height || '30px',
-      },
-    };
-  }
-);
+const SVGLogo = styled.svg<Pick<LogoProps, '$height'>>(({ theme, $height }) => {
+  return {
+    height: $height || '48px',
+    [theme.breakpoints.max.mobile]: {
+      height: $height || '30px',
+    },
+  };
+});
 
 type LogoProps = {
   fill?: CSSObject['fill'];

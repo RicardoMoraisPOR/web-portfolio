@@ -17,7 +17,7 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import MetaTag from '../components/MetaTag';
 
-const PageContainer = styled('div')(({ theme }) => ({
+const PageContainer = styled.div(({ theme }) => ({
   display: 'grid',
   gridTemplateColumns: 'repeat(2, 1fr)',
   justifyContent: 'center',
@@ -29,7 +29,7 @@ const PageContainer = styled('div')(({ theme }) => ({
   },
 }));
 
-const ThemeExample = styled('div')(({ theme }) => ({
+const ThemeExample = styled.div(({ theme }) => ({
   border: '1px solid',
   borderColor: theme.isDarkTheme ? 'white' : 'black',
   display: 'flex',
@@ -42,20 +42,20 @@ const ThemeExample = styled('div')(({ theme }) => ({
   gap: '15px',
 }));
 
-const ThemeExampleCard = styled('div')({
+const ThemeExampleCard = styled.div({
   padding: 20,
   display: 'flex',
   alignItems: 'center',
   gap: '10px',
 });
 
-const ThemeExampleText = styled('div')({
+const ThemeExampleText = styled.div({
   display: 'flex',
   alignItems: 'center',
   gap: '10px',
 });
 
-const ColorsWrapper = styled('div')(({ theme }) => ({
+const ColorsWrapper = styled.div(({ theme }) => ({
   display: 'grid',
   gridTemplateColumns: 'repeat(3, 1fr)',
   gap: '10px',
@@ -69,7 +69,7 @@ const ColorsWrapper = styled('div')(({ theme }) => ({
   },
 }));
 
-const ApplyButton = styled('button')(({ theme }) => ({
+const ApplyButton = styled.button(({ theme }) => ({
   fontFamily: theme.fonts.lato,
   fontSize: '12px !important',
   background: 'none',
@@ -99,7 +99,7 @@ const ApplyButton = styled('button')(({ theme }) => ({
   },
 }));
 
-const RuleItem = styled('span')<{ $valid: boolean }>(({ theme, $valid }) => {
+const RuleItem = styled.span<{ $valid: boolean }>(({ theme, $valid }) => {
   const validColor: CSSObject['color'] = theme.isDarkTheme
     ? 'lightgreen'
     : 'green';
@@ -114,30 +114,30 @@ const RuleItem = styled('span')<{ $valid: boolean }>(({ theme, $valid }) => {
   };
 });
 
-const ThemeTitleWrapper = styled('div')({
+const ThemeTitleWrapper = styled.div({
   display: 'flex',
   alignItems: 'center',
   gap: '10px',
 });
 
-const ThemeDisplayTitleWrapper = styled('div')({
+const ThemeDisplayTitleWrapper = styled.div({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'end',
 });
 
-const ThemeTitleType = styled('span')({
+const ThemeTitleType = styled.span({
   fontSize: '10px',
   opacity: '0.5',
 });
 
-const ThemeDisplayWrapper = styled('div')({
+const ThemeDisplayWrapper = styled.div({
   display: 'flex',
   flexDirection: 'column',
   gap: '10px',
 });
 
-const RulesWrapper = styled('div')(({ theme }) => ({
+const RulesWrapper = styled.div(({ theme }) => ({
   display: 'grid',
   gap: '10px',
   textAlign: 'center',

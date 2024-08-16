@@ -12,7 +12,7 @@ import cloneDeep from 'lodash/cloneDeep';
 import { hexToLottieRGBA } from '../theme/AppThemeUtils';
 import MetaTag from '../components/MetaTag';
 
-const AnimationContainer = styled('div')(({ theme }) => ({
+const AnimationContainer = styled.div(({ theme }) => ({
   height: 'calc(80vh)',
   display: 'flex',
   justifyContent: 'center',
@@ -26,7 +26,7 @@ const AnimationContainer = styled('div')(({ theme }) => ({
   },
 }));
 
-const UnstyledButton = styled('button')({
+const UnstyledButton = styled.button({
   position: 'absolute',
   left: '30%',
   top: '30%',

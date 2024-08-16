@@ -9,7 +9,7 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import MetaTag from '../components/MetaTag';
 
-const ImageWrapper = styled('div')({
+const ImageWrapper = styled.div({
   borderRadius: '100px',
   width: '200px',
   height: '200px',
@@ -19,13 +19,13 @@ const ImageWrapper = styled('div')({
   alignItems: 'center',
 });
 
-const Image = styled('img')({
+const Image = styled.img({
   width: '100%',
   height: '100%',
   objectFit: 'cover', // Ensures the image covers the entire area
 });
 
-const AboutPageWrapper = styled('div')(({ theme }) => ({
+const AboutPageWrapper = styled.div(({ theme }) => ({
   height: '100%',
   width: '100%',
   display: 'flex',
@@ -36,18 +36,18 @@ const AboutPageWrapper = styled('div')(({ theme }) => ({
   },
 }));
 
-const Title = styled('span')(({ theme }) => ({
+const Title = styled.span(({ theme }) => ({
   fontFamily: theme.fonts.lato,
   fontSize: '20px',
 }));
 
-const DescriptionText = styled('span')({
+const DescriptionText = styled.span({
   fontSize: '14px',
   alignSelf: 'start',
   justifySelf: 'start',
 });
 
-const BioSide = styled('section')({
+const BioSide = styled.section({
   flexGrow: 1,
   width: '100%',
   display: 'flex',
@@ -56,7 +56,7 @@ const BioSide = styled('section')({
   gap: '20px',
 });
 
-const ExperienceSide = styled('section')({
+const ExperienceSide = styled.section({
   flexGrow: 3,
   width: '100%',
   display: 'flex',

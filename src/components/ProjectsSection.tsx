@@ -40,7 +40,7 @@ const ProjectsWrapper = styled(PositioningDiv)(({ theme }) => ({
   },
 }));
 
-const ProjectWrapper = styled('div')(({ theme }) => ({
+const ProjectWrapper = styled.div(({ theme }) => ({
   minHeight: '500px',
   width: '100%',
   [theme.breakpoints.max.desktop]: {
@@ -58,7 +58,7 @@ const ProjectWrapper = styled('div')(({ theme }) => ({
   },
 }));
 
-const ProjectInnerWrapper = styled('div')(({ theme }) => ({
+const ProjectInnerWrapper = styled.div(({ theme }) => ({
   minHeight: '500px',
   padding: '20px',
   width: '100%',
@@ -72,7 +72,7 @@ const ProjectInnerWrapper = styled('div')(({ theme }) => ({
   },
 }));
 
-const ProjectImageWrapper = styled('div')(({ theme }) => ({
+const ProjectImageWrapper = styled.div(({ theme }) => ({
   background: alphaHexConverter(theme.palette.accent, 20),
   height: '200px',
   marginBottom: '16px',
@@ -86,7 +86,7 @@ const ProjectTitle = styled(Link)(({ theme }) => ({
   fontSize: '20px',
 }));
 
-const ProjectTitleButton = styled('button')(({ theme }) => ({
+const ProjectTitleButton = styled.button(({ theme }) => ({
   fontFamily: theme.fonts.lato,
   fontSize: '20px',
   background: 'none',
@@ -116,17 +116,17 @@ const ProjectTitleButton = styled('button')(({ theme }) => ({
   },
 }));
 
-const ProjectTitleNoLink = styled('span')(({ theme }) => ({
+const ProjectTitleNoLink = styled.span(({ theme }) => ({
   fontFamily: theme.fonts.lato,
   fontSize: '20px',
 }));
 
-const ProjectDescription = styled('span')({
+const ProjectDescription = styled.span({
   fontSize: '14px',
   margin: '10px 0px',
 });
 
-const ProjectSkills = styled('div')(({ theme }) => ({
+const ProjectSkills = styled.div(({ theme }) => ({
   flexGrow: 1,
   display: 'flex',
   justifyContent: 'end',

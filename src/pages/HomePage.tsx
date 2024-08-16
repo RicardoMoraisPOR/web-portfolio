@@ -17,19 +17,19 @@ const ProjectsSection = LoadableComponent(
   lazy(() => import('../components/ProjectsSection'))
 );
 
-const InlineDiv = styled('div')({
+const InlineDiv = styled.div({
   display: 'inline-block',
 });
 
-const ScrollAnimationInnerWrapper = styled('div')({
+const ScrollAnimationInnerWrapper = styled.div({
   opacity: 0,
 });
 
-const ScrollAnimationWrapper = styled('div')({
+const ScrollAnimationWrapper = styled.div({
   height: '31px',
 });
 
-export const PositioningDiv = styled('div')(({ theme }) => {
+export const PositioningDiv = styled.div(({ theme }) => {
   return {
     display: 'flex',
     flexDirection: 'column',
@@ -41,24 +41,24 @@ export const PositioningDiv = styled('div')(({ theme }) => {
   };
 });
 
-const Title = styled('h1')({
+const Title = styled.h1({
   margin: '30px 0px 16px 0px',
 });
 
-const Subtitle = styled('span')(({ theme }) => {
+const Subtitle = styled.span(({ theme }) => {
   return {
     color: theme.palette.primary,
   };
 });
 
-export const IntroTextWrapper = styled('div')(({ theme }) => ({
+export const IntroTextWrapper = styled.div(({ theme }) => ({
   width: '50vw',
   [theme.breakpoints.max.tablet]: {
     width: '100%',
   },
 }));
 
-export const IntroTextAbout = styled('span')(({ theme }) => {
+export const IntroTextAbout = styled.span(({ theme }) => {
   return {
     color: theme.palette.text,
   };
@@ -72,7 +72,7 @@ const IntroTextBold = styled(IntroTextAbout)({
   fontWeight: '800',
 });
 
-const HomePageWrapper = styled('div')({
+const HomePageWrapper = styled.div({
   width: '100%',
   display: 'flex',
   flexDirection: 'column',

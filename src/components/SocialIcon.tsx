@@ -3,7 +3,7 @@ import styled, { CSSObject } from 'styled-components';
 import { GlowEffectComponentProps, GlowEffectStyle } from './GlowEffect';
 import useTouching from '../hooks/useIsTouching';
 
-const SocialIconLink = styled('a')<
+const SocialIconLink = styled.a<
   Omit<GlowEffectComponentProps, '$transparency'>
 >(({ theme, $isTouching }) => {
   const glowStyle = GlowEffectStyle(theme, { $transparency: 100 });

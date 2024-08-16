@@ -14,14 +14,14 @@ const BaseLayoutBackground = LoadableComponent(
   lazy(() => import('../components/Background'))
 );
 
-const Container = styled('div')({
+const Container = styled.div({
   padding: '3px',
   height: '100vh',
   display: 'flex',
   flexDirection: 'column',
 });
 
-const InnerContainer = styled('div')(({ theme }) => ({
+const InnerContainer = styled.div(({ theme }) => ({
   flexGrow: 1,
   paddingLeft: 'clamp(2rem, 4vw + 2rem, 6rem)',
   paddingRight: 'clamp(2rem, 4vw + 2rem, 6rem)',
@@ -35,7 +35,7 @@ const InnerContainer = styled('div')(({ theme }) => ({
   },
 }));
 
-const OutletContainer = styled('div')(({ theme }) => ({
+const OutletContainer = styled.div(({ theme }) => ({
   paddingLeft: 'clamp(0px, 4vw, 6rem)',
   paddingRight: 'clamp(0px, 4vw, 6rem)',
   minHeight: 'calc(100% - 62px - 2rem)',
@@ -45,14 +45,14 @@ const OutletContainer = styled('div')(({ theme }) => ({
   },
 }));
 
-const Trademark = styled('div')({
+const Trademark = styled.div({
   alignSelf: 'center',
   justifySelf: 'end',
   fontSize: '12px',
   opacity: 0.3,
 });
 
-const SecretPin = styled('span')(({ theme }) => ({
+const SecretPin = styled.span(({ theme }) => ({
   fontSize: '12px',
   color: theme.palette.background,
 }));

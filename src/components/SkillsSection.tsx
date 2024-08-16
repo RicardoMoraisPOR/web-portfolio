@@ -32,7 +32,7 @@ const SkillsWrapper = styled(PositioningDiv)(({ theme }) => ({
   },
 }));
 
-const SkillWrapper = styled('div')({
+const SkillWrapper = styled.div({
   height: '100px',
   width: '100%',
   '& div': {
@@ -41,7 +41,7 @@ const SkillWrapper = styled('div')({
   },
 });
 
-const SkillInnerWrapper = styled('div')({
+const SkillInnerWrapper = styled.div({
   height: '100px',
   width: '100%',
   display: 'flex',
