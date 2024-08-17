@@ -48,6 +48,8 @@ const SkillInnerWrapper = styled.div({
   justifyContent: 'space-evenly',
   alignItems: 'center',
   flexDirection: 'column',
+  textAlign: 'center',
+  padding: '0px 6px',
 });
 
 interface InViewProps {
