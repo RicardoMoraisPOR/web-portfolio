@@ -15,11 +15,19 @@ import SvgVite from '../assets/Icons/Vite';
 import SvgGsapGreensock from '../assets/Icons/GsapGreensock';
 import SvgLottieFilesLogo from '../assets/Icons/LottieFilesLogo';
 import SvgVercelLogo from '../assets/Icons/VercelLogo';
-import SvgStitches from '../assets/Icons/Stitches';
 import Tooltip from './Tooltip';
 import SvgRadixUi from '../assets/Icons/RadixUi';
 import SvgStyledComponentsLogo from '../assets/Icons/StyledComponentsLogo';
-import { SiPnpm, SiReact, SiTypescript } from '@icons-pack/react-simple-icons';
+import {
+  SiBun,
+  SiJss,
+  SiPnpm,
+  SiReact,
+  SiTailwindcss,
+  SiTestinglibrary,
+  SiTypescript,
+  SiVitest,
+} from '@icons-pack/react-simple-icons';
 import { useSecretContext } from '../hooks/useSecret';
 
 const ProjectsWrapper = styled(PositioningDiv)(({ theme }) => ({
@@ -176,16 +184,54 @@ const ProjectsSection = ({ inView }: InViewProps) => {
     return [
       {
         icon: TailwindJssLogo,
-        title: 'Tailwind 2 JSS',
+        title: 'Tailwind to JSS',
+        link: 'https://tw-to-jss.vercel.app/',
         description:
-          'This project transforms Tailwind CSS classes into JSS. It simplifies the process of converting styles across different styling libraries.',
+          'This project transforms Tailwind CSS classes into css-in-js style objects. It simplifies the process of converting styles across different styling libraries.',
         skills: [
+          {
+            name: 'Bun',
+            iconComponent: (
+              <SiBun height={20} width={20} fill={theme.palette.primary} />
+            ),
+          },
           {
             name: 'Vite',
             icon: SvgVite,
             iconSecondaryFill: theme.palette.accent,
           },
-          { name: 'Stitches', icon: SvgStitches },
+          {
+            name: 'JSS',
+            iconComponent: (
+              <SiJss height={20} width={20} fill={theme.palette.primary} />
+            ),
+          },
+          {
+            name: 'Tailwind',
+            iconComponent: (
+              <SiTailwindcss
+                height={20}
+                width={20}
+                fill={theme.palette.primary}
+              />
+            ),
+          },
+          {
+            name: 'Vitest',
+            iconComponent: (
+              <SiVitest height={20} width={20} fill={theme.palette.primary} />
+            ),
+          },
+          {
+            name: 'Testing Library',
+            iconComponent: (
+              <SiTestinglibrary
+                height={20}
+                width={20}
+                fill={theme.palette.primary}
+              />
+            ),
+          },
           { name: 'Vercel', icon: SvgVercelLogo },
           {
             name: 'React',
@@ -259,15 +305,25 @@ const ProjectsSection = ({ inView }: InViewProps) => {
         icon: HatLogo,
         iconSecondaryFill: theme.palette.secondary,
         title: 'HexAlphaTool',
+        link: 'https://hex-alpha-tool.vercel.app/',
         description:
           'HexAlphaTool (HAT) is an online utility tool that allows users to add alpha transparency to hex color codes, enabling users to generate hex color codes on the fly.',
         skills: [
+          {
+            name: 'Bun',
+            iconComponent: (
+              <SiBun height={20} width={20} fill={theme.palette.primary} />
+            ),
+          },
           {
             name: 'Vite',
             icon: SvgVite,
             iconSecondaryFill: theme.palette.accent,
           },
-          { name: 'Stitches', icon: SvgStitches },
+          {
+            name: 'Styled Components',
+            icon: SvgStyledComponentsLogo,
+          },
           { name: 'Vercel', icon: SvgVercelLogo },
           {
             name: 'React',
