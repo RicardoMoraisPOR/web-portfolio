@@ -14,7 +14,6 @@ import {
   ThemeDisplayOptions,
   ThemeDisplayTitleWrapper,
   ThemeDisplayWrapper,
-  ThemeTitleWrapper,
 } from './themeEditor.styles';
 import { checkThemeRulesAreMet, getThemeRules } from './themeEditor.types';
 import ThemeEditorColorsAndRules from './ThemeEditorColorsAndRules';
@@ -93,7 +92,6 @@ const ThemeEditorPage = () => {
       <ThemeDisplayWrapper>
         <h3>Create your custom theme to be applied on the whole portfolio</h3>
         <ThemeDisplayTitleWrapper>
-          <ThemeTitleWrapper></ThemeTitleWrapper>
           <ThemeDisplayOptions>
             {canChangeTheme(themeColorsDisplay, customThemeDisplay) && (
               <ApplyButton onClick={changeTheme(themeColorsDisplay)}>

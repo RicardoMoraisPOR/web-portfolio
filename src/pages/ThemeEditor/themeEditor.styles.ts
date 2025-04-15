@@ -62,6 +62,7 @@ export const ColorsAndRulesWrapper = styled.div({
 export const ThemeDisplayOptions = styled.div({
   display: 'flex',
   gap: '10px',
+  height: '20px',
 });
 
 export const ApplyButton = styled.button(({ theme }) => ({
@@ -126,15 +127,9 @@ export const RulesWrapper = styled.div({
   marginTop: '10px',
 });
 
-export const ThemeTitleWrapper = styled.div({
-  display: 'flex',
-  alignItems: 'center',
-  gap: '10px',
-});
-
 export const ThemeDisplayTitleWrapper = styled.div({
   display: 'flex',
-  justifyContent: 'space-between',
+  justifyContent: 'end',
   alignItems: 'end',
 });
 
