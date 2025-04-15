@@ -1,5 +1,14 @@
-import '@fontsource/lato';
-import '@fontsource/montserrat';
+import '@fontsource/lato/100.css';
+import '@fontsource/lato/300.css';
+import '@fontsource/lato/400.css';
+import '@fontsource/lato/700.css';
+import '@fontsource/lato/900.css';
+import '@fontsource/montserrat/100.css';
+import '@fontsource/montserrat/300.css';
+import '@fontsource/montserrat/400.css';
+import '@fontsource/montserrat/600.css';
+import '@fontsource/montserrat/700.css';
+import '@fontsource/montserrat/900.css';
 import { lazy, useMemo } from 'react';
 import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';

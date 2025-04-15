@@ -51,7 +51,7 @@ export const SmallIntroTextAbout = styled(IntroTextAbout)({
 });
 
 export const IntroTextBold = styled(IntroTextAbout)({
-  fontWeight: '800',
+  fontWeight: '700',
 });
 
 export const HomePageWrapper = styled.div(({ theme }) => ({

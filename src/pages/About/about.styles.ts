@@ -181,7 +181,3 @@ export const FlexCenter = styled.div({
 export const HeadingContainer = styled.div({
   gap: '0.5rem',
 });
-
-export const Heading = styled.h1({
-  fontWeight: 'bold',
-});

@@ -11,7 +11,6 @@ import {
   DescriptionText,
   ExperienceSide,
   FlexCenter,
-  Heading,
   HeadingContainer,
   Image,
   ImageWrapper,
@@ -125,7 +124,7 @@ const AboutPage = () => {
         <div ref={titleRef}>
           <FlexCenter>
             <HeadingContainer>
-              <Heading>Career Highlights</Heading>
+              <h1>Career Highlights</h1>
             </HeadingContainer>
           </FlexCenter>
           <Timeline />
