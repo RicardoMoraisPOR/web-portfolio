@@ -1,23 +1,23 @@
-import { Routes, Route } from 'react-router-dom';
-import BaseLayout from './pages/BaseLayout';
-import Page404 from './pages/Page404';
-import PageTransition from './pages/PageTransition/PageTransition';
-import LoadableComponent from './components/LoadableComponent';
+import LoadableComponent from '@components/LoadableComponent';
+import BaseLayout from '@pages/BaseLayout';
+import Page404 from '@pages/Page404';
+import PageTransition from '@pages/PageTransition';
 import { lazy } from 'react';
-import { useSecretContext } from './hooks/useSecret';
+import { Route, Routes } from 'react-router-dom';
 
-const HomePage = LoadableComponent(lazy(() => import('./pages/HomePage')));
-const AboutPage = LoadableComponent(lazy(() => import('./pages/AboutPage')));
-const UsesPage = LoadableComponent(lazy(() => import('./pages/UsesPage')));
-const SecretsPage = LoadableComponent(
-  lazy(() => import('./pages/SecretsPage'))
+const HomePage = LoadableComponent(lazy(() => import('@pages/Home/HomePage')));
+const AboutPage = LoadableComponent(
+  lazy(() => import('@pages/About/AboutPage'))
 );
-const ThemeEditorPage = LoadableComponent(
-  lazy(() => import('./pages/ThemeEditorPage'))
+const ProjectsPage = LoadableComponent(
+  lazy(() => import('@pages/Projects/ProjectsPage'))
+);
+const UsesPage = LoadableComponent(lazy(() => import('@pages/Uses/UsesPage')));
+const ThemePage = LoadableComponent(
+  lazy(() => import('@pages/ThemeEditor/ThemeEditorPage'))
 );
 
 const App = () => {
-  const { foundAll, computing } = useSecretContext();
   return (
     <Routes>
       <Route path="/" element={<BaseLayout />}>
@@ -46,18 +46,18 @@ const App = () => {
           }
         />
         <Route
-          path="secrets"
+          path="projects"
           element={
             <PageTransition>
-              <SecretsPage />
+              <ProjectsPage />
             </PageTransition>
           }
         />
         <Route
-          path="theme"
+          path="theme-editor"
           element={
             <PageTransition>
-              {computing ? <></> : foundAll ? <ThemeEditorPage /> : <Page404 />}
+              <ThemePage />
             </PageTransition>
           }
         />

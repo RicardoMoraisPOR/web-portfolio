@@ -1,6 +1,6 @@
-import styled, { CSSObject, useTheme } from 'styled-components';
+import { interpolateHexColors } from '@theme/appThemeUtils';
 import { useMemo } from 'react';
-import { interpolateHexColors } from '../theme/AppThemeUtils';
+import styled, { CSSObject, useTheme } from 'styled-components';
 
 const SVGLogo = styled.svg<Pick<LogoProps, '$height'>>(({ theme, $height }) => {
   return {

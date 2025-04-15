@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { Breakpoints, BreakpointTypes } from '@theme/appTheme.types';
+import { useEffect, useState } from 'react';
 import { DefaultTheme, useTheme } from 'styled-components';
-import { Breakpoints, BreakpointTypes } from '../theme/AppTheme.types';
 
 const extractMediaQuery = (fullQuery: string): string | null => {
   const match = fullQuery.match(/\(([^)]+)\)/);

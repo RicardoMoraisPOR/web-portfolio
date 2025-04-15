@@ -1,11 +1,11 @@
-import { useLottie } from 'lottie-react';
-import styled, { useTheme } from 'styled-components';
-import bubblesAnimation from '../assets/bubbles.json';
+import bubblesAnimation from '@assets/lottie/bubbles.json';
+import { hexToLottieRGBA } from '@theme/appThemeUtils';
+import cloneDeep from 'lodash/cloneDeep';
 import cloneDeepWith from 'lodash/cloneDeepWith';
 import isEqual from 'lodash/isEqual';
-import cloneDeep from 'lodash/cloneDeep';
+import { useLottie } from 'lottie-react';
 import { useMemo } from 'react';
-import { hexToLottieRGBA } from '../theme/AppThemeUtils';
+import styled, { useTheme } from 'styled-components';
 
 const BubblesContainer = styled.div({
   position: 'fixed',

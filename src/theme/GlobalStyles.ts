@@ -1,5 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
-import { alphaHexConverter } from './AppThemeUtils';
+import { alphaHexConverter } from './appThemeUtils';
 
 const GlobalStyles = createGlobalStyle(({ theme }) => {
   return {
@@ -31,7 +31,8 @@ const GlobalStyles = createGlobalStyle(({ theme }) => {
     },
 
     h1: {
-      fontSize: 'clamp(2.2rem, 5vw, 3rem)',
+      marginTop: '0px',
+      fontSize: 'clamp(2.2rem, 3vw, 4rem)',
       fontFamily: theme.fonts.lato,
       textAlign: 'center',
     },
@@ -44,6 +45,8 @@ const GlobalStyles = createGlobalStyle(({ theme }) => {
     span: {
       lineHeight: 1.6,
       letterSpacing: '0.5px',
+      fontSize: 'clamp(1rem, 1vw, 1.6rem)',
+      transition: `color ${theme.transitions.fast}ms linear`,
     },
 
     a: {
@@ -65,10 +68,17 @@ const GlobalStyles = createGlobalStyle(({ theme }) => {
         bottom: '-1.5px', // Adjust this value to move the underline lower
         height: '1px', // Adjust the thickness of the underline
         backgroundColor: 'currentColor', // Use the text color for the underline
+        transition: `backgroundColor ${theme.transitions.fast}ms linear`,
       },
     },
 
     svg: {
+      transition: `fill ${theme.transitions.fast}ms ease`,
+    },
+    path: {
+      transition: `fill ${theme.transitions.fast}ms ease`,
+    },
+    rect: {
       transition: `fill ${theme.transitions.fast}ms ease`,
     },
 

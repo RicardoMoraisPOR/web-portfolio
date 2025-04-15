@@ -1,7 +1,10 @@
+import useTouching from '@hooks/useIsTouching';
 import { FC, PropsWithChildren } from 'react';
 import styled, { CSSObject } from 'styled-components';
-import { GlowEffectComponentProps, GlowEffectStyle } from './GlowEffect';
-import useTouching from '../hooks/useIsTouching';
+import {
+  GlowEffectComponentProps,
+  GlowEffectStyle,
+} from './GlowEffect/glowEffect.types';
 
 const SocialIconLink = styled.a<
   Omit<GlowEffectComponentProps, '$transparency'>
@@ -23,8 +26,8 @@ const SocialIconLink = styled.a<
     svg: {
       fill: theme.palette.primary,
       opacity: $isTouching ? '100%' : '40%',
-      width: '30px',
-      height: '30px',
+      width: '20px',
+      height: '20px',
       transition: `opacity ${theme.transitions.fast}ms ease, fill ${theme.transitions.fast}ms ease`,
       ...($isTouching && glowStyle.filter),
     },

@@ -1,13 +1,8 @@
-import { useRef, memo, useEffect, useState, useMemo } from 'react';
-import themeAnimation from '../assets/themeLottie.json';
+import themeAnimation from '@assets/lottie/themeLottie.json';
+import useAppThemeContext from '@hooks/useAppThemeContext';
 import { useLottie } from 'lottie-react';
-import useAppThemeContext from '../hooks/useAppThemeContext';
-import { hexToLottieRGBA } from '../theme/AppThemeUtils';
+import { memo, useEffect, useRef, useState } from 'react';
 import { useTheme } from 'styled-components';
-
-import cloneDeepWith from 'lodash/cloneDeepWith';
-import isEqual from 'lodash/isEqual';
-import cloneDeep from 'lodash/cloneDeep';
 
 type AnimationDirection = 1 | -1;
 
@@ -17,31 +12,11 @@ const ThemeToggleAnimation = memo(() => {
 
   // #region Lottie Animation Values
   const LIGHT_THEME_FRAME = 0;
-  const DARK_THEME_FRAME = 90;
+  const DARK_THEME_FRAME = 22;
 
   const initialAnimationRenderStatus = useRef(false);
   const [showAnimation, setShowAnimation] = useState(false);
   // #endregion
-
-  const deepRGBAReplace = (
-    obj: Record<string, unknown>,
-    target: Array<number>,
-    replacement: Array<number>
-  ) => {
-    return cloneDeepWith(obj, (value) => {
-      if (isEqual(value, target)) {
-        return cloneDeep(replacement);
-      }
-    });
-  };
-
-  const AnimationWithTheme = useMemo(() => {
-    return deepRGBAReplace(
-      themeAnimation,
-      [1, 0.819607853889, 0.372549027205, 1],
-      hexToLottieRGBA(theme.palette.accent)
-    );
-  }, [theme.palette.accent]);
 
   const {
     View,
@@ -54,13 +29,10 @@ const ThemeToggleAnimation = memo(() => {
   } = useLottie(
     {
       id: 'themeAnimationId',
-      animationData: AnimationWithTheme,
+      animationData: themeAnimation,
       loop: false,
       autoplay: false,
       initialSegment: [LIGHT_THEME_FRAME, DARK_THEME_FRAME],
-      rendererSettings: {
-        viewBoxSize: '175 175 250 250',
-      },
     },
     {
       height: 'inherit',
@@ -83,7 +55,7 @@ const ThemeToggleAnimation = memo(() => {
         play();
       }
     } else if (animationLoaded) {
-      setSpeed(2);
+      setSpeed(4);
       if (isDarkTheme) {
         setDirection(-1);
       } else {

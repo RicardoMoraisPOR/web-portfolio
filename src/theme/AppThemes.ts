@@ -1,6 +1,6 @@
 import { DefaultTheme } from 'styled-components';
-import { Palette } from './AppTheme.types';
 import type { Except } from 'type-fest';
+import { Palette } from './appTheme.types';
 
 const baseTheme: Except<DefaultTheme, 'palette' | 'isDarkTheme'> = {
   breakpoints: {

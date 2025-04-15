@@ -1,64 +1,75 @@
 import {
   FC,
   PropsWithChildren,
-  createContext,
   useCallback,
   useEffect,
   useMemo,
   useState,
 } from 'react';
 import { ThemeProvider } from 'styled-components';
-import Theme, { ThemeContextProps } from './AppTheme.types';
+import { DefaultTheme } from 'styled-components/dist/types';
+import { PREFERRED_THEME_STORAGE_KEY } from '@constants/localstorage';
+import ThemeTypeContext from '@contexts/ThemeTypeContext';
+import { useCustomThemeContext } from '@hooks/useCustomTheme';
+import Theme, { ThemeContextProps } from './appTheme.types';
 import {
   darkTheme as defaultDark,
   lightTheme as defaultLight,
-} from './AppThemes';
-import { useCustomThemeContext } from '../hooks/useCustomTheme';
-import { DefaultTheme } from 'styled-components/dist/types';
+} from './appThemes';
 
 declare module 'styled-components' {
   export interface DefaultTheme extends Theme {}
 }
 
-export const ThemeTypeContext = createContext<ThemeContextProps>({
-  isDarkTheme: window.matchMedia('(prefers-color-scheme: dark)').matches,
-});
-
 export const AppThemeProvider: FC<PropsWithChildren> = ({ children }) => {
-  const { customDarkTheme, customLightTheme } = useCustomThemeContext();
-  const [isDarkTheme, setIsDarkTheme] = useState(
-    window.matchMedia('(prefers-color-scheme: dark)').matches
-  );
+  const { customTheme } = useCustomThemeContext();
+
+  const getInitialThemePreference = () => {
+    const storedTheme = localStorage.getItem(PREFERRED_THEME_STORAGE_KEY);
+    if (storedTheme) {
+      return storedTheme === 'dark';
+    }
+
+    const systemPrefersDark = window.matchMedia(
+      '(prefers-color-scheme: dark)'
+    ).matches;
+
+    localStorage.setItem(
+      PREFERRED_THEME_STORAGE_KEY,
+      systemPrefersDark ? 'dark' : 'light'
+    );
+    return systemPrefersDark;
+  };
+
+  const [isDarkTheme, setIsDarkTheme] = useState(getInitialThemePreference);
 
   const toggleTheme = useCallback<
     NonNullable<ThemeContextProps['toggleTheme']>
   >((darkTheme) => {
-    setIsDarkTheme((previous) =>
-      darkTheme === undefined ? !previous : darkTheme
-    );
+    setIsDarkTheme((previous) => {
+      const newValue = darkTheme === undefined ? !previous : darkTheme;
+      localStorage.setItem(
+        PREFERRED_THEME_STORAGE_KEY,
+        newValue ? 'dark' : 'light'
+      );
+      return newValue;
+    });
   }, []);
 
   const contextValue = useMemo<ThemeContextProps>(() => {
     return { isDarkTheme, toggleTheme };
   }, [isDarkTheme, toggleTheme]);
 
-  const darkTheme = useMemo<DefaultTheme>(() => {
-    return customDarkTheme
-      ? {
-          ...defaultDark,
-          palette: customDarkTheme,
-        }
-      : defaultDark;
-  }, [customDarkTheme]);
+  const customThemeProfile = useMemo<DefaultTheme | null>(() => {
+    if (customTheme) {
+      return {
+        ...defaultLight,
+        palette: customTheme,
+      };
+    }
 
-  const lightTheme = useMemo<DefaultTheme>(() => {
-    return customLightTheme
-      ? {
-          ...defaultLight,
-          palette: customLightTheme,
-        }
-      : defaultLight;
-  }, [customLightTheme]);
+    return null;
+  }, [customTheme]);
 
   useEffect(() => {
     const updateFavicon = () => {
@@ -86,9 +97,11 @@ export const AppThemeProvider: FC<PropsWithChildren> = ({ children }) => {
     };
   }, []);
 
+  const themeProfile = isDarkTheme ? defaultDark : defaultLight;
+
   return (
     <ThemeTypeContext.Provider value={contextValue}>
-      <ThemeProvider theme={isDarkTheme ? darkTheme : lightTheme}>
+      <ThemeProvider theme={customThemeProfile || themeProfile}>
         {children}
       </ThemeProvider>
     </ThemeTypeContext.Provider>

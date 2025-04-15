@@ -1,3 +1,4 @@
+import { CUSTOM_THEME_STORAGE_KEY } from '@constants/localstorage';
 import {
   createContext,
   FC,
@@ -9,12 +10,9 @@ import {
 import { DefaultTheme } from 'styled-components/dist/types';
 
 interface CustomThemeContextProps {
-  setCustomTheme: (
-    type: 'dark' | 'light',
-    theme: DefaultTheme['palette']
-  ) => void;
-  customDarkTheme?: DefaultTheme['palette'];
-  customLightTheme?: DefaultTheme['palette'];
+  setCustomTheme: (theme: DefaultTheme['palette']) => void;
+  deleteCustomTheme: () => void;
+  customTheme?: DefaultTheme['palette'];
 }
 
 const CustomThemeContext = createContext<CustomThemeContextProps | undefined>(
@@ -22,46 +20,40 @@ const CustomThemeContext = createContext<CustomThemeContextProps | undefined>(
 );
 
 export const CustomThemeProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [customLightTheme, setCustomLightTheme] =
-    useState<DefaultTheme['palette']>();
-  const [customDarkTheme, setCustomDarkTheme] =
+  const [customThemeState, setCustomThemeState] =
     useState<DefaultTheme['palette']>();
 
   useEffect(() => {
-    const jsonLight = localStorage.getItem('custom-theme-light');
-    const jsonDark = localStorage.getItem('custom-theme-dark');
+    const jsonCustomTheme = localStorage.getItem(CUSTOM_THEME_STORAGE_KEY);
 
-    let customLight = undefined;
-    let customDark = undefined;
+    let customThemeFromStorage = undefined;
 
-    if (jsonLight) {
-      customLight = JSON.parse(jsonLight) as DefaultTheme['palette'];
-    }
-    if (jsonDark) {
-      customDark = JSON.parse(jsonDark) as DefaultTheme['palette'];
+    if (jsonCustomTheme) {
+      customThemeFromStorage = JSON.parse(
+        jsonCustomTheme
+      ) as DefaultTheme['palette'];
     }
 
-    setCustomLightTheme(customLight);
-    setCustomDarkTheme(customDark);
+    setCustomThemeState(customThemeFromStorage);
   }, []);
 
-  const setCustomTheme = useCallback(
-    (type: 'dark' | 'light', theme: DefaultTheme['palette']) => {
-      if (type === 'dark') {
-        setCustomDarkTheme(theme);
-        localStorage.setItem('custom-theme-dark', JSON.stringify(theme));
-      }
-      if (type === 'light') {
-        setCustomLightTheme(theme);
-        localStorage.setItem('custom-theme-light', JSON.stringify(theme));
-      }
-    },
-    []
-  );
+  const setCustomTheme = useCallback((theme: DefaultTheme['palette']) => {
+    setCustomThemeState(theme);
+    localStorage.setItem(CUSTOM_THEME_STORAGE_KEY, JSON.stringify(theme));
+  }, []);
+
+  const deleteCustomTheme = useCallback(() => {
+    setCustomThemeState(undefined);
+    localStorage.removeItem(CUSTOM_THEME_STORAGE_KEY);
+  }, []);
 
   return (
     <CustomThemeContext.Provider
-      value={{ setCustomTheme, customDarkTheme, customLightTheme }}
+      value={{
+        setCustomTheme,
+        deleteCustomTheme,
+        customTheme: customThemeState,
+      }}
     >
       {children}
     </CustomThemeContext.Provider>

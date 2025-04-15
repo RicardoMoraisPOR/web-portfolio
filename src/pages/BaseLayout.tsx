@@ -1,93 +1,74 @@
-import { Outlet } from 'react-router-dom';
-import styled, { useTheme } from 'styled-components';
-import FloatingMenu from '../components/FloatingMenu';
-import AppThemeProvider from '../theme/AppThemeProvider';
-import GlobalStyles from '../theme/GlobalStyles';
 import '@fontsource/lato';
 import '@fontsource/montserrat';
-import LoadableComponent from '../components/LoadableComponent';
 import { lazy, useMemo } from 'react';
-import { useSecretContext } from '../hooks/useSecret';
-import { Toaster } from 'sonner';
+import { Outlet } from 'react-router-dom';
+import styled from 'styled-components';
+import GithubIcon from '@assets/Icons/Github';
+import LinkedInIcon from '@assets/Icons/LinkedIn';
+import StackOverflowIcon from '@assets/Icons/StackOverflow';
+import FloatingMenu from '@components/FloatingMenu/FloatingMenu';
+import LoadableComponent from '@components/LoadableComponent';
+import SocialIcon from '@components/SocialIcon';
+import AppThemeProvider from '@theme/AppThemeProvider';
+import GlobalStyles from '@theme/GlobalStyles';
 
 const BaseLayoutBackground = LoadableComponent(
-  lazy(() => import('../components/Background'))
+  lazy(() => import('@components/Background'))
 );
 
 const Container = styled.div({
   padding: '3px',
-  height: '100vh',
+  height: '100%',
   display: 'flex',
   flexDirection: 'column',
 });
 
-const InnerContainer = styled.div(({ theme }) => ({
-  flexGrow: 1,
-  paddingLeft: 'clamp(2rem, 4vw + 2rem, 6rem)',
-  paddingRight: 'clamp(2rem, 4vw + 2rem, 6rem)',
-  paddingTop: '2rem',
-  paddingBottom: '2rem',
+const SocialsWrapper = styled.div(({ theme }) => ({
+  justifySelf: 'end',
+  display: 'flex',
+  gap: '6px',
+  marginTop: '-10px',
+  marginBottom: '10px',
   [theme.breakpoints.max.mobile]: {
-    paddingLeft: 'clamp(2rem, 3vw, 3rem)',
-    paddingRight: 'clamp(2rem, 3vw, 3rem)',
+    justifySelf: 'start',
+  },
+}));
+
+const InnerContainer = styled.div(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  height: '99vh',
+  paddingLeft: '2rem',
+  paddingRight: '2rem',
+  paddingTop: '2rem',
+  [theme.breakpoints.max.mobile]: {
+    paddingLeft: '1rem',
+    paddingRight: '1rem',
     paddingTop: '1rem',
-    paddingBottom: '1rem',
   },
 }));
 
 const OutletContainer = styled.div(({ theme }) => ({
   paddingLeft: 'clamp(0px, 4vw, 6rem)',
   paddingRight: 'clamp(0px, 4vw, 6rem)',
-  minHeight: 'calc(100% - 62px - 2rem)',
+  flex: 1,
   [theme.breakpoints.max.mobile]: {
     paddingLeft: '0px',
     paddingRight: '0px',
   },
 }));
 
-const Trademark = styled.div({
+const Trademark = styled.div(({ theme }) => ({
   alignSelf: 'center',
   justifySelf: 'end',
   fontSize: '12px',
   opacity: 0.3,
-});
-
-const SecretPin = styled.span(({ theme }) => ({
-  fontSize: '12px',
-  color: theme.palette.background,
-}));
-
-const StyledToaster = styled(Toaster)(({ theme }) => ({
-  fontSize: '12px',
-  '& li': {
-    background: theme.palette.primary,
-    '& > div': {
-      color: theme.palette.background,
-    },
-    '& > button': {
-      background: 'red',
-    },
+  [theme.breakpoints.max.mobile]: {
+    justifySelf: 'start',
   },
 }));
 
-const ToasterComponent = () => {
-  const theme = useTheme();
-  return (
-    <StyledToaster
-      duration={7000}
-      expand={true}
-      toastOptions={{
-        actionButtonStyle: {
-          background: theme.palette.secondary,
-          color: theme.palette.text,
-        },
-      }}
-    />
-  );
-};
-
 const BaseLayout = () => {
-  const { secrets } = useSecretContext();
   const currentYear = useMemo(() => {
     return new Date().getFullYear();
   }, []);
@@ -97,17 +78,37 @@ const BaseLayout = () => {
       <GlobalStyles />
       <BaseLayoutBackground />
       <div id="bg-id-portal" />
-      <ToasterComponent />
       <Container>
         <InnerContainer>
           <FloatingMenu />
           <OutletContainer>
             <Outlet />
           </OutletContainer>
-          <Trademark>
-            © {currentYear} Ricardo Morais | made in 🇵🇹{' '}
-            {!secrets.secretPin.hasFoundSecret && <SecretPin>P1N</SecretPin>}
-          </Trademark>
+          <div style={{ paddingBottom: '1rem' }}>
+            <SocialsWrapper>
+              <SocialIcon
+                url="https://github.com/RicardoMoraisPOR"
+                ariaLabel="Ricardo Morais Github profile"
+              >
+                <GithubIcon />
+              </SocialIcon>
+              <SocialIcon
+                url="https://www.linkedin.com/in/ricardo-dias-morais/"
+                ariaLabel="Ricardo Morais LinkedIn profile"
+              >
+                <LinkedInIcon />
+              </SocialIcon>
+              <SocialIcon
+                url="https://stackoverflow.com/users/8182493/ricardo-dias-morais"
+                ariaLabel="Ricardo Morais StackOverflow profile"
+              >
+                <StackOverflowIcon />
+              </SocialIcon>
+            </SocialsWrapper>
+            <Trademark>
+              © {currentYear} Ricardo Morais | made in 🇵🇹 Portugal
+            </Trademark>
+          </div>
         </InnerContainer>
       </Container>
     </AppThemeProvider>

@@ -12,6 +12,7 @@ const HatLogo = (props: HatLogoProps) => {
       xmlns="http://www.w3.org/2000/svg"
       width={120}
       height={86}
+      viewBox="0 0 120 86"
       {...props}
       fill="none"
     >
