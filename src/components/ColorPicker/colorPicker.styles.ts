@@ -1,5 +1,5 @@
 import * as Popover from '@radix-ui/react-popover';
-import { isColorLight } from '@theme/appThemeUtils';
+import { isColorLight } from '@theme/themeUtils';
 import { HexColorPicker } from 'react-colorful';
 import styled from 'styled-components';
 

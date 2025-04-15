@@ -17,7 +17,7 @@ import {
   SiTypescript,
   SiVitest,
 } from '@icons-pack/react-simple-icons';
-import Theme from '@theme/appTheme.types';
+import Theme from '@theme/theme.types';
 import { SVGProps } from 'react';
 
 interface ProjectSkillProps {

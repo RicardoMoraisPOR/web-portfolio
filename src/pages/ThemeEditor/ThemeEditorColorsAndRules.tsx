@@ -2,7 +2,7 @@ import SvgAlertError from '@assets/Icons/AlertError';
 import SvgCheckmark from '@assets/Icons/Checkmark';
 import ColorPicker from '@components/ColorPicker/ColorPicker';
 import useMediaQuery from '@hooks/useMediaQuery';
-import { lightTheme as defaultLight } from '@theme/appThemes';
+import { lightTheme as defaultLight } from '@theme/themes';
 import { useCallback } from 'react';
 import { DefaultTheme } from 'styled-components';
 import {

@@ -1,6 +1,6 @@
 import * as Select from '@radix-ui/react-select';
 import styled from 'styled-components';
-import { alphaHexConverter } from '@theme/appThemeUtils';
+import { alphaHexConverter } from '@theme/themeUtils';
 
 export const StyledInput = styled.input(({ theme }) => ({
   flex: 1,

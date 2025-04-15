@@ -1,5 +1,5 @@
 import bubblesAnimation from '@assets/lottie/bubbles.json';
-import { hexToLottieRGBA } from '@theme/appThemeUtils';
+import { hexToLottieRGBA } from '@theme/themeUtils';
 import cloneDeep from 'lodash/cloneDeep';
 import cloneDeepWith from 'lodash/cloneDeepWith';
 import isEqual from 'lodash/isEqual';

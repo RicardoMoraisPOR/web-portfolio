@@ -11,11 +11,8 @@ import { DefaultTheme } from 'styled-components/dist/types';
 import { PREFERRED_THEME_STORAGE_KEY } from '@constants/localstorage';
 import ThemeTypeContext from '@contexts/ThemeTypeContext';
 import { useCustomThemeContext } from '@hooks/useCustomTheme';
-import Theme, { ThemeContextProps } from './appTheme.types';
-import {
-  darkTheme as defaultDark,
-  lightTheme as defaultLight,
-} from './appThemes';
+import Theme, { ThemeContextProps } from './theme.types';
+import { darkTheme as defaultDark, lightTheme as defaultLight } from './themes';
 
 declare module 'styled-components' {
   export interface DefaultTheme extends Theme {}

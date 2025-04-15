@@ -1,4 +1,4 @@
-import { getLuminanceLevel, isColorLight } from '@theme/appThemeUtils';
+import { getLuminanceLevel, isColorLight } from '@theme/themeUtils';
 import { DefaultTheme } from 'styled-components';
 
 export const checkThemeRulesAreMet = (rules: Array<boolean>) => {

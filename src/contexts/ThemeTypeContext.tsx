@@ -1,4 +1,4 @@
-import { ThemeContextProps } from '@theme/appTheme.types';
+import { ThemeContextProps } from '@theme/theme.types';
 import { createContext } from 'react';
 
 const ThemeTypeContext = createContext<ThemeContextProps>({

@@ -1,4 +1,4 @@
-import { interpolateHexColors } from '@theme/appThemeUtils';
+import { interpolateHexColors } from '@theme/themeUtils';
 import { useMemo } from 'react';
 import styled, { CSSObject, useTheme } from 'styled-components';
 

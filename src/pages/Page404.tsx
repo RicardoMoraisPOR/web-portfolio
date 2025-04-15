@@ -6,7 +6,7 @@ import { useMemo } from 'react';
 import styled, { useTheme } from 'styled-components';
 import Animation404 from '@assets/lottie/404.json';
 import MetaTag from '@components/MetaTag';
-import { hexToLottieRGBA } from '@theme/appThemeUtils';
+import { hexToLottieRGBA } from '@theme/themeUtils';
 
 const AnimationContainer = styled.div(({ theme }) => ({
   height: 'calc(80vh)',

@@ -1,4 +1,4 @@
-import { alphaHexConverter } from '@theme/appThemeUtils';
+import { alphaHexConverter } from '@theme/themeUtils';
 import styled from 'styled-components';
 
 export const Container = styled.div(({ theme }) => ({

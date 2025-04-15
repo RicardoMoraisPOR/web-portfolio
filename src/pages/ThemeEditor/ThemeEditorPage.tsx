@@ -1,8 +1,8 @@
 import MetaTag from '@components/MetaTag';
 import { useGSAP } from '@gsap/react';
 import { useCustomThemeContext } from '@hooks/useCustomTheme';
-import { lightTheme as defaultLight } from '@theme/appThemes';
-import { isColorLight } from '@theme/appThemeUtils';
+import { lightTheme as defaultLight } from '@theme/themes';
+import { isColorLight } from '@theme/themeUtils';
 import gsap from 'gsap';
 import isEqual from 'lodash/isEqual';
 import { useCallback, useMemo, useRef, useState } from 'react';

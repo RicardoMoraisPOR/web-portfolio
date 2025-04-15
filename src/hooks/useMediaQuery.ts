@@ -1,4 +1,4 @@
-import { Breakpoints, BreakpointTypes } from '@theme/appTheme.types';
+import { Breakpoints, BreakpointTypes } from '@theme/theme.types';
 import { useEffect, useState } from 'react';
 import { DefaultTheme, useTheme } from 'styled-components';
 

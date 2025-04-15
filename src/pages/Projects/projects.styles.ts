@@ -1,4 +1,4 @@
-import { alphaHexConverter } from '@theme/appThemeUtils';
+import { alphaHexConverter } from '@theme/themeUtils';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 

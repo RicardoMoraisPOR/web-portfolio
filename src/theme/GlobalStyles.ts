@@ -1,5 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
-import { alphaHexConverter } from './appThemeUtils';
+import { alphaHexConverter } from './themeUtils';
 
 const GlobalStyles = createGlobalStyle(({ theme }) => {
   return {

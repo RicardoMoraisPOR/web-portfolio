@@ -1,4 +1,4 @@
-import { alphaHexConverter } from '@theme/appThemeUtils';
+import { alphaHexConverter } from '@theme/themeUtils';
 import { CSSObject, DefaultTheme } from 'styled-components';
 
 export type GlowEffectComponentProps = {
