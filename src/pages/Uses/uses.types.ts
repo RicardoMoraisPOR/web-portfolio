@@ -40,17 +40,5 @@ export type Action =
   | { type: 'SET_SEARCHED'; payload: Array<TechItemProps> };
 
 export const techsList = () => {
-  const shuffleArray = (array: Array<TechItemProps>) => {
-    const shuffledArray = array.slice(); // Create a copy of the array
-    for (let i = shuffledArray.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [shuffledArray[i], shuffledArray[j]] = [
-        shuffledArray[j],
-        shuffledArray[i],
-      ];
-    }
-    return shuffledArray;
-  };
-
-  return shuffleArray(USES_LIST);
+  return USES_LIST.slice().sort((a, b) => a.name.localeCompare(b.name));
 };

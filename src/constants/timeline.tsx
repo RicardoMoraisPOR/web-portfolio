@@ -32,7 +32,7 @@ export const TIMELINE_LIST: Array<TimelineItemProps> = [
     companyStart: 'Mar 2024',
     companyEnd: 'Present',
     descriptionTexts: [
-      'The place where I am currently working as a Software Engineer on the Tech Innovation Team, leading Frontend development and architecting a new front-end framework and UI library',
+      'The place where I am currently working as a Software Engineer on the Tech Innovation Team, leading Frontend development and architecting a new front-end framework and UI library.',
       "I'm excited to contribute to projects that emphasize sustainability, a cause I am devoted about.",
     ],
   },
