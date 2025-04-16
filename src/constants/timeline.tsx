@@ -2,6 +2,10 @@ import SvgCareerRaise from '@assets/Icons/CareerRaise';
 import SvgCertificationFile from '@assets/Icons/CertificationFile';
 import SvgGraduation from '@assets/Icons/Graduation';
 import SvgInterview from '@assets/Icons/Interview';
+import acinFavicon from '@assets/acin-logo.png';
+import escoFavicon from '@assets/esco-logo.png';
+import nextbittFavicon from '@assets/nextbitt-logo.png';
+import wigFavicon from '@assets/wig-logo.png';
 
 type TimelineAchievementsProps = {
   iconComponent: JSX.Element;
@@ -27,8 +31,7 @@ export const TIMELINE_LIST: Array<TimelineItemProps> = [
     companyName: 'Nextbitt',
     companyLink: 'https://www.nextbitt.com/',
     companyJob: 'Software Engineer',
-    companyFavicon:
-      'https://cdn.prod.website-files.com/65b7981897ba2e51087129d0/65f2f0ab4e401e8939af70e8_Favicon.png',
+    companyFavicon: nextbittFavicon,
     companyStart: 'Mar 2024',
     companyEnd: 'Present',
     descriptionTexts: [
@@ -41,7 +44,7 @@ export const TIMELINE_LIST: Array<TimelineItemProps> = [
     companyName: 'ACIN Group',
     companyLink: 'https://acin.pt/',
     companyJob: 'Front-end Developer',
-    companyFavicon: 'https://acin.pt/img/favicon.png',
+    companyFavicon: acinFavicon,
     companyStart: 'Feb 2021',
     companyEnd: 'Mar 2024',
     descriptionTexts: [
@@ -89,7 +92,7 @@ export const TIMELINE_LIST: Array<TimelineItemProps> = [
     companyName: 'WIG - Work is Good',
     companyLink: 'https://www.wig.pt/',
     companyJob: 'Software Developer',
-    companyFavicon: 'https://www.wig.pt/wwwroot/img/favicon-500.png',
+    companyFavicon: wigFavicon,
     companyStart: 'Sep 2018',
     companyEnd: 'Oct 2020',
     descriptionTexts: [
@@ -107,8 +110,7 @@ export const TIMELINE_LIST: Array<TimelineItemProps> = [
   {
     id: 'esco',
     companyJob: 'CTE in CSMPT',
-    companyFavicon:
-      'https://formacao.sefo.pt/pluginfile.php/1/theme_edumy/preloader_image/1668617099/Loading%20ESCO.png',
+    companyFavicon: escoFavicon,
     companyStart: 'Sep 2015',
     companyEnd: 'Jun 2018',
     descriptionTexts: [

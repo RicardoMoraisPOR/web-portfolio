@@ -51,7 +51,10 @@ const Timeline = () => {
               {index !== TIMELINE_LIST.length - 1 && <TimelineLine />}
               <CompanyContainer>
                 {item.companyFavicon !== undefined && (
-                  <CompanyImage src={item.companyFavicon} />
+                  <CompanyImage
+                    alt={`${item.companyName}-logo`}
+                    src={item.companyFavicon}
+                  />
                 )}
                 <CompanyInfoContainer>
                   <TimelineDescription>
