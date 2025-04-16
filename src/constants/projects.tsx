@@ -40,7 +40,7 @@ export const PROJECTS_LIST = (theme: Theme): Array<ProjectProps> => [
     title: 'Tailwind to JSS',
     link: 'https://tw-to-jss.vercel.app/',
     description:
-      'tw2jss an online utility tool that transforms Tailwind CSS classes into css-in-js style objects.',
+      'tw2jss is an online utility tool that transforms Tailwind CSS classes into css-in-js style objects.',
     skills: [
       {
         name: 'Bun',
