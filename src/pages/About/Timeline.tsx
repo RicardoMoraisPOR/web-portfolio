@@ -1,26 +1,32 @@
+import FlareCard from '@components/FlareCard/FlareCard';
+import GlowEffect from '@components/GlowEffect/GlowEffect';
 import ScrollableContent from '@components/ScrollableContent/ScrollableContent';
 import { TIMELINE_LIST } from '@constants/timeline';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { useTheme } from 'styled-components';
 import {
   CompanyContainer,
   CompanyImage,
   CompanyInfoContainer,
   Container,
-  TimelineAchievement,
-  TimelineAchievementDescription,
   TimelineContainer,
   TimelineDate,
   TimelineDescription,
   TimelineItem,
   TimelineLine,
   TimelineMarker,
+  TimelineTool,
+  TimelineToolDescription,
+  TimelineToolInnerWrapper,
+  TimelineToolWrapper,
 } from './about.styles';
 
 const Timeline = () => {
   const timelineRef = useRef<HTMLDivElement>(null);
+  const theme = useTheme();
 
   useGSAP(() => {
     if (timelineRef.current) {
@@ -82,16 +88,42 @@ const Timeline = () => {
                   {description}
                 </TimelineDescription>
               ))}
-              {item.achievementsTexts !== undefined &&
-                item.achievementsTexts.length > 0 && <br />}
-              {item.achievementsTexts?.map((achievement, id) => (
-                <TimelineAchievement key={`${item.id}-text-${id}`}>
-                  {achievement.iconComponent}
-                  <TimelineAchievementDescription>
-                    {achievement.year} - {achievement.description}
-                  </TimelineAchievementDescription>
-                </TimelineAchievement>
-              ))}
+              {item.mainTools !== undefined && item.mainTools.length > 0 && (
+                <>
+                  <br />
+                  <TimelineToolWrapper>
+                    {item.mainTools?.map(
+                      ({ description, iconComponent: Icon, icon }, id) => (
+                        <GlowEffect
+                          key={`${item.companyName}-${description}-${id}`}
+                          $transparency={20}
+                        >
+                          <FlareCard
+                            $intensity={15}
+                            $borderRadius={4}
+                            $disableTouch
+                          >
+                            <TimelineToolInnerWrapper>
+                              <TimelineTool>
+                                {Icon ? (
+                                  <Icon fill={theme.palette.primary} />
+                                ) : (
+                                  icon?.({
+                                    fill: theme.palette.primary,
+                                  })
+                                )}
+                                <TimelineToolDescription>
+                                  {description}
+                                </TimelineToolDescription>
+                              </TimelineTool>
+                            </TimelineToolInnerWrapper>
+                          </FlareCard>
+                        </GlowEffect>
+                      )
+                    )}
+                  </TimelineToolWrapper>
+                </>
+              )}
             </TimelineItem>
           ))}
         </TimelineContainer>

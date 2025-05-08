@@ -1,6 +1,4 @@
 import ImageMyself from '@assets/me.webp';
-import FlareCard from '@components/FlareCard/FlareCard';
-import GlowEffect from '@components/GlowEffect/GlowEffect';
 import MetaTag from '@components/MetaTag';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
@@ -85,17 +83,13 @@ const AboutPage = () => {
     <AboutPageWrapper>
       <MetaTag />
       <BioSide ref={bioRef}>
-        <GlowEffect $transparency={10}>
-          <FlareCard $intensity={70} $borderRadius="50%">
-            <ImageWrapper>
-              <Image
-                ref={bioImageRef}
-                src={ImageMyself}
-                alt="Ricardo Morais Dev Face Image"
-              />
-            </ImageWrapper>
-          </FlareCard>
-        </GlowEffect>
+        <ImageWrapper>
+          <Image
+            ref={bioImageRef}
+            src={ImageMyself}
+            alt="Ricardo Morais Dev Face Image"
+          />
+        </ImageWrapper>
         <br />
         <DescriptionText>
           I'm Ricardo Morais, a {getYearsDiference(new Date(1996, 0, 18))}

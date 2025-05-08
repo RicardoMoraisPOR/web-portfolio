@@ -44,6 +44,7 @@ import {
   SiNotion,
   SiNpm,
   SiOpenai,
+  SiPhp,
   SiPlaywright,
   SiPnpm,
   SiPostman,
@@ -136,9 +137,9 @@ export const USES_LIST: Array<TechItemProps> = [
     category: ['ui-ux', 'using'],
   },
   {
-    name: 'NextJS',
+    name: 'Next.js',
     iconComponent: SiNextdotjs,
-    category: ['framework', 'not-using'],
+    category: ['framework', 'using'],
   },
   {
     name: 'Tailwind',
@@ -426,5 +427,10 @@ export const USES_LIST: Array<TechItemProps> = [
     name: 'Discord',
     iconComponent: SiDiscord,
     category: ['web-tool', 'using', 'love'],
+  },
+  {
+    name: 'PHP',
+    iconComponent: SiPhp,
+    category: ['lang', 'not-using'],
   },
 ];

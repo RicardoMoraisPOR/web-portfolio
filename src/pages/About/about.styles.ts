@@ -72,21 +72,33 @@ export const TimelineLine = styled.div(({ theme }) => ({
   top: '2.9rem',
 }));
 
-export const TimelineAchievement = styled.div(({ theme }) => ({
+export const TimelineTool = styled.div({
+  padding: '8px',
   display: 'flex',
   alignItems: 'center',
+  justifyContent: 'center',
   gap: '10px',
-  [theme.breakpoints.max.mobile]: {
-    marginBottom: '10px',
-  },
-}));
+});
+
+export const TimelineToolDescription = styled.span({
+  fontSize: '0.8rem',
+});
+
+export const TimelineToolWrapper = styled.div({
+  display: 'flex',
+  flexFlow: 'wrap',
+  gap: '10px',
+});
+
+export const TimelineToolInnerWrapper = styled.span({
+  height: '26px',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+});
 
 export const TimelineDescription = styled.span({
   fontSize: 'clamp(1rem, 0.8vw, 1.6rem)',
-});
-
-export const TimelineAchievementDescription = styled.span({
-  fontSize: 'clamp(0.8rem, 0.8vw, 1.2rem)',
 });
 
 export const TimelineDate = styled.span({
@@ -113,7 +125,7 @@ export const CompanyInfoContainer = styled.div({
   justifyContent: 'space-between',
 });
 
-export const ImageWrapper = styled.div({
+export const ImageWrapper = styled.div(({ theme }) => ({
   borderRadius: '50%',
   width: 'clamp(200px, 11vw, 300px)',
   height: 'clamp(200px, 11vw, 300px)',
@@ -121,7 +133,8 @@ export const ImageWrapper = styled.div({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-});
+  background: alphaHexConverter(theme.palette.secondary, 25),
+}));
 
 export const Image = styled.img({
   width: '100%',

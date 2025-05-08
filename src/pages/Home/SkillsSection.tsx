@@ -1,5 +1,4 @@
 import SvgGsapGreensock from '@assets/Icons/GsapGreensock';
-import SvgStyledComponentsLogo from '@assets/Icons/StyledComponentsLogo';
 import SvgVercelLogo from '@assets/Icons/VercelLogo';
 import ViteLogo from '@assets/Icons/Vite';
 import FlareCard from '@components/FlareCard/FlareCard';
@@ -8,6 +7,7 @@ import { useGSAP } from '@gsap/react';
 import {
   SiNextdotjs,
   SiReact,
+  SiStorybook,
   SiTestinglibrary,
   SiTypescript,
 } from '@icons-pack/react-simple-icons';
@@ -79,8 +79,12 @@ const SkillsSection = ({ inView }: InViewProps) => {
         <GlowEffect $transparency={15}>
           <FlareCard $intensity={20} $borderRadius={5} $disableTouch>
             <SkillInnerWrapper>
-              <SvgStyledComponentsLogo height={16} width={16} />
-              Styled Components
+              <SiStorybook
+                fill={theme.palette.primary}
+                height={16}
+                width={16}
+              />
+              Storybook
             </SkillInnerWrapper>
           </FlareCard>
         </GlowEffect>
