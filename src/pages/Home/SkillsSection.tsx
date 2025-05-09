@@ -43,7 +43,7 @@ const SkillsSection = ({ inView }: InViewProps) => {
     <SkillsWrapper ref={skillsRef}>
       <SkillWrapper>
         <GlowEffect $transparency={15}>
-          <FlareCard $intensity={20} $borderRadius={5} $disableTouch>
+          <FlareCard $intensity={20} $borderRadius={5}>
             <SkillInnerWrapper>
               <SiReact fill={theme.palette.primary} height={16} width={16} />
               React
@@ -53,7 +53,7 @@ const SkillsSection = ({ inView }: InViewProps) => {
       </SkillWrapper>
       <SkillWrapper>
         <GlowEffect $transparency={15}>
-          <FlareCard $intensity={20} $borderRadius={5} $disableTouch>
+          <FlareCard $intensity={20} $borderRadius={5}>
             <SkillInnerWrapper>
               <SiTypescript
                 fill={theme.palette.primary}
@@ -67,7 +67,7 @@ const SkillsSection = ({ inView }: InViewProps) => {
       </SkillWrapper>
       <SkillWrapper>
         <GlowEffect $transparency={15}>
-          <FlareCard $intensity={20} $borderRadius={5} $disableTouch>
+          <FlareCard $intensity={20} $borderRadius={5}>
             <SkillInnerWrapper>
               <ViteLogo fill={theme.palette.primary} height={16} width={16} />
               Vite
@@ -77,7 +77,7 @@ const SkillsSection = ({ inView }: InViewProps) => {
       </SkillWrapper>
       <SkillWrapper>
         <GlowEffect $transparency={15}>
-          <FlareCard $intensity={20} $borderRadius={5} $disableTouch>
+          <FlareCard $intensity={20} $borderRadius={5}>
             <SkillInnerWrapper>
               <SiStorybook
                 fill={theme.palette.primary}
@@ -91,7 +91,7 @@ const SkillsSection = ({ inView }: InViewProps) => {
       </SkillWrapper>
       <SkillWrapper>
         <GlowEffect $transparency={15}>
-          <FlareCard $intensity={20} $borderRadius={5} $disableTouch>
+          <FlareCard $intensity={20} $borderRadius={5}>
             <SkillInnerWrapper>
               <SiNextdotjs
                 fill={theme.palette.primary}
@@ -105,7 +105,7 @@ const SkillsSection = ({ inView }: InViewProps) => {
       </SkillWrapper>
       <SkillWrapper>
         <GlowEffect $transparency={15}>
-          <FlareCard $intensity={20} $borderRadius={5} $disableTouch>
+          <FlareCard $intensity={20} $borderRadius={5}>
             <SkillInnerWrapper>
               <SvgVercelLogo
                 fill={theme.palette.primary}
@@ -119,7 +119,7 @@ const SkillsSection = ({ inView }: InViewProps) => {
       </SkillWrapper>
       <SkillWrapper>
         <GlowEffect $transparency={15}>
-          <FlareCard $intensity={20} $borderRadius={5} $disableTouch>
+          <FlareCard $intensity={20} $borderRadius={5}>
             <SkillInnerWrapper>
               <SvgGsapGreensock
                 fill={theme.palette.primary}
@@ -133,7 +133,7 @@ const SkillsSection = ({ inView }: InViewProps) => {
       </SkillWrapper>
       <SkillWrapper>
         <GlowEffect $transparency={15}>
-          <FlareCard $intensity={20} $borderRadius={5} $disableTouch>
+          <FlareCard $intensity={20} $borderRadius={5}>
             <SkillInnerWrapper>
               <SiTestinglibrary
                 fill={theme.palette.primary}
