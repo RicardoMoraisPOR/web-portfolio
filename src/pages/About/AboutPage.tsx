@@ -19,7 +19,7 @@ const AboutPage = () => {
   const bioRef = useRef<HTMLDivElement>(null);
   const bioImageRef = useRef<HTMLImageElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
-  const getYearsDiference = useCallback((dateFrom: Date) => {
+  const getYearsDifference = useCallback((dateFrom: Date) => {
     const today = new Date();
     let diference = today.getFullYear() - dateFrom.getFullYear();
     const monthDifference = today.getMonth() - dateFrom.getMonth();
@@ -92,7 +92,7 @@ const AboutPage = () => {
         </ImageWrapper>
         <br />
         <DescriptionText>
-          I'm Ricardo Morais, a {getYearsDiference(new Date(1996, 0, 18))}
+          I'm Ricardo Morais, a {getYearsDifference(new Date(1996, 0, 18))}
           -year-old Front-end developer originally from Lisbon, now living in
           Madeira Island.
         </DescriptionText>
@@ -101,7 +101,7 @@ const AboutPage = () => {
           Computer Systems Management and Programming in Torres Vedras/Lisbon.
         </DescriptionText>
         <DescriptionText>
-          Now, With {getYearsDiference(new Date(2018, 6, 1))} years of
+          Now, with {getYearsDifference(new Date(2018, 6, 1))} years of
           professional experience, I've worked in both mobile and web
           development, contributing to projects for large companies nationally
           and internationally
