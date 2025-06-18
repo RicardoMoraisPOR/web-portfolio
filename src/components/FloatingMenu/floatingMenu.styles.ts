@@ -97,6 +97,7 @@ export const Option = styled(Link)<{ $selected: boolean }>(
   ({ theme, $selected }) => ({
     color: theme.palette.text,
     fontSize: 'clamp(0.8rem, 1vw, 1.4rem)',
+    textDecoration: 'none',
     ...($selected
       ? {
           '&:hover': {
@@ -114,6 +115,7 @@ export const OptionTheme = styled.span<{ $selected: boolean }>(
   ({ theme, $selected }) => ({
     color: theme.palette.text,
     fontSize: 'clamp(0.8rem, 1vw, 1.4rem)',
+    textDecoration: 'none',
     ...($selected
       ? {
           '&:hover': {

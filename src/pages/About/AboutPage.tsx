@@ -118,7 +118,7 @@ const AboutPage = () => {
         <div ref={titleRef}>
           <FlexCenter>
             <HeadingContainer>
-              <h1>Career Highlights</h1>
+              <h1>Career Timeline</h1>
             </HeadingContainer>
           </FlexCenter>
           <Timeline />

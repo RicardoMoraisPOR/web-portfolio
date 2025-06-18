@@ -2,6 +2,7 @@ import acinFavicon from '@assets/acin-logo.png';
 import escoFavicon from '@assets/esco-logo.png';
 import SvgStyledComponentsLogo from '@assets/Icons/StyledComponentsLogo';
 import nextbittFavicon from '@assets/nextbitt-logo.png';
+import santanderFavicon from '@assets/santander-logo.png';
 import wigFavicon from '@assets/wig-logo.png';
 import {
   IconType,
@@ -33,6 +34,8 @@ type TimelineItemProps = {
   companyName?: string;
   companyLink?: string;
   companyJob: string;
+  title?: string;
+  jobArea?: string;
   companyFavicon?: string;
   companyStart: string;
   companyEnd: string;
@@ -42,15 +45,35 @@ type TimelineItemProps = {
 
 export const TIMELINE_LIST: Array<TimelineItemProps> = [
   {
+    id: 'santander',
+    companyName: 'Santander Auto Software',
+    companyLink: 'https://www.santanderconsumer.com/',
+    companyJob: 'Front-end Engineer',
+    title: 'Industry:',
+    jobArea: 'Fintech',
+    companyFavicon: santanderFavicon,
+    companyStart: 'Jul 2025',
+    companyEnd: 'Present',
+    descriptionTexts: [
+      'Working as a Front-end Engineer, collaborating with cross-functional teams to deliver high-quality user experiences and implement responsive, accessible interfaces.',
+    ],
+    mainTools: [
+      { description: 'React', iconComponent: SiReact },
+      { description: 'Typescript', iconComponent: SiTypescript },
+    ],
+  },
+  {
     id: 'nextbitt',
     companyName: 'Nextbitt',
     companyLink: 'https://www.nextbitt.com/',
     companyJob: 'Software Engineer',
+    title: 'Industry:',
+    jobArea: 'Sustainability & Asset Management',
     companyFavicon: nextbittFavicon,
     companyStart: 'Mar 2024',
-    companyEnd: 'Present',
+    companyEnd: 'Jul 2025',
     descriptionTexts: [
-      'The place where I am currently working as a Software Engineer on the Tech Innovation Team, leading Frontend development and architecting a new front-end framework and UI library.',
+      'Worked as a Software Engineer on the Tech Innovation Team, leading Front-end development and architecting a new front-end framework and UI library.',
     ],
     mainTools: [
       { description: 'React', iconComponent: SiReact },
@@ -65,6 +88,8 @@ export const TIMELINE_LIST: Array<TimelineItemProps> = [
     companyName: 'ACIN Group',
     companyLink: 'https://acin.pt/',
     companyJob: 'Front-end Developer',
+    title: 'Industry:',
+    jobArea: 'Healthcare & Digital Signatures / Certifications',
     companyFavicon: acinFavicon,
     companyStart: 'Feb 2021',
     companyEnd: 'Mar 2024',
@@ -84,6 +109,8 @@ export const TIMELINE_LIST: Array<TimelineItemProps> = [
     companyName: 'WIG - Work is Good',
     companyLink: 'https://www.wig.pt/',
     companyJob: 'Software Developer',
+    title: 'Industry:',
+    jobArea: 'Real Estate & Logistics',
     companyFavicon: wigFavicon,
     companyStart: 'Sep 2018',
     companyEnd: 'Oct 2020',
@@ -102,6 +129,7 @@ export const TIMELINE_LIST: Array<TimelineItemProps> = [
   {
     id: 'esco',
     companyJob: 'CTE in CSMPT',
+    jobArea: 'Education',
     companyFavicon: escoFavicon,
     companyStart: 'Sep 2015',
     companyEnd: 'Jun 2018',

@@ -123,11 +123,11 @@ const HomePage = () => {
             <IntroTextWrapper>
               <IntroTextAbout>
                 Hey <InlineDiv ref={emojiRef}>✌️</InlineDiv> I'm a{' '}
-                <IntroTextBold>Front-end developer</IntroTextBold>, currently
-                working as <IntroTextBold>Software Engineer</IntroTextBold> at{' '}
+                <IntroTextBold>Front-end Engineer</IntroTextBold>, currently
+                working at{' '}
                 <IntroTextBold>
-                  <Link to="https://www.nextbitt.com/" target="_blank">
-                    Nextbitt
+                  <Link to="https://www.santanderconsumer.com/" target="_blank">
+                    Santander Auto Software
                   </Link>
                 </IntroTextBold>
                 {'. '} I work with forward-thinking people to design and build

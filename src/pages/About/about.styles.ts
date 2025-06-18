@@ -105,6 +105,29 @@ export const TimelineDate = styled.span({
   fontSize: 'clamp(0.6rem, 0.6vw, 1rem)',
 });
 
+export const TimelineJobArea = styled.span(({ theme }) => ({
+  fontSize: 'clamp(0.75rem, 0.75vw, 1.2rem)',
+  color: theme.palette.primary,
+  fontWeight: '500',
+  opacity: 0.5,
+  marginTop: '4px',
+}));
+
+export const TimelineTitle = styled.span(({ theme }) => ({
+  fontSize: 'clamp(0.75rem, 0.75vw, 1.2rem)',
+  color: theme.palette.primary,
+  fontWeight: '500',
+  opacity: 0.5,
+  marginTop: '4px',
+}));
+
+export const TimelineAreaContainer = styled.div({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '8px',
+  marginTop: '4px',
+});
+
 export const CompanyImage = styled.img({
   marginTop: '4px',
   height: 'clamp(30px, 2vw, 60px)',

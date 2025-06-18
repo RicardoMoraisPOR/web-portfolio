@@ -12,12 +12,15 @@ import {
   CompanyImage,
   CompanyInfoContainer,
   Container,
+  TimelineAreaContainer,
   TimelineContainer,
   TimelineDate,
   TimelineDescription,
   TimelineItem,
+  TimelineJobArea,
   TimelineLine,
   TimelineMarker,
+  TimelineTitle,
   TimelineTool,
   TimelineToolDescription,
   TimelineToolInnerWrapper,
@@ -83,6 +86,12 @@ const Timeline = () => {
                   </TimelineDate>
                 </CompanyInfoContainer>
               </CompanyContainer>
+              {item.title && item.jobArea && (
+                <TimelineAreaContainer>
+                  <TimelineTitle>{item.title}</TimelineTitle>
+                  <TimelineJobArea>{item.jobArea}</TimelineJobArea>
+                </TimelineAreaContainer>
+              )}
               {item.descriptionTexts?.map((description, id) => (
                 <TimelineDescription key={`${item.id}-text-${id}`}>
                   {description}

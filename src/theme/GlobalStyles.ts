@@ -54,21 +54,14 @@ const GlobalStyles = createGlobalStyle(({ theme }) => {
       letterSpacing: '0.5px',
       color: theme.palette.text,
       width: 'fit-content',
-      position: 'relative',
       transition: `color ${theme.transitions.fast}ms linear`,
-      textDecoration: 'none', // Remove the default underline
+      textDecoration: 'underline',
+      textDecorationColor: theme.palette.text,
+      textDecorationThickness: '1px',
+      textUnderlineOffset: '4px',
       '&:hover': {
         color: theme.palette.primary,
-      },
-      '&::after': {
-        content: '""',
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        bottom: '-1.5px', // Adjust this value to move the underline lower
-        height: '1px', // Adjust the thickness of the underline
-        backgroundColor: 'currentColor', // Use the text color for the underline
-        transition: `backgroundColor ${theme.transitions.fast}ms linear`,
+        textDecorationColor: theme.palette.primary,
       },
     },
 
