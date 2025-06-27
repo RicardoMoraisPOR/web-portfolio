@@ -12,6 +12,7 @@ import {
   SiJss,
   SiPnpm,
   SiReact,
+  SiShadcnui,
   SiTailwindcss,
   SiTestinglibrary,
   SiTypescript,
@@ -143,7 +144,7 @@ export const PROJECTS_LIST = (theme: Theme): Array<ProjectProps> => [
       />
     ),
     title: 'HexAlphaTool',
-    link: 'https://hex-alpha-tool.vercel.app/',
+    link: 'https://hex-alpha-tool.com/',
     description:
       'HexAlphaTool (HAT) is an online utility tool that allows users to add alpha transparency to hex color codes on the fly.',
     skills: [
@@ -156,10 +157,6 @@ export const PROJECTS_LIST = (theme: Theme): Array<ProjectProps> => [
       {
         name: 'Vite',
         icon: SvgVite,
-      },
-      {
-        name: 'Styled Components',
-        icon: SvgStyledComponentsLogo,
       },
       { name: 'Vercel', icon: SvgVercelLogo },
       {
@@ -174,6 +171,19 @@ export const PROJECTS_LIST = (theme: Theme): Array<ProjectProps> => [
           <SiTypescript height={15} width={15} fill={theme.palette.primary} />
         ),
       },
+      {
+        name: 'Shadcn',
+        iconComponent: (
+          <SiShadcnui height={15} width={15} fill={theme.palette.primary} />
+        ),
+      },
+      {
+        name: 'Tailwind',
+        iconComponent: (
+          <SiTailwindcss height={15} width={15} fill={theme.palette.primary} />
+        ),
+      },
+      { name: 'GSAP', icon: SvgGsapGreensock },
     ],
   },
 ];
