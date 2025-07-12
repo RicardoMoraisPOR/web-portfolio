@@ -21,6 +21,7 @@
     "@radix-ui/react-select": "^2.1.7",
     "@radix-ui/react-tooltip": "^1.2.0",
     "@uidotdev/usehooks": "^2.4.1",
+    "@vercel/analytics": "^1.5.0",
     "gsap": "^3.12.7",
     "lodash": "^4.17.21",
     "react": "^18.3.1",

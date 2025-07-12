@@ -1,4 +1,5 @@
 import { CustomThemeProvider } from '@contexts/CustomThemeContext.tsx';
+import { Analytics } from '@vercel/analytics/next';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { HelmetProvider } from 'react-helmet-async';
@@ -10,6 +11,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <HelmetProvider>
       <BrowserRouter>
         <CustomThemeProvider>
+          <Analytics />
           <App />
         </CustomThemeProvider>
       </BrowserRouter>
